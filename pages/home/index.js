@@ -1,7 +1,7 @@
 // --------Importaciones y librerías--------------
 import React from "react";
 import MainLayout from '../../components/layouts/MainLayout';
-import { getIngresos, getSalidas, getUsuario } from '../../db/db';
+import { getIngresos, getSalidas, getUsuario, getUsuarios } from '../../db/db';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import '../../styles/pages/home.css';
@@ -22,6 +22,7 @@ const HomePage = () => {
     const [access_token, setAccess] = useState('');
     const [username, setUsername] = useState('');
     const [usuario, setUsuario] = useState('');
+    const [usuarios, setUsuarios] = useState('');
     const router = useRouter();
 //---------------Variables------------------------------------------------- 
 
@@ -40,7 +41,7 @@ const HomePage = () => {
 
     useEffect(() => {
 
-//----Función para detectar al usuario ---------
+//----Función para detectar al usuario si puede acceder---------
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
@@ -48,28 +49,41 @@ const HomePage = () => {
         if (access_token == 'sin-acceso'){
             router.push('/');
         }
-//----Función para detectar al usuario ---------
+//----Función para detectar al usuario si puede acceder---------
         
 //--- obtención de la data de local storage------
-    setUsername(localStorage.getItem('username'));
+        setUsername(localStorage.getItem('username'));
 //--- obtención de la data de local storage------
 
-//--- Función para obtener los datos del usuario----
-    async function fetchUsuario() {
-        try {
-            const data = await getUsuario(username);
-            setUsuario(data);
-            localStorage.setItem('id',data.id);
-            localStorage.setItem('first_name',data.first_name);
-            localStorage.setItem('last_name',data.last_name);
-            localStorage.setItem('email',data.email);
-            localStorage.setItem('ficha',data.ficha);
-            localStorage.setItem('tipo_usuario',data.tipo_usuario);
-            console.log(data);
-        } catch (error) {
-            console.error(error);
-        }
+
+
+//---Función para obtener todos los datos de todos los usuarios--------
+async function fetchUsuarios() {
+    try {
+        const data = await getUsuarios();
+        setUsuarios(data);
+        console.log(data);
+    } catch (error) {
+        console.error(error);
     }
+}
+//---Función para obtener todos los datos de todos los usuarios--------
+//--- Función para obtener los datos del usuario----
+async function fetchUsuario() {
+    try {
+        const data = await getUsuario(username);
+        setUsuario(data);
+        localStorage.setItem('id',data.id);
+        localStorage.setItem('first_name',data.first_name);
+        localStorage.setItem('last_name',data.last_name);
+        localStorage.setItem('email',data.email);
+        localStorage.setItem('ficha',data.ficha);
+        localStorage.setItem('tipo_usuario',data.tipo_usuario);
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
 //--- Función para obtener los datos del usuario----
 
 //---Función asyncrona para obtener los datos de ingresos -----------------
@@ -97,9 +111,11 @@ const HomePage = () => {
 //---Función asyncrona para obtener los datos de salidas -----------------
 
 //---Inicializar funciones asyncronas -----------------
+        fetchUsuarios();  
         fetchUsuario();
         fetchIngreos();
-        fetchSalidas();        
+        fetchSalidas();  
+           
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
     
@@ -112,7 +128,7 @@ const HomePage = () => {
                 <h1>Bienvenid@ {usuario.first_name} {usuario.last_name} al área de asistencias</h1>   
             </div>
             <div className="contenedor_titulo_asistencias">
-                <h1>Usuario {usuario.tipo_usuario} - Ficha {usuario.ficha}</h1>   
+                <h1>Usuario {usuario.username} {usuario.tipo_usuario} - Ficha {usuario.ficha}</h1>   
             </div>
             {/* titulo */}
 
@@ -183,6 +199,7 @@ const HomePage = () => {
                             // Extraer el ID de la URL
                             const urlParts = ingreso.url.split('/');
                             const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
+                            const usuario = usuarios.find((user) => user.username === ingreso.username);
 
                             return (
                                 <div key={ingreso.url}>
@@ -203,9 +220,14 @@ const HomePage = () => {
                                         {/* div con usuario y nombre */}
                                         <div className="div_card_usuario">
                                             <p className="div_card_usuario_ind">
-                                                <strong>▫ Usuario:</strong> {ingreso.username}</p>
+                                                <strong>▫ Usuario:</strong> {ingreso.username}
+                                            </p>
                                             <p className="div_card_usuario_ind">
-                                                <strong>Nombre:</strong> <span className="div_card_usuario_nombre">Miguel Ángel Páez parra</span> </p>
+                                                <strong>Nombre:</strong>{" "}
+                                                <span className="div_card_usuario_nombre">
+                                                    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
+                                                </span>{" "}
+                                            </p>
                                         </div>
                                         {/* div con usuario y nombre */}
 
@@ -221,7 +243,10 @@ const HomePage = () => {
                                         {/* Div con ficha y zona */}
                                         <div className="div_card_usuario">
                                             <p className="div_card_usuario_ind">
-                                                <strong>▫ Ficha:</strong> 2465417
+                                                <strong>▫ Ficha:</strong>{" "}
+                                                <span className="div_card_usuario_nombre">
+                                                    {usuario ? `${usuario.ficha}` : "Ficha no encontrado"}
+                                                </span>{" "}
                                             </p>
                                             <p className="div_card_usuario_ind">
                                                 <strong>Zona:</strong> {ingreso.zona}
@@ -286,6 +311,7 @@ const HomePage = () => {
                                 // Extraer el ID de la URL
                                 const urlParts = salida.url.split('/');
                                 const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
+                                const usuario = usuarios.find((user) => user.username === salida.username);
 
                                 return (
                                     <div key={salida.url}>
@@ -308,7 +334,11 @@ const HomePage = () => {
                                                 <p className="div_card_usuario_ind">
                                                     <strong>▫ Usuario:</strong> {salida.username}</p>
                                                 <p className="div_card_usuario_ind">
-                                                    <strong>Nombre:</strong> <span className="div_card_usuario_nombre">Miguel Ángel Páez parra</span> </p>
+                                                <strong>Nombre:</strong>{" "}
+                                                <span className="div_card_usuario_nombre">
+                                                    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
+                                                </span>{" "}
+                                                </p>
                                             </div>
                                             {/* div con usuario y nombre */}
 
@@ -324,7 +354,10 @@ const HomePage = () => {
                                             {/* Div con ficha y zona */}
                                             <div className="div_card_usuario">
                                                 <p className="div_card_usuario_ind">
-                                                    <strong>▫ Ficha:</strong> 2465417
+                                                    <strong>▫ Ficha:</strong>{" "}
+                                                    <span className="div_card_usuario_nombre">
+                                                        {usuario ? `${usuario.ficha}` : "Ficha no encontrado"}
+                                                    </span>{" "}
                                                 </p>
                                                 <p className="div_card_usuario_ind">
                                                     <strong>Zona:</strong> {salida.zona}
