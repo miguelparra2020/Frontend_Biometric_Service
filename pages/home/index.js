@@ -115,7 +115,7 @@ async function fetchUsuario() {
         fetchUsuario();
         fetchIngreos();
         fetchSalidas();  
-           
+        
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
     

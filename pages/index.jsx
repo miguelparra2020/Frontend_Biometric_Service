@@ -5,6 +5,7 @@ import styles from '@/styles/index.module.css';
 // Nota: Siempre importar etiquetas raras
 import Image from 'next/image';
 
+import { Toaster, toast } from 'sonner';
 
 const LandPage = () => {
   useEffect(() => {
@@ -91,6 +92,7 @@ const LandPage = () => {
 
         </section>
       </main>
+      <Toaster/> 
     </LandPageLayout>
   );
 };

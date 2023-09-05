@@ -5,8 +5,10 @@ import styles from '@/styles/login.module.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+import { Toaster, toast } from 'sonner';
+
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   
@@ -89,11 +91,17 @@ const LoginPage = () => {
               <Link href="/recuperar-password" className={styles.a}>¿Has olvidado la contraseña?</Link>
             </h4>
             
-            <button className={styles.button} onClick={handleLogin}>Ingresar</button>
+            <button 
+            className={styles.button} 
+            onClick={ () => {
+              toast('Validando')
+            }}
+            >Ingresar</button>
             
           </div>
         </div>
       </main>
+      <Toaster/>
     </LoginLayout>
   );
 };

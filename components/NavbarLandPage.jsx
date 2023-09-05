@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/NavbarLandPage.module.css';
 
+// Biblioteca de mensajes.
+import { Toaster, toast } from 'sonner';
+
 const NavbarLandPage = () => {
   return (
     // Encabezado
@@ -18,7 +21,13 @@ const NavbarLandPage = () => {
               <Link href="/login" className={styles.nav__link}>
               Acceder
               </Link>
-              <Link href="/login" className={`${styles.nav__link} ${styles['nav__link--activate']}`}>
+              <Link href="/" 
+              className={`${styles.nav__link} ${styles['nav__link--activate']}`}
+              onClick={ () => {
+                toast.error('Por ahora:', {
+                  description: 'Solo los instructores asministradores y coordinador podrán registrar a los usuarios'
+                })
+              }}>
               Registrarse
               </Link>
           </div>
