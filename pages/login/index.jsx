@@ -93,9 +93,7 @@ const [username, setUsername] = useState('');
             
             <button 
             className={styles.button} 
-            onClick={ () => {
-              toast('Validando')
-            }}
+            onClick={handleLogin}
             >Ingresar</button>
             
           </div>
