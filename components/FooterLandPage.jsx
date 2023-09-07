@@ -13,7 +13,7 @@ const FooterLandPage = () => {
           <div className={styles.divfirst}>
               <div className={styles.containerone}>
                 <Link href="/" className={styles.container__link}>
-                  <Image  src="/img/logo_blanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.container__img}/>
+                  <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.container__img}/>
                 </Link>
               </div>
               <div className={styles.containertwo} >
