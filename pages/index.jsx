@@ -92,7 +92,7 @@ const LandPage = () => {
 
         </section>
       </main>
-      <Toaster/> 
+      <Toaster position="top-center"  theme='dark' richColors />
     </LandPageLayout>
   );
 };

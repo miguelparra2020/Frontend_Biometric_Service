@@ -12,7 +12,7 @@ const FooterLandPage = () => {
         <footer className={styles.footer}>
           <div className={styles.divfirst}>
               <div className={styles.containerone}>
-                <Link href="/Login" className={styles.container__link}>
+                <Link href="/" className={styles.container__link}>
                   <Image  src="/img/logo_blanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.container__img}/>
                 </Link>
               </div>
@@ -32,11 +32,11 @@ const FooterLandPage = () => {
                   Sobre nosotros
                 </h2>
                 <Link href="/Login" className={styles.containerthree__link}>
-                  Terminos
+                  Términos y condiciones
                 </Link>
                 <br />
                 <Link href="/Login" className={styles.containerthree__link}>
-                Política de privacidad
+                  Política de privacidad
                 </Link>
               </div>
               <div className={styles.containerfour}>

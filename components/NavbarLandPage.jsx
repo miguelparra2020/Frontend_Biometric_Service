@@ -13,7 +13,7 @@ const NavbarLandPage = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
           {/* Contenedor img */}
-          <Link href="index.jsx" className={styles.nav__a}>
+          <Link href="/" className={styles.nav__a}>
             <Image  src="/img/logo_negro.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.nav__img} />
           </Link>
           {/* Contenedor de links  */}
@@ -24,8 +24,8 @@ const NavbarLandPage = () => {
               <Link href="/" 
               className={`${styles.nav__link} ${styles['nav__link--activate']}`}
               onClick={ () => {
-                toast.error('Por ahora:', {
-                  description: 'Solo los instructores asministradores y coordinador podrán registrar a los usuarios'
+                toast.error('POR AHORA:', {
+                  description: 'Por favor acercarse a un instructor administrador ADSO para realizar su registro.'
                 })
               }}>
               Registrarse
