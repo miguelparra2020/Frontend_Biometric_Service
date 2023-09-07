@@ -70,7 +70,7 @@ const [username, setUsername] = useState('');
         <div className={styles.tarjeta}>
           <div className={styles.contenido_tarjeta}>
             <h1 className={styles.h1}>Iniciar sesión</h1>
-            <h2 className={styles.h2}>Servicio Biometrico</h2>
+            <h2 className={styles.h2}>Servicio QR</h2>
             <h3 className={styles.h3}>Documento de identidad:</h3>
             <input
               type="text"

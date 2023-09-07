@@ -38,7 +38,7 @@ const LandPage = () => {
           <div className={styles.section__texts}>
             <div className={styles.section__texts_margin}>
               <div className={styles.content_section__title}>
-                <h1 className={styles.section__title}>Biometric Service</h1>
+                <h1 className={styles.section__title}>Qrutine</h1>
               </div>
               <div className={styles.container__p}>
               &quot;Lleve un control exhaustivo de su asistencia mientras inculca el hábito de llegar a tiempo.&quot;
