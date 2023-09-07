@@ -10,10 +10,10 @@ const NavbarLogin = () => {
     <div>
       {/* className={styles.} */}
       <header className={styles.header}>
-        <nav className={styles.header}>
+        <nav className={styles.nav}>
         <Link href="/" className={styles.link__header}>
           <div className={styles.logo}>
-            <Image className={styles.img} src="/img/logoblanco.png" alt="Logo Símbolo SENA y Biometric Service Blanco" width={469} height={209}/>
+          <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.logo} />
           </div>
         </Link>
         </nav>
