@@ -31,11 +31,11 @@ const FooterLandPage = () => {
                 <h2 className={styles.containerthree__h2}>
                   Sobre nosotros
                 </h2>
-                <Link href="/Login" className={styles.containerthree__link}>
+                <Link href="/terminos" className={styles.containerthree__link}>
                   Términos y condiciones
                 </Link>
                 <br />
-                <Link href="/Login" className={styles.containerthree__link}>
+                <Link href="/" className={styles.containerthree__link}>
                   Política de privacidad
                 </Link>
               </div>
