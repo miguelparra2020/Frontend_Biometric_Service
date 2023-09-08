@@ -1,7 +1,9 @@
 import NavbarLogin from "@/components/NavbarLogin";
+import  LoginLayout from '../../components/layouts/LoginLayout';
 
 const Terminos = () => {
     return (
+      <LoginLayout>
       <div>
         {/* className={styles.} */}
         <main className="main">
@@ -11,6 +13,7 @@ const Terminos = () => {
           </p>
         </main>
       </div>
+      </LoginLayout>
     );
   };
   
