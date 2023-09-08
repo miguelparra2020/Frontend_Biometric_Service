@@ -3,7 +3,6 @@ import React from 'react';
 import styles from '@/styles/components/FooterMain.module.css';
 import '../styles/global.css';
 
-
 const FooterMain = () => {
   return (
     <div className={styles.footer}>

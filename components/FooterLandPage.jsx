@@ -35,7 +35,7 @@ const FooterLandPage = () => {
                   Términos y condiciones
                 </Link>
                 <br />
-                <Link href="/" className={styles.containerthree__link}>
+                <Link href="/politicas" className={styles.containerthree__link}>
                   Política de privacidad
                 </Link>
               </div>

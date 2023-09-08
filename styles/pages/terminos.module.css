@@ -1,0 +1,14 @@
+.main {
+    background-color: #FBFBE2;
+}
+
+.article {
+    background-color: #B2C1C9;
+    margin: 3rem 7rem;
+    padding: 3rem 3rem;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+}

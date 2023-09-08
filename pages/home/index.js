@@ -5,7 +5,7 @@ import { getIngresos, getSalidas, getUsuario, getUsuarios } from '../../db/db';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import '../../styles/pages/home.css';
-import Image from 'next/image'
+import Image from 'next/image';
 import { Suspense } from 'react';
 import { useRouter } from 'next/router';
 import '../../styles/pages/fichas.css';
