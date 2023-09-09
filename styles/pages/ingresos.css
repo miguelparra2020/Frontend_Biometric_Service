@@ -94,3 +94,9 @@ font-style: oblique;
     cursor: pointer;
   }
   
+  @media (max-width: 750px) {
+    .container {
+      width: 80%;
+    }
+  }
+

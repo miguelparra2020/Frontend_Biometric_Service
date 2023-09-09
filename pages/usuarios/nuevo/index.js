@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import MainLayout from '../../../components/layouts/MainLayout';
 import { getUsuarios, getFichas, CreateUsuario } from '../../../db/db';
 import { useRouter } from 'next/router';
-import '../../../styles/pages/ingresos.css'
+import '../../../styles/pages/ingresos.css';
+import { Toaster, toast } from 'sonner';
 
 const CrearUsuarioPage = () => {
     const [existeUsuario, setExisteUsuario] = useState(''); 
@@ -51,47 +52,15 @@ const CrearUsuarioPage = () => {
         // Validar si el usuario ya existe
         const usuarioExiste = existeUsuario.some((usuario) => usuario.username === username);
         if (usuarioExiste) {
-            alert('El usuario ingresado ya existe, por favor ingrese un valor diferente.');
+            toast.error('Error en el usuario', {
+                description: 'El usuario ingresado ya existe, por favor ingrese un valor diferente.'
+              });
             return;
         }
-
-        if (username == '') {
-            alert('Por favor ingresar un valor de usuario, recuerda es el número de documento identidad!.');
-            return;
-        }
-
-        if (first_name == '') {
-            alert('Por favor ingresar los nombres del usuario!.');
-            return;
-        }
-
-        if (last_name == '') {
-            alert('Por favor ingresar los apellidos del usuario!.');
-            return;
-        }
-
-        if (email == '') {
-            alert('Por favor ingresar el correo del usuario!.');
-            return;
-        }
-
-        if (ficha == '') {
-            alert('Por favor asignar una ficha al usuario!.');
-            return;
-        }
-
-        if (tipo_usuario == '') {
-            alert('Por favor seleccionar un tipo de usuario!.');
-            return;
-        }
-
-        if (password == '') {
-            alert('Por favor crear una contraseña al usuario!.');
-            return;
-        }
-
         if (password != confirmPassword) {
-            alert('La contraseña proporcionada es diferente al confirmarse, por favor validar!.');
+            toast.error('Error en la contraseña', {
+                description: 'Al confirmar es diferente, por favor validar!'
+              });
             return;
         }
     
@@ -111,8 +80,12 @@ const CrearUsuarioPage = () => {
 
         const createUsuario = await CreateUsuario(usuarioData);
         console.log(createUsuario);
-        alert("Ha creado el usuario de manera exitosa");
-        router.push(`/usuarios`);
+        toast.success('Registro de usuario', {
+            description: 'Exitoso!'
+          });
+          setTimeout(() => {
+            router.push('/usuarios');
+        }, 2000);
     };
 
     
@@ -174,6 +147,7 @@ const CrearUsuarioPage = () => {
             <button type="submit">Crear usuario</button> 
         </form>
         </div>
+        <Toaster/>
         </MainLayout>
     )
 };
