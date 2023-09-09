@@ -2,9 +2,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+// CSS Styles: 
 import styles from '@/styles/components/NavbarMain.module.css';
 import '../styles/global.css';
-
 
 
 const NavbarMain = () => {
@@ -13,16 +13,16 @@ const NavbarMain = () => {
       <div className={styles.nav}>
         <Link href="/home" className={styles.links}> 
           <div>
-            <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Blanco" width={120} height={30} className={styles.nav__img} />     
+          <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.nav__img} />     
           </div>
         </Link>
         <Link href="/home" className={styles.links}> 
           <div className={styles.nav__link}>            
                 Asistencias &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
-  <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-  <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
-                </svg>           
+          <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+          <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+          </svg>           
           </div>
         </Link>
         <Link href="/excusas" className={styles.links}>
