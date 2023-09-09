@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { CreateFicha,getFichas } from '../../../db/db';
 import { useRouter } from 'next/router';
-import '../../../styles/pages/ingresos.css'
-import MainLayout from '../../../components/layouts/MainLayout'
+import '../../../styles/pages/ingresos.css';
+import MainLayout from '../../../components/layouts/MainLayout';
 
 
 function NuevaFichaPage() {
