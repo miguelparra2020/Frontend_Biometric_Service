@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import  LoginLayout from '../../components/layouts/LoginLayout';
 import Link from 'next/link';
 import styles from '@/styles/login.module.css';
@@ -9,10 +9,18 @@ import { Toaster, toast } from 'sonner';
 
 const LoginPage = () => {
 const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  
+  const [password, setPassword] = useState('');  
   const router = useRouter();
+  
+  useEffect(() => {
+    function alertaIngreso() {
+      toast.message('Bienvenido', {
+        description: 'Por favor ingresar con sus credenciales asignadas'
+      });
+    }
+    
+    alertaIngreso();
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -46,7 +54,22 @@ const [username, setUsername] = useState('');
       
       localStorage.setItem('username', username);
       localStorage.setItem('access_token', accessToken);
-    router.push('/home');
+      
+      toast.loading('Validando credenciales', {
+        description: ''
+      });
+      
+      setTimeout(() => {
+        toast.success('Acceso concedido', {
+          description: ''
+        });
+      }, 2000);
+
+      
+
+      setTimeout(() => {
+        router.push('/home');
+      }, 3000); // 5000 milisegundos (5 segundos)
 
       // Aquí puedes guardar el token en el almacenamiento local o en una cookie
     } catch (error) {
@@ -58,7 +81,9 @@ const [username, setUsername] = useState('');
       localStorage.setItem('last_name', '');
       localStorage.setItem('ficha', '');
       localStorage.setItem('tipo_usuario', '');
-      alert("Usuario invalido, por favor revisa sus credenciales")
+      toast.error('Usuario invalido', {
+        description: 'Por favor revisa sus credenciales'
+      });
       console.error('Error al iniciar sesión:', error);
     }
   };

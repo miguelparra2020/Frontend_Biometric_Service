@@ -18,14 +18,14 @@ const NavbarLandPage = () => {
           </Link>
           {/* Contenedor de links  */}
           <div className={styles.container__links}>
-              <Link href="/login" className={styles.nav__link}>
+              <Link href="/login" className={styles.nav__link} >
               Acceder
               </Link>
               <Link href="/" 
               className={`${styles.nav__link} ${styles['nav__link--activate']}`}
               onClick={ () => {
                 toast.error('POR AHORA:', {
-                  description: 'Por favor acercarse a un instructor administrador ADSO para realizar su registro.'
+                  description: 'Por favor acercarse a un instructor ó administrador ADSO para realizar su registro.'
                 })
               }}>
               Registrarse
