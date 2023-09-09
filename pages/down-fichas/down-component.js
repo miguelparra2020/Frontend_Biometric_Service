@@ -1,32 +1,150 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet,  Link,  } from '@react-pdf/renderer';
+
+import {useState, useEffect} from 'react';
+import { getFichas } from '../../db/db';
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
+    flexDirection: 'column',
+    backgroundColor: '#FFFAF8'
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
-  }
+  container: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '5vh',
+    marginTop: '10px',
+    marginBottom: '10px',
+    color: '#1D383E',
+    textDecoration: 'underline',
+  },
+  detailColumn: {
+    flexDirection: 'column',
+    flexGrow: 9,
+    textTransform: 'uppercase',
+  },
+  name: {
+    fontSize: 24,
+  },
+  titleColumn: {
+    fontSize: 18,
+    textDecoration: 'underline',
+  },
+  table:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  sections:{
+    width: '30%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
 });
 
 // Create Document Component
-const MyDocument = () => (
-  
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View>
-    </Page>
-  </Document>
-);
+function MyDocumentFichas (){
+//----------------Variables---------------------------------
+  const [originalFichas, setOriginalFichas] = useState([]);
+  const [orderedFichas, setOrderedFichas] = useState([]);
+//----------------Variables---------------------------------
 
-export default MyDocument;
+//----Función useEffect asyncrona para obtener la data de fichas-------
+useEffect(() => {
+  //-----Función asincrona para obtener las fichas----------------
+          async function fetchFichas() {
+              try {
+                  const data = await getFichas();
+                  setOriginalFichas(data);
+                  
+                  const orderedData = [...data].sort((a, b) => a.numero_ficha - b.numero_ficha);
+                  setOrderedFichas(orderedData);
+                  console.log(orderedData);
+              } catch (error) {
+                  console.error(error);
+              }
+          }
+  //-----Función asincrona para obtener las fichas----------------
+  
+  //-----Inicializar funciones-------------------------
+          fetchFichas();
+  //-----Inicializar funciones-------------------------
+      }, []);
+  //----Función useEffect asyncrona para obtener la data de fichas-------
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+
+          <View style={styles.container}>       
+            <View style={styles.detailColumn}>
+              <Text style={styles.name}>Fichas</Text>
+            </View>
+          </View>
+          <View style={styles.table}>
+            <View style={styles.sections}>
+              <Text style={styles.titleColumn}> Id ficha:</Text>
+            </View>
+            <View style={styles.sections}>
+              <Text style={styles.titleColumn}> Número de ficha:</Text>
+            </View>
+            <View style={styles.sections}>
+              <Text style={styles.titleColumn}> Nombre de ficha:</Text>
+            </View>
+          </View>
+          <br/>
+          <View style={styles.table}>
+            <View style={styles.sections}>
+              
+              {orderedFichas.map((ficha) => {
+                // Extraer el ID de la URL
+                const urlParts = ficha.url.split('/');
+                const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
+
+                return (
+                        <div key={ficha.url}> 
+                          <Text >{id}</Text>                      
+                        </div>
+                      );
+                  })}
+            </View>
+            <View style={styles.sections}>
+              {orderedFichas.map((ficha) => {
+                // Extraer el ID de la URL
+                const urlParts = ficha.url.split('/');
+                const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
+
+                return (
+                        <div key={ficha.url}> 
+                          <Text >{ficha.numero_ficha}</Text>                      
+                        </div>
+                      );
+                  })}
+            </View>
+            <View style={styles.sections}>
+              {orderedFichas.map((ficha) => {
+                // Extraer el ID de la URL
+                const urlParts = ficha.url.split('/');
+                const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
+
+                return (
+                        <div key={ficha.url}> 
+                          <Text >{ficha.nombre_ficha}</Text>                      
+                        </div>
+                      );
+                  })}
+            </View>
+          </View>
+      </Page>
+    </Document>
+  )
+};
+
+export default MyDocumentFichas;

@@ -1,6 +1,7 @@
 import React from "react";
 import MainLayout from '../../components/layouts/MainLayout';
 import MyDocument from './down-component';
+import Ensayo from './ejemplos';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Suspense } from 'react';
 import '../../styles/pages/descargasfichas.css'
@@ -25,6 +26,12 @@ function DownFichasPage () {
                     </PDFViewer>
                 </Suspense>
                 </div>
+                <br/>
+                {/* <div className="contenedor_descargas_fichas_pdf">
+                    <Suspense fallback={<Loading />}>
+                        <Ensayo/>
+                    </Suspense>
+                </div> */}
                 
             </MainLayout>
     )
