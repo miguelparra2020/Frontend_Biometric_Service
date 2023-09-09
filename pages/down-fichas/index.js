@@ -3,11 +3,14 @@ import MainLayout from '../../components/layouts/MainLayout';
 import MyDocument from './down-component';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Suspense } from 'react';
-import '../../styles/pages/descargasfichas.css'
+import '../../styles/pages/descargasfichas.css';
+import { Toaster, toast } from 'sonner';
 
 function DownFichasPage () {
     function alertaDescargar(){
-        alert("Hola")
+        toast.loading('Descargando PDF fichas', {
+            description: 'Visualizar en su carpeta de descargas'
+          });
     }
     return (
             <MainLayout>
@@ -29,7 +32,7 @@ function DownFichasPage () {
                 </Suspense>
                 </div>
                 <br/>
-                
+                <Toaster/>
             </MainLayout>
     )
 };
