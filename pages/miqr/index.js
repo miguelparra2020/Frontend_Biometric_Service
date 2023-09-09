@@ -26,13 +26,13 @@ const MiQrPage = () => {
     
     return (
         <MainLayout>
-            <div >
+            <div className="container-all">
                 <div className="header-container">
                     <div className="header-container-titulo">
                         <h1>Bienvenid@ al área de mi Qr</h1>
                     </div>
                     <div className="header-container-subtitulo">
-                        <h3>Con este Qr puedes registrar su ingreso o salida</h3>
+                        <h3>Con este código registra tu ingreso y salida</h3>
                     </div>
                 </div>
             
