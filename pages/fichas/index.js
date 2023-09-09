@@ -69,6 +69,9 @@ function FichasPage(){
 //---área visual de la página---------
     return (
         <MainLayout>
+            <div className="contenedor_body">
+
+            
             {/* titulo */}
             <div className="contenedor_titulo_fichas">
                 <h1>Bienvenid@ al área de fichas</h1>   
@@ -140,6 +143,7 @@ function FichasPage(){
             {/* área de la ficha, recorrido map de todas las fichas */}
 
             <Toaster/>
+            </div>
         </MainLayout>
     )
 };

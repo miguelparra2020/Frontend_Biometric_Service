@@ -17,6 +17,10 @@ font-family: "Fira Sans";
 font-weight: 200;
 font-style: oblique;
 }
+.contenedor_body{
+    width: 100%;
+    padding: 10px;
+}
 .contenedor_titulo_fichas{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -31,6 +35,7 @@ font-style: oblique;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
 .div_card_fichas{
     margin: 10px;
@@ -63,6 +68,7 @@ font-style: oblique;
     align-items: center;
     justify-content: flex-start;
     pointer-events: none;
+    width: 100%;
 }
 .div_body_fichas{
     padding: 10px;
@@ -113,7 +119,6 @@ font-style: oblique;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin: 20px;
     width: 100%;
 }
 .search-container {
@@ -149,15 +154,18 @@ font-style: oblique;
         width: 90%;
     }
     .div_crear_ficha{
-        margin: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .contenedor_busqueda_fichas{
+        display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
     }
     .search-container {
-        width: 96%;
-    }
-    .search-input {
-        width: 230px;
+        width: 90%;
     }
 }

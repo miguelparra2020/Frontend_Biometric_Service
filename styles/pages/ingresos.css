@@ -52,4 +52,30 @@ body {
   button:hover {
     background-color: #0056b3;
   }
+
+  .container_botton_volver{
+    width: 100%;
+  }
+  .volver_link{
+    display: inline-block;
+    background-color: #0ed46b;
+    border-color: #0ed46b;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+    width: 90px;
+    margin: 10px;
+  }
+  .volver_link:hover{
+    background-color: #0d8042;
+    cursor: pointer;
+  }
   
