@@ -93,6 +93,7 @@ font-style: oblique;
 .crear_link_ficha{
     display: inline-block;
     background-color: #0ed46b;
+    border-color: #0ed46b;
     color: white;
     padding: 8px 16px;
     border-radius: 5px;
@@ -105,6 +106,7 @@ font-style: oblique;
 }
 .crear_link_ficha:hover{
     background-color: #0d8042;
+    cursor: pointer;
 }
 .contenedor_busqueda_fichas{
     display: flex;
@@ -112,7 +114,34 @@ font-style: oblique;
     align-items: center;
     justify-content: space-around;
     margin: 20px;
+    width: 100%;
 }
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+.search-input {
+    width: 300px;
+    flex-grow: 1; /* Hace que el input ocupe todo el espacio restante */
+    padding: 10px; /* Ajusta el relleno según tus necesidades */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus necesidades */
+}
+.search-button {
+    background-color: #007bff; /* Cambia el color de fondo según tus necesidades */
+    color: #fff; /* Cambia el color del texto según tus necesidades */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px; /* Ajusta el relleno según tus necesidades */
+    cursor: pointer;
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus necesidades */
+}
+.search-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo en el hover según tus necesidades */
+}
+  
 
 
 @media (max-width: 750px) {
@@ -124,5 +153,11 @@ font-style: oblique;
     }
     .contenedor_busqueda_fichas{
         flex-direction: column;
+    }
+    .search-container {
+        width: 96%;
+    }
+    .search-input {
+        width: 230px;
     }
 }

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { CreateFicha,getFichas } from '../../../db/db';
 import { useRouter } from 'next/router';
-
+import '../../../styles/pages/ingresos.css'
 import MainLayout from '../../../components/layouts/MainLayout'
 
 
@@ -50,18 +50,18 @@ function NuevaFichaPage() {
         <div>
             <h3><Link href="/fichas">Volver</Link></h3>
         </div>
-        <div>
+        <div className="titulo-ingresos">
             <h1>Crear ficha</h1>
         </div>
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="container">
             <label>
             Número de la ficha:
-            <input type="number" value={numero_ficha} onChange={(e) => setNumeroFicha(e.target.value)} />
+            <input type="number" value={numero_ficha} onChange={(e) => setNumeroFicha(e.target.value)} className="inputs-ingresos" required/>
             </label>
             <label>
             Nombre de la ficha:
-            <input type="text" value={nombre_ficha} onChange={(e) => setNombreFicha(e.target.value)} />
+            <input type="text" value={nombre_ficha} onChange={(e) => setNombreFicha(e.target.value)} className="inputs-ingresos" required/>
             </label>
             <button type="submit">Crear ficha</button> 
         </form>
