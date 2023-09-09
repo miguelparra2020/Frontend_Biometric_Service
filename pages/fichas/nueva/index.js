@@ -4,6 +4,7 @@ import { CreateFicha,getFichas } from '../../../db/db';
 import { useRouter } from 'next/router';
 import '../../../styles/pages/ingresos.css';
 import MainLayout from '../../../components/layouts/MainLayout';
+import { Toaster, toast } from 'sonner';
 
 
 function NuevaFichaPage() {
@@ -29,7 +30,9 @@ function NuevaFichaPage() {
         // Validar si el numero de la ficha ya existe del producto ya existe
         const fichaExiste = existeFicha.some((ficha) => ficha.numero_ficha === numero_ficha);
         if (fichaExiste) {
-          alert('El número de la ficha ya existe. Por favor, ingrese un número único.');
+          toast.error('Error en la creación', {
+            description: 'Ficha ingresada ya existe'
+          });
           return;
         }
     
@@ -40,8 +43,14 @@ function NuevaFichaPage() {
         console.log(fichaData);
         const createFicha = await CreateFicha(fichaData);
         console.log(fichaData);
-        alert("Ha creado la ficha de manera exitosa");
-        router.push(`/fichas`);
+        toast.success('Exito en la creación', {
+          description: 'Ficha creada'
+        });
+        setTimeout(() => {
+            router.push(`/fichas`);
+        }, 2000);
+
+        
       };
 
     
@@ -69,6 +78,7 @@ function NuevaFichaPage() {
             <button type="submit">Crear ficha</button> 
         </form>
         </div>
+        <Toaster/>
         </MainLayout>
     )
 }
