@@ -142,7 +142,6 @@ const CrearUsuarioPage = () => {
                 <option value="aprendiz">Aprendiz</option>
                 <option value="instructor">Instructor</option>
                 <option value="administrador">Administrador</option>
-                <option value="instructoradministrador">Instructor Administrador</option>
             </select>
             </div>
             <div>
