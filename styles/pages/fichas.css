@@ -97,21 +97,27 @@ font-style: oblique;
     background-color: #0056b3;
 }
 .crear_link_ficha{
-    display: inline-block;
-    background-color: #0ed46b;
-    border-color: #0ed46b;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
     text-decoration: none;
-    transition: background-color 0.3s;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    padding: 0.625rem 2.5rem;
+    margin: 1rem 3rem;
     align-items: center;
+    background-color: #00324D;
+    color: #fff;
+    border: solid 2px #00324D;
+    font-weight: 600;
+    font-size: 1.126em;
+    transition: 0.3s ease-out;
+    overflow: visible;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
 }
 .crear_link_ficha:hover{
-    background-color: #0d8042;
+    align-items: center;
+    background-color: #668494;
+    color: #fff;
     cursor: pointer;
 }
 .contenedor_busqueda_fichas{
@@ -119,6 +125,7 @@ font-style: oblique;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    margin: 2rem 0;
     width: 100%;
 }
 .search-container {
