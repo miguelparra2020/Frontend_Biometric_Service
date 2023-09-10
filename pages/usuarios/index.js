@@ -2,12 +2,26 @@ import React, { useEffect, useState } from "react";
 import MainLayout from '../../components/layouts/MainLayout';
 import { getUsuarios } from '../../db/db';
 import Link from "next/link";
-import '../../styles/pages/usuarios.css'
+import '../../styles/pages/usuarios.css';
+import { useRouter } from 'next/router';
 
 const UsuariosPage = () => {
+    // ----Constantes y variables de estado-----------
+    const [access_token, setAccess] = useState('');
     const [usuarios, setUsuarios] = useState([]);
+    const router = useRouter();
+    // ----Constantes y variables de estado-----------
 
+     // ----Función useEffects --------------------
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
+        }
+        if (access_token == 'sin-acceso'){
+            router.push('/');
+        }
+
         async function fetchUsuarios() {
             try {
                 const data = await getUsuarios();
@@ -19,7 +33,7 @@ const UsuariosPage = () => {
         }
 
         fetchUsuarios();
-    }, []);
+    }, [access_token, router]);
 
     return (
         <MainLayout>

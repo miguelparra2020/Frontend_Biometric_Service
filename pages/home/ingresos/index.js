@@ -9,6 +9,7 @@ import '../../../styles/pages/ingresos.css'
 
 const IngresosPage = () => {
     // --------Constantes y variables de estado--------------------
+    const [access_token, setAccess] = useState('');
     const [username, setUsername ] = useState([]);
     const [fecha_ingreso, setFechaIngreso ] = useState([]);
     const [hora_ingreso, setHoraIngreso ] = useState([]);
@@ -19,6 +20,15 @@ const IngresosPage = () => {
 
     //----Función useEffect -----------
     useEffect(() => {
+        //----Función para detectar al usuario si puede acceder---------
+          if (typeof window !== 'undefined') {
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
+            }
+          if (access_token == 'sin-acceso'){
+              router.push('/');
+          }
+        //----Función para detectar al usuario si puede acceder---------
         // --- función asincrona para la obtención de usuarios---------
         async function fetchUsuarios() {
             const Usuarios = await getUsuarios();
@@ -29,7 +39,7 @@ const IngresosPage = () => {
         // ---activación de funciones----------
         fetchUsuarios();
         // ---activación de funciones----------
-    }, []);
+    }, [access_token, router]);
     //----Función useEffect -----------
 
     // --función envío de formulario-----

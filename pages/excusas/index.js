@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 
 function ExcusasPage(){
 //----------------Variables---------------------------------
+    const [access_token, setAccess] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [originalFichas, setOriginalFichas] = useState([]);
     const [orderedFichas, setOrderedFichas] = useState([]);
@@ -18,6 +19,16 @@ function ExcusasPage(){
 
 //----Función useEffect asyncrona para obtener la data de fichas-------
     useEffect(() => {
+        //----Función para detectar al usuario si puede acceder---------
+        if (typeof window !== 'undefined') {
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
+            }
+        if (access_token == 'sin-acceso'){
+            router.push('/');
+        }
+//----Función para detectar al usuario si puede acceder---------
+
 //-----Función asincrona para obtener las fichas----------------
         async function fetchFichas() {
             try {
@@ -35,7 +46,7 @@ function ExcusasPage(){
 //-----Inicializar funciones-------------------------
         fetchFichas();
 //-----Inicializar funciones-------------------------
-    }, [usuario, router, searchTerm]);
+    }, [access_token,usuario, router, searchTerm]);
 //----Función useEffect asyncrona para obtener la data de fichas-------
 
 //----Función Handle de busqueda para filtrar por numero y nombre de fichas---

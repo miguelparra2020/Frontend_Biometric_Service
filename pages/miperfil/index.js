@@ -4,16 +4,18 @@ import { Suspense } from 'react';
 import '../../styles/pages/home.css';
 import '../../styles/pages/miperfil.css';
 import Image from 'next/image';
-import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const MiPerfilPage = () => {
     // ----Constantes y variables de estado-----------
+    const [access_token, setAccess] = useState('');
     const [username, setUsername] = useState('');
     const [ficha, setFicha] = useState('');
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [tipo_usuario, setTipoUsuario] = useState('');
+    const router = useRouter();
     // ----Constantes y variables de estado-----------
 
     // ----Función useEffects --------------------
@@ -25,8 +27,13 @@ const MiPerfilPage = () => {
             setLastName(localStorage.getItem('last_name'));
             setEmail(localStorage.getItem('email'));
             setTipoUsuario(localStorage.getItem('tipo_usuario'));
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
         }
-    }, []);
+        if (access_token == 'sin-acceso'){
+            router.push('/');
+        }
+    }, [access_token,router]);
     // ----Función useEffects --------------------
     
     return (

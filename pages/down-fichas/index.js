@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import Link from 'next/link';
 import MainLayout from '../../components/layouts/MainLayout';
 import MyDocument from './down-component';
@@ -9,6 +9,25 @@ import '../../styles/pages/ingresos.css';
 import { Toaster, toast } from 'sonner';
 
 function DownFichasPage () {
+//----------------Variables---------------------------------
+    const [access_token, setAccess] = useState('');
+//----------------Variables---------------------------------
+
+//----Función useEffect asyncrona para obtener la data de fichas-------
+useEffect(() => {
+    //----Función para detectar al usuario si puede acceder---------
+    if (typeof window !== 'undefined') {
+        const storedUsuario = localStorage.getItem('access_token');
+        setAccess(storedUsuario);
+        }
+    if (access_token == 'sin-acceso'){
+        router.push('/');
+    }
+//----Función para detectar al usuario si puede acceder---------
+}, [access_token]);
+//----Función useEffect asyncrona para obtener la data de fichas-------
+
+
     function alertaDescargar(){
         toast.loading('Descargando PDF fichas', {
             description: 'Visualizar en su carpeta de descargas'

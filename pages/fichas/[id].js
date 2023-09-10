@@ -9,12 +9,26 @@ import { getFicha, updateFicha, deleteFicha } from '../../db/db';
 
 
 function FichaPage() {
+  //----------------Variables---------------------------------
+    const [access_token, setAccess] = useState('');
     const router = useRouter();
     const { id } = router.query;
     const [ficha, setFicha] = useState(null); // Estado para almacenar el producto / State to store the product
     const [numero_ficha, setNumeroFicha] = useState(''); // Estado para el ID del producto / State for the product ID
     const [nombre_ficha, setNombreFicha] = useState(''); // Estado para el nombre del producto / State for the product name
+  //----------------Variables---------------------------------
+
+  //----Función useEffect asyncrona para obtener la data de fichas-------
     useEffect(() => {
+  //----Función para detectar al usuario si puede acceder---------
+       if (typeof window !== 'undefined') {
+        const storedUsuario = localStorage.getItem('access_token');
+        setAccess(storedUsuario);
+        }
+      if (access_token == 'sin-acceso'){
+          router.push('/');
+      }
+  //----Función para detectar al usuario si puede acceder---------
         async function fetchFicha() {
           const data = await getFicha(id);
           setFicha(data);
@@ -23,7 +37,8 @@ function FichaPage() {
         }
     
         fetchFicha();
-      }, [id]);
+      },[access_token, id,router]);
+    //----Función useEffect asyncrona para obtener la data de fichas-------
     
       const handleUpdate = async () => {
         const updatedFicha = {

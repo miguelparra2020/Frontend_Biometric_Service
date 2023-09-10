@@ -6,6 +6,8 @@ import '../../../styles/pages/ingresos.css';
 import { Toaster, toast } from 'sonner';
 
 const CrearUsuarioPage = () => {
+    // ----Constantes y variables de estado-----------
+    const [access_token, setAccess] = useState('');
     const [existeUsuario, setExisteUsuario] = useState(''); 
     const [username, setUsername] = useState(''); 
     const [first_name, setFirstName] = useState(''); 
@@ -17,10 +19,17 @@ const CrearUsuarioPage = () => {
     const [tipo_usuario, setTipoUsuario] = useState(""); 
     const [password, setPassword] = useState(''); 
     const [confirmPassword, setConfirmPassword] = useState(''); 
-
     const router = useRouter();
+    // ----Constantes y variables de estado-----------
 
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
+        }
+        if (access_token == 'sin-acceso'){
+            router.push('/');
+        }
         async function fetchUsuarios() {
             const Usuarios = await getUsuarios();
             setExisteUsuario(Usuarios);
@@ -32,7 +41,7 @@ const CrearUsuarioPage = () => {
         }
         fetchFichas();
         fetchUsuarios();
-    }, []);
+    }, [access_token, router]);
 
     //---Función para el cambio de selección de ficha----
     const handleFichaChange = (e) => {

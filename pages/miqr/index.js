@@ -4,13 +4,16 @@ import QRCode from 'react-qr-code';
 import { Suspense } from 'react';
 import '../../styles/pages/home.css';
 import '../../styles/pages/miqr.css';
+import { useRouter } from 'next/router';
 
 const MiQrPage = () => {
     // ----Constantes y variables de estado-----------
+    const [access_token, setAccess] = useState('');
     const [username, setUsername] = useState('');
     const [ficha, setFicha] = useState('');
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
+    const router = useRouter();
     // ----Constantes y variables de estado-----------
 
     // ----Función useEffects --------------------
@@ -20,8 +23,13 @@ const MiQrPage = () => {
             setFicha(localStorage.getItem('ficha'));
             setFirstName(localStorage.getItem('first_name'));
             setLastName(localStorage.getItem('last_name'));
+            const storedUsuario = localStorage.getItem('access_token');
+            setAccess(storedUsuario);
         }
-    }, []);
+        if (access_token == 'sin-acceso'){
+            router.push('/');
+        }
+    }, [access_token,router]);
     // ----Función useEffects --------------------
     
     return (

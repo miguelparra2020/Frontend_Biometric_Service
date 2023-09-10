@@ -68,6 +68,7 @@ async function fetchUsuarios() {
     }
 }
 //---Función para obtener todos los datos de todos los usuarios--------
+
 //--- Función para obtener los datos del usuario----
 async function fetchUsuario() {
     try {
