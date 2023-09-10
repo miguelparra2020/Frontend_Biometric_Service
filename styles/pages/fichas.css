@@ -99,7 +99,7 @@ font-style: oblique;
 .crear_link_ficha{
     text-decoration: none;
     padding: 0.625rem 2.5rem;
-    margin: 1rem 3rem;
+    margin: 1rem 0 ;
     align-items: center;
     background-color: #00324D;
     color: #fff;
