@@ -1,17 +1,20 @@
-body{
+body {
   background-color: #fbfbe2;
   /* pointer-events: none; */
 }
+
 body, html{
   font-family: "Noto Sans";
   font-weight: normal;
   font-style: normal;
-  }   
+} 
+
 h1{
 font-family: "Laila";
 font-weight: 600;
 font-style: normal;
 }
+
 h2, h3, h4{
 font-family: "Fira Sans";
 font-weight: 200;

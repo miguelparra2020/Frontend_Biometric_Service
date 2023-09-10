@@ -53,14 +53,14 @@ font-style: oblique;
 .div_card_fichas:hover {
     box-shadow:
     0px 0.3px 0.3px hsla(0, 0%, 60%, 0.29),
-0.2px 1.7px 2px -0.3px hsla(0, 0%, 60%,0.3),
-0.3px 3.1px 3.6px -0.6px hsla(0, 0%, 60%, 0.31),
-0.4px 4.8px 5.6px -0.9px hsla(0, 0%, 60%, 0.31),
-0.7px 7.2px 8.4px -1.2px hsla(0, 0%, 60%,0.32),
-1px 10.7px 12.4px -1.4px hsla(0, 0%, 60%, 0.32),
-1.4px 15.5px 18px -1.7px hsla(0, 0%, 60%, 0.33),
-2px 22.2px 25.7px -2px hsla(0, 0%, 60%, 0.33),
-2.8px 30.9px 35.8px -2.3px hsla(0, 0%, 60%, 0.34);
+    0.2px 1.7px 2px -0.3px hsla(0, 0%, 60%,0.3),
+    0.3px 3.1px 3.6px -0.6px hsla(0, 0%, 60%, 0.31),
+    0.4px 4.8px 5.6px -0.9px hsla(0, 0%, 60%, 0.31),
+    0.7px 7.2px 8.4px -1.2px hsla(0, 0%, 60%,0.32),
+    1px 10.7px 12.4px -1.4px hsla(0, 0%, 60%, 0.32),
+    1.4px 15.5px 18px -1.7px hsla(0, 0%, 60%, 0.33),
+    2px 22.2px 25.7px -2px hsla(0, 0%, 60%, 0.33),
+    2.8px 30.9px 35.8px -2.3px hsla(0, 0%, 60%, 0.34);
 }
 .div_header_fichas{
     display: flex;
@@ -97,21 +97,27 @@ font-style: oblique;
     background-color: #0056b3;
 }
 .crear_link_ficha{
-    display: inline-block;
-    background-color: #0ed46b;
-    border-color: #0ed46b;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
     text-decoration: none;
-    transition: background-color 0.3s;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    padding: 0.625rem 2.5rem;
+    margin: 1rem 0 ;
     align-items: center;
+    background-color: #00324D;
+    color: #fff;
+    border: solid 2px #00324D;
+    font-weight: 600;
+    font-size: 1.126em;
+    transition: 0.3s ease-out;
+    overflow: visible;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
 }
 .crear_link_ficha:hover{
-    background-color: #0d8042;
+    align-items: center;
+    background-color: #668494;
+    color: #fff;
     cursor: pointer;
 }
 .contenedor_busqueda_fichas{
@@ -119,6 +125,7 @@ font-style: oblique;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    margin: 2rem 0;
     width: 100%;
 }
 .search-container {
