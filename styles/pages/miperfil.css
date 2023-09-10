@@ -1,3 +1,7 @@
+.container-all {
+  padding: 2rem 0 3rem 0;
+}
+
 .header-container{
   display: flex;
   flex-direction: column;
@@ -24,7 +28,16 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 10px;
+  border: solid 3px white;
+
 }
+
+.qr-container:hover {
+  box-shadow:  20px 20px 60px #d5d5c0,
+  -20px -20px 60px #ffffff;
+  border: solid 3px #39A900;
+}
+
 /* Estilos para el encabezado del código QR */
 .perfil-header {
     text-align: left;
@@ -65,10 +78,7 @@
     font-size: 14px;
     margin: 5px 0;
   }
-  
-  
-  
-  
+
   .qr-code {
     width: 200px;
     height: 200px;

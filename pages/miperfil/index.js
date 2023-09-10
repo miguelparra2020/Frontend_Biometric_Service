@@ -31,7 +31,7 @@ const MiPerfilPage = () => {
     
     return (
         <MainLayout>
-            <div >
+            <div className="container-all">
                 <div className="header-container">
                     <div className="header-container-titulo">
                         <h1>Bienvenid@ al área de mi Perfil</h1>
