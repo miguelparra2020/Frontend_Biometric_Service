@@ -2,9 +2,9 @@
 import React, {useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+// CSS Styles: 
 import styles from '@/styles/components/NavbarMain.module.css';
 import '../styles/global.css';
-
 
 
 const NavbarMain = () => {
@@ -22,7 +22,7 @@ const NavbarMain = () => {
       <div className={styles.nav}>
         <Link href="/home" className={styles.links}> 
           <div>
-            <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Blanco" width={120} height={30} className={styles.nav__img} />     
+          <Image  src="/img/logoblanco.png" alt="Logo Símbolo SENA Biometric Service Negro" width={468} height={209} className={styles.nav__img} />     
           </div>
         </Link>
         <Link href="/home" className={styles.links}> 

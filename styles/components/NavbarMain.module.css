@@ -45,7 +45,9 @@
 }
 
 .nav__link:hover {
-    text-decoration:underline;
+    color: #000;
+    background-color: #fff;
+    border-radius: 30px;
 }
 .menu{
     color: white;

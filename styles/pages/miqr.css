@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;400;600;700;800&display=swap');
+
+.container-all {
+  padding: 2rem 0 3rem 0;
+}
+
 .header-container{
   display: flex;
   flex-direction: column;
@@ -5,6 +11,7 @@
   justify-content: center;
 }
 .header-container-titulo{
+  font-family: 'Work Sans';
   text-align: center;
   margin: 10px;
 }
@@ -23,7 +30,15 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  margin: 2rem 0;
+  border: solid 3px white;
+
+}
+
+.qr-container:hover {
+  box-shadow:  20px 20px 60px #d5d5c0,
+  -20px -20px 60px #ffffff;
+  border: solid 3px #39A900;
 }
 /* Estilos para el encabezado del código QR */
 .qr-header {
@@ -40,10 +55,6 @@
     font-size: 14px;
     margin: 5px 0;
   }
-  
-  
-  
-  
   .qr-code {
     width: 200px;
     height: 200px;
