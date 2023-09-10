@@ -4,6 +4,7 @@ import { getUsuarios } from '../../db/db';
 import Link from "next/link";
 import '../../styles/pages/usuarios.css';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const UsuariosPage = () => {
     // ----Constantes y variables de estado-----------
@@ -49,6 +50,12 @@ const UsuariosPage = () => {
                 {usuarios.map((item) => (
                     <div key={item.id} className="div_card_fichas">
                         {item.id} &nbsp;
+                        {item.imagen_perfil ? (
+                        <Image src={item.imagen_perfil} alt="Imagen de perfil" width={30} height={30} className="rounded-image"/>
+                        ) : (
+                        <Image src="https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png" alt="Imagen de perfil predeterminada" width={30} height={30} className="rounded-image"/>
+                        )}
+                        &nbsp;
                         {item.username} &nbsp;
                         {item.first_name} &nbsp;
                         {item.last_name} &nbsp;

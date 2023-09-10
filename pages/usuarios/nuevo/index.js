@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MainLayout from '../../../components/layouts/MainLayout';
 import { getUsuarios, getFichas, CreateUsuario } from '../../../db/db';
 import { useRouter } from 'next/router';
 import '../../../styles/pages/ingresos.css';
 import { Toaster, toast } from 'sonner';
+import Image from 'next/image';
+
 
 const CrearUsuarioPage = () => {
     // ----Constantes y variables de estado-----------
@@ -19,8 +21,61 @@ const CrearUsuarioPage = () => {
     const [tipo_usuario, setTipoUsuario] = useState(""); 
     const [password, setPassword] = useState(''); 
     const [confirmPassword, setConfirmPassword] = useState(''); 
+    const [imagen_perfil, setImagenPerfil] = useState(null);
+    const [imagenMostrar, setImagenMostrar] = useState(null);
+    const [mostrarVideo, setMostrarVideo] = useState(false);
+    const videoRef = useRef(null);
     const router = useRouter();
+
     // ----Constantes y variables de estado-----------
+
+
+      
+    const handleCameraClick = async () => {
+        setMostrarVideo(true);
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          videoRef.current.srcObject = stream;
+        } catch (error) {
+          console.error('Error al acceder a la cámara: ', error);
+        }
+      };
+    
+      // Función para convertir base64 en objeto File
+function base64ToFile(base64, filename) {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteArrays = [];
+  
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+  
+    const byteArray = new Uint8Array(byteArrays);
+  
+    return new File([byteArray], filename, { type: 'image/png' }); // Puedes ajustar el tipo de archivo según corresponda
+  }
+  
+  // En tu función handleCaptureClick
+  const handleCaptureClick = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    const capturedImageDataUrl = canvas.toDataURL('image/png');
+    setImagenMostrar(capturedImageDataUrl);
+    // Llama a la función base64ToFile para convertirlo en un objeto File
+    const capturedImageFile = base64ToFile(capturedImageDataUrl, 'captured_image.png');
+  
+    // Asigna el objeto File a files[0]
+    setImagenPerfil(capturedImageFile);
+    videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+    setMostrarVideo(false);
+  };
+
+      
+      
+      
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -72,6 +127,9 @@ const CrearUsuarioPage = () => {
               });
             return;
         }
+        // if (imagen_perfil) {
+        //     formData.append("imagen_perfil", imagen_perfil);
+        //   }
     
         const usuarioData = {
             username,
@@ -80,7 +138,8 @@ const CrearUsuarioPage = () => {
             last_name,
             ficha,
             tipo_usuario,
-            password
+            password,
+            imagen_perfil
             
         };
         console.log(usuarioData);
@@ -144,6 +203,23 @@ const CrearUsuarioPage = () => {
                 <option value="administrador">Administrador</option>
             </select>
             </div>
+            
+            <div>
+                Fotografía del usuario:&nbsp;
+                <input type="file" onChange={(e) => setImagenPerfil(e.target.files[0])} className="inputs-ingresos" />
+                <br/>
+                <br/>
+                <button onClick={handleCameraClick}>Tomar foto desde la cámara</button>
+                <br/>
+                <br/>
+                <button onClick={handleCaptureClick}>Capturar</button>
+                <br/>
+                {imagenMostrar && <Image src={imagenMostrar} alt="Imagen de perfil" width={200} height={200} />}
+                {mostrarVideo && (
+                    <video ref={videoRef} autoPlay width={300} height={300} className="videoDiv" />
+                )}
+            </div>
+
             <div>
             Contraseña:&nbsp;
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="inputs-ingresos" required/>

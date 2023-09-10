@@ -133,12 +133,25 @@ export async function getUsuario(username) {
 //Función para crear un usuario
 
 export async function CreateUsuario(usuarioData) {
+  const formData = new FormData();
+
+  // Agrega los campos de usuario al FormData
+  formData.append('username', usuarioData.username);
+  formData.append('email', usuarioData.email);
+  formData.append('first_name', usuarioData.first_name);
+  formData.append('last_name', usuarioData.last_name);
+  formData.append('ficha', usuarioData.ficha);
+  formData.append('tipo_usuario', usuarioData.tipo_usuario);
+  formData.append('password', usuarioData.password);
+
+  // Agrega la imagen de perfil al FormData
+  if (usuarioData.imagen_perfil) {
+    formData.append('imagen_perfil', usuarioData.imagen_perfil);
+  }
+
   const response = await fetch('https://miguelpaez9612.pythonanywhere.com/register/', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(usuarioData),
+    body: formData,
   });
 
   const data = await response.json();

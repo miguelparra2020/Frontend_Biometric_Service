@@ -123,6 +123,12 @@ font-style: oblique;
     margin: 20px;
 }
 
+/* En tu archivo de estilos CSS */
+.rounded-image {
+    border-radius: 50%; /* Esto redondeará la imagen en forma de círculo */
+    overflow: hidden; /* Esto ocultará cualquier parte de la imagen que se salga del borde redondeado */
+  }
+
 
 @media (max-width: 750px) {
     .div_card_fichas{
