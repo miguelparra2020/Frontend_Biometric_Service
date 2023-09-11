@@ -75,6 +75,13 @@ export async function getIngresos() {
   return data;
 }
 
+//Función para obtener todas los ingresos, de la base de datos es un READ - lectura
+export async function getIngreso(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/ingresos/${id}/`);
+  const data = await response.json();
+  return data;
+}
+
 //del CRUD - Ingresos
 //Created 🆕
 //Función para crear un registro de ingreso
@@ -91,6 +98,22 @@ export async function CreateIngreso(ingresoData) {
   const data = await response.json();
   return data;
 }
+
+//del CRUD - fichas
+//Updated 😮‍💨
+//Función para obtener actualizar todos los datos de una ficha de la base de datos es un Updated 
+export async function updateIngreso(id, updatedIngreso) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/ingresos/${id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedIngreso),
+  });
+
+  const data = await response.json();
+  return data;
+} 
 
 
 //----------------------------Modelo---Salidas-------------------------------
