@@ -115,6 +115,20 @@ export async function updateIngreso(id, updatedIngreso) {
   return data;
 } 
 
+//del CRUD - fichas
+//Delete ❌
+//Función para eliminar una ficha según el ID
+export async function deleteIngreso(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/ingresos/${id}/`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    return { success: true };
+  } else {
+    throw new Error('Error al eliminar una ficha');
+  }
+}
 
 //----------------------------Modelo---Salidas-------------------------------
 

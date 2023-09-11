@@ -203,7 +203,7 @@ async function fetchUsuario() {
                             // Extraer el ID de la URL
                             const urlParts = ingreso.url.split('/');
                             const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
-                            const usuario = usuarios.find((user) => user.username === ingreso.username);
+                            const usuario = usuarios ? usuarios.find((user) => user.username === ingreso.username) : null;
 
                             return (
                                 <div key={ingreso.url}>
@@ -227,11 +227,11 @@ async function fetchUsuario() {
                                                 <strong>▫ Usuario:</strong> {ingreso.username}
                                             </p>
                                             <p className="div_card_usuario_ind">
-                                                <strong>Nombre:</strong>{" "}
-                                                <span className="div_card_usuario_nombre">
-                                                    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
-                                                </span>{" "}
-                                            </p>
+  <strong>Nombre:</strong>{" "}
+  <span className="div_card_usuario_nombre">
+    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
+  </span>
+</p>
                                         </div>
                                         {/* div con usuario y nombre */}
 

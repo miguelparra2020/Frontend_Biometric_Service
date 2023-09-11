@@ -4,8 +4,7 @@ import '../../../styles/pages/ingresos.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getIngreso } from '../../../db/db';
-
+import { getIngreso, updateIngreso, deleteIngreso } from '../../../db/db';
 
 
 function IngreosPage() {
@@ -44,29 +43,36 @@ function IngreosPage() {
     
         fetchIngreso();
         
-      },[access_token, id,router]);
+      },[access_token,id,router]);
     //----Función useEffect asyncrona para obtener la data de fichas-------
     
       const handleUpdate = async () => {
-        const updatedFicha = {
-            numero_ficha,
-            nombre_ficha,
+        const updatedIngreso = {
+            username,
+            fecha_ingreso,
+            hora_ingreso,
+            zona,
         };
     
-        await updateFicha(id, updatedFicha);
-        alert("Ha actualizado la ficha de manera exitosa!"); // Successful update alert
-        router.push('/fichas');
+        try {
+            await updateIngreso(id, updatedIngreso);
+          } catch (error) {
+            console.error('Error al actualizar ingreso:', error);
+          }       
+          alert("Modificación exitosa!");
       };
+
     
       const handleDelete = async () => {
-        await deleteFicha(id);
-        alert("Ha eliminado la ficha de manera exitosa!"); // Successful deletion alert
-        router.push('/fichas');
+        try {
+            await deleteIngreso(id);
+          } catch (error) {
+            console.error('Error al actualizar ingreso:', error);
+          }   
+        
+        alert("Ha eliminado el ingreso correctamente"); 
       };
     
-      if (!ingreso) {
-        return <p>Cargando...</p>; // Loading message
-      }
 
     return(
         <MainLayout>
@@ -97,7 +103,7 @@ function IngreosPage() {
                 <input type="text" value={zona} onChange={e => setZona(e.target.value)} className="inputs-ingresos" required/>
             </label>
             
-            <button onClick={handleUpdate}>Guardar cambios</button> 
+            <button onClick={handleUpdate} >Guardar cambios</button> 
             &nbsp;&nbsp;&nbsp;
             <button onClick={handleDelete}>Eliminar</button> 
             </form> 
