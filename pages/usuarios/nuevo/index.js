@@ -24,6 +24,8 @@ const CrearUsuarioPage = () => {
     const [imagen_perfil, setImagenPerfil] = useState(null);
     const [imagenMostrar, setImagenMostrar] = useState(null);
     const [mostrarVideo, setMostrarVideo] = useState(false);
+    const [pregunta_seguridad, setPreguntaSeguridad] = useState(null);
+    const [respuesta_seguridad, setRespuestaSeguridad] = useState(null);
     const videoRef = useRef(null);
     const router = useRouter();
 
@@ -109,6 +111,10 @@ function base64ToFile(base64, filename) {
         setTipoUsuario(e.target.value);
     };
 
+    const handlePreguntaChange = (e) => {
+        setPreguntaSeguridad(e.target.value);
+    };
+
     //Validación de formulario 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -139,8 +145,9 @@ function base64ToFile(base64, filename) {
             ficha,
             tipo_usuario,
             password,
-            imagen_perfil
-            
+            imagen_perfil,
+            pregunta_seguridad,
+            respuesta_seguridad,            
         };
         console.log(usuarioData);
 
@@ -228,6 +235,27 @@ function base64ToFile(base64, filename) {
             Confirmar contraseña:&nbsp;
             <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="inputs-ingresos" required/>
             </div>
+            <br/>
+            <br/>
+            <div>
+            <h3>Para la recuperación de cuenta:&nbsp;</h3> 
+            </div>
+            <br/><br/>
+            <div>
+            Escoge una pregunta de seguridad:&nbsp;
+            <select value={pregunta_seguridad} className="inputs-ingresos" required onChange={handlePreguntaChange}>
+                <option value="">Seleccionar pregunta</option>
+                <option value="¿Cuál fue el nombre de tu primera mascota?">¿Cuál fue el nombre de tu primera mascota?</option>
+                <option value="¿Cuál fue el nombre de tu mejor amigo en la infancia?">¿Cuál fue el nombre de tu mejor amigo en la infancia?</option>
+                <option value="¿En qué ciudad conociste a tu primer pareja?">¿En qué ciudad conociste a tu primer pareja?</option>
+                <option value="¿Cuál es tu comida favorita de la abuela?">¿En Cuál es tu comida favorita de la abuela?</option>
+            </select>
+            </div>
+            <div>
+            Respuesta a la pregunta de seguridad - <strong>en minúsculas</strong> :&nbsp;
+            <input type="text" value={respuesta_seguridad} onChange={(e) => setRespuestaSeguridad(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <br/>
             <button type="submit">Crear usuario</button> 
         </form>
         </div>
