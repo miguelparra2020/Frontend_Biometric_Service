@@ -126,13 +126,20 @@ export async function deleteIngreso(id) {
   if (response.ok) {
     return { success: true };
   } else {
-    throw new Error('Error al eliminar una ficha');
+    throw new Error('Error al eliminar un ingreso');
   }
 }
 
 //----------------------------Modelo---Salidas-------------------------------
 
 //Función para obtener todas las salidas, de la base de datos es un READ - lectura
+
+export async function getSalida(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/salidas/${id}/`);
+  const data = await response.json();
+  return data;
+}
+
 export async function getSalidas() {
   const response = await fetch('https://miguelpaez9612.pythonanywhere.com/salidas/');
   const data = await response.json();
@@ -155,6 +162,39 @@ export async function CreateSalida(salidaData) {
   const data = await response.json();
   return data;
 }
+
+
+//del CRUD - fichas
+//Updated 😮‍💨
+//Función para obtener actualizar todos los datos de una ficha de la base de datos es un Updated 
+export async function updateSalida(id, updatedSalida) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/salidas/${id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedSalida),
+  });
+
+  const data = await response.json();
+  return data;
+} 
+
+//del CRUD - fichas
+//Delete ❌
+//Función para eliminar una ficha según el ID
+export async function deleteSalida(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/salidas/${id}/`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    return { success: true };
+  } else {
+    throw new Error('Error al eliminar una salida');
+  }
+}
+
 
 
 //----------------------------Modelo---Usuario-------------------------------
