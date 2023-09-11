@@ -157,8 +157,8 @@ function base64ToFile(base64, filename) {
         console.log(createUsuario);
         toast.success('Registro de usuario', {
             description: 'Exitoso!'
-          });
-          setTimeout(() => {
+        });
+        setTimeout(() => {
             router.push('/usuarios');
         }, 2000);
     };
