@@ -9,6 +9,7 @@ import Image from 'next/image';
 const UsuariosPage = () => {
     // ----Constantes y variables de estado-----------
     const [access_token, setAccess] = useState('');
+    const [tipo_usuario, setTipoUsuario] = useState('');
     const [usuarios, setUsuarios] = useState([]);
     const router = useRouter();
     // ----Constantes y variables de estado-----------
@@ -18,11 +19,18 @@ const UsuariosPage = () => {
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
+            setTipoUsuario(localStorage.getItem('tipo_usuario'));
         }
         if (access_token == 'sin-acceso'){
             router.push('/');
         }
+        if (tipo_usuario == 'aprendiz'){
+            router.push('/home');
+        }
 
+        if (tipo_usuario == 'undefined'){
+            router.push('/home');
+        }
         async function fetchUsuarios() {
             try {
                 const data = await getUsuarios();
@@ -34,7 +42,7 @@ const UsuariosPage = () => {
         }
 
         fetchUsuarios();
-    }, [access_token, router]);
+    }, [access_token, router,tipo_usuario]);
 
     return (
         <MainLayout>

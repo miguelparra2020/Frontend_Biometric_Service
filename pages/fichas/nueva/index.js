@@ -10,6 +10,7 @@ import { Toaster, toast } from 'sonner';
 function NuevaFichaPage() {
     //----------------Variables---------------------------------
     const [access_token, setAccess] = useState('');
+    const [tipo_usuario, setTipoUsuario] = useState('');
     const [numero_ficha, setNumeroFicha] = useState(''); // Estado para el numero_ficha
     const [nombre_ficha, setNombreFicha] = useState(''); // Estado para el nombre_ficha
     const [existeFicha, setExisteFichas] = useState([]); // Estado para almacenar las fichas existentes 
@@ -22,10 +23,17 @@ function NuevaFichaPage() {
       if (typeof window !== 'undefined') {
         const storedUsuario = localStorage.getItem('access_token');
         setAccess(storedUsuario);
+        setTipoUsuario(localStorage.getItem('tipo_usuario'));
         }
       if (access_token == 'sin-acceso'){
           router.push('/');
       }
+      if (tipo_usuario == 'aprendiz'){
+        router.push('/home');
+    }
+    if (tipo_usuario == 'undefined'){
+      router.push('/home');
+  }
     //----Función para detectar al usuario si puede acceder---------
         async function fetchFichas() {
           const fichas = await getFichas();
@@ -33,7 +41,7 @@ function NuevaFichaPage() {
         }
     
         fetchFichas();
-      }, [access_token, router]);
+      }, [access_token, router,tipo_usuario]);
     //----Función useEffect asyncrona para obtener la data de fichas-------
       //Validación de formulario 
       const handleSubmit = async (e) => {

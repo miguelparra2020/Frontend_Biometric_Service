@@ -11,6 +11,7 @@ import { Toaster, toast } from 'sonner';
 function FichasPage(){
 //----------------Variables---------------------------------
     const [access_token, setAccess] = useState('');
+    const [tipo_usuario, setTipoUsuario] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [originalFichas, setOriginalFichas] = useState([]);
     const [orderedFichas, setOrderedFichas] = useState([]);
@@ -23,10 +24,18 @@ function FichasPage(){
         //----Función para detectar al usuario si puede acceder---------
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
+            
             setAccess(storedUsuario);
+            setTipoUsuario(localStorage.getItem('tipo_usuario'));
             }
         if (access_token == 'sin-acceso'){
             router.push('/');
+        }
+        if (tipo_usuario == 'aprendiz'){
+            router.push('/home');
+        }
+        if (tipo_usuario == 'undefined'){
+            router.push('/home');
         }
 //----Función para detectar al usuario si puede acceder---------
 
@@ -47,7 +56,7 @@ function FichasPage(){
 //-----Inicializar funciones-------------------------
         fetchFichas();
 //-----Inicializar funciones-------------------------
-    }, [access_token,usuario, router, searchTerm]);
+    }, [access_token,usuario, router, searchTerm,tipo_usuario]);
 //----Función useEffect asyncrona para obtener la data de fichas-------
 
 //----Función Handle de busqueda para filtrar por numero y nombre de fichas---

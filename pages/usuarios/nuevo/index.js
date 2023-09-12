@@ -83,9 +83,16 @@ function base64ToFile(base64, filename) {
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
+            setTipoUsuario(localStorage.getItem('tipo_usuario'));
         }
         if (access_token == 'sin-acceso'){
             router.push('/');
+        }
+        if (tipo_usuario == 'aprendiz'){
+            router.push('/home');
+        }
+        if (tipo_usuario == 'undefined'){
+            router.push('/home');
         }
         async function fetchUsuarios() {
             const Usuarios = await getUsuarios();
@@ -98,7 +105,7 @@ function base64ToFile(base64, filename) {
         }
         fetchFichas();
         fetchUsuarios();
-    }, [access_token, router]);
+    }, [access_token, router,tipo_usuario]);
 
     //---Función para el cambio de selección de ficha----
     const handleFichaChange = (e) => {

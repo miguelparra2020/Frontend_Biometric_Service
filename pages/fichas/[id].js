@@ -11,6 +11,7 @@ import { getFicha, updateFicha, deleteFicha } from '../../db/db';
 function FichaPage() {
   //----------------Variables---------------------------------
     const [access_token, setAccess] = useState('');
+    const [tipo_usuario, setTipoUsuario] = useState('');
     const router = useRouter();
     const { id } = router.query;
     const [ficha, setFicha] = useState(null); // Estado para almacenar el producto / State to store the product
@@ -24,10 +25,17 @@ function FichaPage() {
        if (typeof window !== 'undefined') {
         const storedUsuario = localStorage.getItem('access_token');
         setAccess(storedUsuario);
+        setTipoUsuario(localStorage.getItem('tipo_usuario'));
         }
       if (access_token == 'sin-acceso'){
           router.push('/');
       }
+      if (tipo_usuario == 'aprendiz'){
+        router.push('/home');
+    }
+    if (tipo_usuario == 'undefined'){
+      router.push('/home');
+  }
   //----Función para detectar al usuario si puede acceder---------
         async function fetchFicha() {
           const data = await getFicha(id);
@@ -37,7 +45,7 @@ function FichaPage() {
         }
     
         fetchFicha();
-      },[access_token, id,router]);
+      },[access_token, id,router,tipo_usuario]);
     //----Función useEffect asyncrona para obtener la data de fichas-------
     
       const handleUpdate = async () => {
