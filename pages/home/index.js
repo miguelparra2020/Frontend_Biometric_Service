@@ -22,8 +22,11 @@ const HomePage = () => {
       };
 
 //---------------Variables------------------------------------------------- 
-    const [ingresos, setIngresos] = useState([]);
+   
+    const [ingresosTodos, setIngresosTodos] = useState([]);
+    const [salidasTodas, setSalidasTodas] = useState([]);
     const [salidas, setSalidas] = useState([]);
+    
     const [fechaInicioFiltro, setFechaInicioFiltro] = useState(getFormattedDate());
     const [fotografia, setFotografia] = useState('');
     const [fechaFinFiltro, setFechaFinFiltro] = useState(getFormattedDate());
@@ -31,6 +34,7 @@ const HomePage = () => {
     const [username, setUsername] = useState('');
     const [usuario, setUsuario] = useState('');
     const [usuarios, setUsuarios] = useState('');
+    
     const router = useRouter();
 
     const [busquedaUsuario, setBusquedaUsuario] = useState('');
@@ -48,68 +52,67 @@ const HomePage = () => {
     }
 //-------Función para obtener la fecha de hoy ---------------------
 
-const realizarBusqueda = () => {
-    console.log(`Valor de busquedaUsuario: ${busquedaUsuario}`);
-    toast.loading('Buscando', {
-        description: `${busquedaUsuario}`
-      });
+    const realizarBusqueda = () => {
+        toast.loading('Buscando', {
+            description: `${busquedaUsuario}`
+        });
 
-    if (!busquedaUsuario){
-        setBusquedaUsuario('')
-        router.push('/home');
-    }
-    else{
-          // Realiza la búsqueda y muestra los resultados de ingresos.
-          const busquedaMinuscula = busquedaUsuario.toLowerCase(); // Convierte la búsqueda a minúsculas.
+        if (!busquedaUsuario){
+            setBusquedaUsuario('')
+            router.push('/home');
+        }
+        else{
+            // Realiza la búsqueda y muestra los resultados de ingresos.
+            const busquedaMinuscula = busquedaUsuario.toLowerCase(); // Convierte la búsqueda a minúsculas.
 
-          // Realiza la búsqueda y muestra los resultados de ingresos.
-          const registrosIngresosFiltrados = ingresos.filter((ingreso) => {
-            const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
-        
-            // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
-            const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
-            const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
-        
-            return (
-              ingreso.username.includes(busquedaMinuscula) ||
-              (usuarioIngreso &&
-                (firstNameMinuscula.includes(busquedaMinuscula) ||
-                  lastNameMinuscula.includes(busquedaMinuscula)))
-            );
-          });
-            // Realiza la búsqueda y muestra los resultados de salidas.
-            const registrosSalidasFiltrados = salidas.filter((salida) => {
-                // return salida.username.includes(busquedaUsuario);
-
-                const usuarioSalida = usuarios.find((user) => user.username === salida.username);
-        
+            // Realiza la búsqueda y muestra los resultados de ingresos.
+            const registrosIngresosFiltrados = ingresosTodos.filter((ingreso) => {
+                const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
+            
                 // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
-                const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
-                const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
+                const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
+                const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
             
                 return (
-                salida.username.includes(busquedaMinuscula) ||
-                (usuarioSalida &&
+                ingreso.username.includes(busquedaMinuscula) ||
+                (usuarioIngreso &&
                     (firstNameMinuscula.includes(busquedaMinuscula) ||
                     lastNameMinuscula.includes(busquedaMinuscula)))
                 );
             });
-  
-      // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
-      setIngresos(registrosIngresosFiltrados);
-      setSalidas(registrosSalidasFiltrados);
-    }
-    
-    
-  };
+                // Realiza la búsqueda y muestra los resultados de salidas.
+                const registrosSalidasFiltrados = salidasTodas.filter((salida) => {
+                    // return salida.username.includes(busquedaUsuario);
 
-  const recargarBusqueda = () => {
-        setBusquedaUsuario('');
-        toast.loading('Actulizando', {
-            description: 'registros...'
-          });
-        router.push('/home');
-  }
+                    const usuarioSalida = usuarios.find((user) => user.username === salida.username);
+            
+                    // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
+                    const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
+                    const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
+                
+                    return (
+                    salida.username.includes(busquedaMinuscula) ||
+                    (usuarioSalida &&
+                        (firstNameMinuscula.includes(busquedaMinuscula) ||
+                        lastNameMinuscula.includes(busquedaMinuscula)))
+                    );
+                });
+    
+        // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
+        setIngresosTodos(registrosIngresosFiltrados);
+        setSalidasTodas(registrosSalidasFiltrados);
+        }
+        
+        
+    };
+
+    const recargarBusqueda = () => {
+            setBusquedaUsuario('');
+            toast.loading('Actulizando', {
+                description: 'registros...'
+            });
+            router.push('/home');
+    }
 
  
 
@@ -132,19 +135,6 @@ const realizarBusqueda = () => {
 //--- obtención de la data de local storage------
 
 
-
-//---Función para obtener todos los datos de todos los usuarios--------
-        async function fetchUsuarios() {
-        try {
-            const data = await getUsuarios();
-            setUsuarios(data);
-            console.log(data);
-        } catch (error) {
-            console.error(error);
-        }
-            }
-//---Función para obtener todos los datos de todos los usuarios--------
-
 //--- Función para obtener los datos del usuario----
         async function fetchUsuario() {
             try {
@@ -165,62 +155,92 @@ const realizarBusqueda = () => {
                 localStorage.setItem('pregunta_seguridad',data.pregunta_seguridad);
                 localStorage.setItem('respuesta_seguridad',data.respuesta_seguridad);
 
-                console.log(data);
             } catch (error) {
                 console.error(error);
             }
         }
 //--- Función para obtener los datos del usuario----
+//--- Función para obtener los datos del usuario----
+async function fetchUsuario() {
+    try {
+        const data = await getUsuarios();
+        setUsuarios(data);
+        
 
-//---Función asyncrona para obtener los datos de ingresos -----------------
-        async function fetchIngreos() {
+    } catch (error) {
+        console.error(error);
+    }
+}
+//--- Función para obtener los datos del usuario----
+
+
+        async  function fetchIngresosTodos(){
+            
             try {
-                const data = await getIngresos();
-                setIngresos(data);
-                console.log(data);
-                // Continúa con las demás llamadas a las funciones fetch (fetchSalidas, fetchUsuario, etc.).
-                // También puedes realizar el filtrado aquí si el usuario es un aprendiz.
-                // if (usuario && usuario.tipo_usuario === 'aprendiz') {
-                //     const registrosIngresosFiltrados = data.filter((ingreso) => {
-                //         return ingreso.username === username;
-                //     });
-                //     setIngresos(registrosIngresosFiltrados);
-                // }
+                const dataIngresos = await getIngresos();
+                const dataUsuarios = await getUsuarios();
+                const todosIngresosArray = [];
+                dataIngresos.forEach(ingreso => {
+                    const usuarioCorrespondiente = dataUsuarios.find(usuario => usuario.username === ingreso.username);
+                    const urlParts = ingreso.url.split('/');
+                    const id = urlParts[urlParts.length - 2];
+                    const nuevoIngreso = {
+                        ...ingreso, 
+                        id_ingreso: id,
+                        first_name: usuarioCorrespondiente ? usuarioCorrespondiente.first_name : 'first_name no encontrado',
+                        last_name: usuarioCorrespondiente ? usuarioCorrespondiente.last_name : 'last_name no encontrado',
+                        ficha: usuarioCorrespondiente ? usuarioCorrespondiente.ficha : 'ficha no encontrada',
+                        imagen_perfil: usuarioCorrespondiente ? usuarioCorrespondiente.imagen_perfil : 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png',
+                      };
+                    todosIngresosArray.push(nuevoIngreso);
+                  });
+                  setIngresosTodos(todosIngresosArray);
+                
+
             } catch (error) {
                 console.error(error);
             }
-        }
-//---Función asyncrona para obtener los datos de ingresos -----------------
+        };
 
-//---Función asyncrona para obtener los datos de salidas -----------------
-        async function fetchSalidas() {
+        async  function fetchSalidasTodas(){
+            
             try {
-                const data = await getSalidas();
-                setSalidas(data);
-                console.log(data);
-                // if (usuario && usuario.tipo_usuario === 'aprendiz') {
-                //     const registrosSalidasFiltrados = data.filter((salida) => {
-                //         return salida.username === username;
-                //     });
-                //     setSalidas(registrosSalidasFiltrados);
+                const dataSalidas = await getSalidas();
+                const dataUsuarios = await getUsuarios();
+                const todasSalidasArray = [];
+                dataSalidas.forEach(salida => {
+                    const usuarioCorrespondiente = dataUsuarios.find(usuario => usuario.username === salida.username);
+                    const urlParts = salida.url.split('/');
+                    const id = urlParts[urlParts.length - 2];
+                    const nuevaSalida = {
+                        ...salida, 
+                        id_salida: id,
+                        first_name: usuarioCorrespondiente ? usuarioCorrespondiente.first_name : 'first_name no encontrado',
+                        last_name: usuarioCorrespondiente ? usuarioCorrespondiente.last_name : 'last_name no encontrado',
+                        ficha: usuarioCorrespondiente ? usuarioCorrespondiente.ficha : 'ficha no encontrada',
+                        imagen_perfil: usuarioCorrespondiente ? usuarioCorrespondiente.imagen_perfil : 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png',
+                      };
+                      todasSalidasArray.push(nuevaSalida);
+                  });
+                  setSalidasTodas(todasSalidasArray);
+                
 
-                // }
             } catch (error) {
                 console.error(error);
             }
-        }
-//---Función asyncrona para obtener los datos de salidas -----------------
+        };
 
 //---Inicializar funciones asyncronas -----------------
-        fetchUsuarios();  
         fetchUsuario();
-        fetchIngreos();
-        fetchSalidas();  
+        // fetchSalidas();
+        fetchIngresosTodos();  
+        fetchSalidasTodas();
         
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
     
-    console.log(usuario)
+    console.log("Hola soy todosIngresosArray:", ingresosTodos); 
+    console.log("Hola soy todasSalidasArray:", salidasTodas);
     return (
         <MainLayout>
             {/* Imagen de perfil */}
@@ -277,7 +297,6 @@ const realizarBusqueda = () => {
                         value={busquedaUsuario}
                         onChange={(e) => {
                             setBusquedaUsuario(e.target.value);
-                            
                         }}
                         />&nbsp; 
                         <button onClick={realizarBusqueda} className="boton_busqueda">Buscar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -320,25 +339,20 @@ const realizarBusqueda = () => {
                     {/* titulo registro de ingresos */}
 
                     {/* mapeo de todos los registros de ingreso */}
+                    <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario !== "aprendiz" && (
-                    <div className="div_contenedor_card_registros">
                         
+                        <div className="div_contenedor_card_registros">
                         {/* mapeo con filtro */}
-                        <Suspense fallback={<Loading />}>
-                            {ingresos.filter((ingreso) => {
+                        
+                            {ingresosTodos.filter((ingreso) => {
                                     if (!fechaInicioFiltro || !fechaFinFiltro) return true; // Mostrar todo si no se ingresaron fechas
                                     return (
                                         ingreso.fecha_ingreso >= fechaInicioFiltro &&
                                         ingreso.fecha_ingreso <= fechaFinFiltro
                                     );
                                 })
-                                .map((ingreso) => {
-                            // Extraer el ID de la URL
-                            const urlParts = ingreso.url.split('/');
-                            const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
-                            const usuario = usuarios ? usuarios.find((user) => user.username === ingreso.username) : null;
-
-                            return (
+                                .map((ingreso) => {                            return (
                                 <div key={ingreso.url}>
                                     {/* card completa */}
                                     <div className="div_card">
@@ -346,13 +360,12 @@ const realizarBusqueda = () => {
                                         {/* div header img - id */}
                                         <div className="div_card_header">
                                         <Image 
-                                            src={usuario.imagen_perfil} alt="Icono de ingresos" 
+                                            src={ingreso.imagen_perfil} alt="Icono de ingresos" 
                                             width={30}
                                             height={30}  
                                             loading="lazy"
-                                            onError={handleImageError}
                                             className="rounded-image"/>&nbsp;&nbsp; 
-                                            <p><strong>Id ingreso:</strong> {id}</p>&nbsp;&nbsp; 
+                                            <p><strong>Id ingreso: {ingreso.id_ingreso} </strong></p>&nbsp;&nbsp; 
                                             <Image 
                                             src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/acceso_wmsdly.png" alt="Icono de ingresos" 
                                             width={30}
@@ -368,11 +381,11 @@ const realizarBusqueda = () => {
                                                 <strong>▫ Usuario:</strong> {ingreso.username}
                                             </p>
                                             <p className="div_card_usuario_ind">
-  <strong>Nombre:</strong>{" "}
-  <span className="div_card_usuario_nombre">
-    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
-  </span>
-</p>
+                                            <strong>Nombre:</strong>{" "}
+                                            <span className="div_card_usuario_nombre">
+                                            {ingreso.first_name} {ingreso.last_name} 
+                                            </span>
+                                            </p>
                                         </div>
                                         {/* div con usuario y nombre */}
 
@@ -390,8 +403,8 @@ const realizarBusqueda = () => {
                                             <p className="div_card_usuario_ind">
                                                 <strong>▫ Ficha:</strong>{" "}
                                                 <span className="div_card_usuario_nombre">
-                                                    {usuario ? `${usuario.ficha}` : "Ficha no encontrado"}
-                                                </span>{" "}
+                                                    {ingreso.ficha}
+                                                </span>
                                             </p>
                                             <p className="div_card_usuario_ind">
                                                 <strong>Zona:</strong> {ingreso.zona}
@@ -400,14 +413,13 @@ const realizarBusqueda = () => {
                                         {/* Div con ficha y zona */}
 
                                         {/* botón editar registro */}
-                                        {usuario.tipo_usuario !== "aprendiz" && (
-                                        <div className="div_card_usuario_button_editar">
-                                            <Link href={`/home/ingresos/${id}`}className="edit_link">Editar &nbsp;
+                                <div className="div_card_usuario_button_editar">
+                                            <Link href={`/home/ingresos/${ingreso.id_ingreso}`}className="edit_link">Editar &nbsp;
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"  viewBox="0 0 16 16">
     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
     <path  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                             </svg></Link>
-                                        </div>)}
+                                        </div>
                                         {/* botón editar registro */}
                                         
                                     </div>
@@ -416,8 +428,9 @@ const realizarBusqueda = () => {
                                 </div>
                                 );
                             })}
-                        </Suspense>
+                        
                     </div>)}
+                    </Suspense>
                     {/* mapeo de todos los registros de ingreso */}
 
                 </div>
@@ -443,11 +456,12 @@ const realizarBusqueda = () => {
                     {/* titulo registro de salidas */}
 
                     {/* mapeo de todos los registros de salida */}
+                    <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario !== "aprendiz" && (
                     <div className="div_contenedor_card_registros">
                         {/* mapeo con filtro */}
-                        <Suspense fallback={<Loading />}>
-                            {salidas
+                        
+                            {salidasTodas
                                 .filter((salida) => {
                                     if (!fechaInicioFiltro || !fechaFinFiltro) return true; // Mostrar todo si no se ingresaron fechas
                                     return (
@@ -456,11 +470,6 @@ const realizarBusqueda = () => {
                                     );
                                 })
                                 .map((salida) => {
-                                // Extraer el ID de la URL
-                                const urlParts = salida.url.split('/');
-                                const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
-                                const usuario2 = usuarios.find((user) => user.username === salida.username);
-                                const usuario = usuario2 ? usuario2 : null;
 
                                 return (
                                     <div key={salida.url}>
@@ -470,14 +479,14 @@ const realizarBusqueda = () => {
                                             {/* div header img - id */}
                                             <div className="div_card_header">
                                             <Image 
-                                            src={usuario.imagen_perfil} alt="Icono de ingresos" 
+                                            src={salida.imagen_perfil} alt="Icono de ingresos" 
                                             width={30}
                                             height={30}  
                                             loading="lazy"
                                             onError={handleImageError}
                                             className="rounded-image"/>&nbsp;&nbsp; 
                                                                                
-                                                <p><strong>Id salida:</strong> {id}</p>&nbsp;&nbsp; 
+                                                <p><strong>Id salida:</strong> {salida.id_salida}</p>&nbsp;&nbsp; 
 
                                                 <Image 
                                                 src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/cerrar-sesion_wlgj16.png" alt="Icono de ingresos" 
@@ -494,8 +503,8 @@ const realizarBusqueda = () => {
                                                 <p className="div_card_usuario_ind">
                                                 <strong>Nombre:</strong>{" "}
                                                 <span className="div_card_usuario_nombre">
-                                                    {usuario ? `${usuario.first_name} ${usuario.last_name}` : "Nombre no encontrado"}
-                                                </span>{" "}
+                                                    {salida.first_name} {salida.last_name}
+                                                </span>
                                                 </p>
                                             </div>
                                             {/* div con usuario y nombre */}
@@ -514,8 +523,8 @@ const realizarBusqueda = () => {
                                                 <p className="div_card_usuario_ind">
                                                     <strong>▫ Ficha:</strong>{" "}
                                                     <span className="div_card_usuario_nombre">
-                                                        {usuario ? `${usuario.ficha}` : "Ficha no encontrado"}
-                                                    </span>{" "}
+                                                        {salida.ficha}
+                                                    </span>
                                                 </p>
                                                 <p className="div_card_usuario_ind">
                                                     <strong>Zona:</strong> {salida.zona}
@@ -524,14 +533,14 @@ const realizarBusqueda = () => {
                                             {/* Div con ficha y zona */}
 
                                             {/* botón editar registro */}
-                                            {usuario.tipo_usuario !== "aprendiz" && (
+                                            
                                             <div className="div_card_usuario_button_editar">
-                                                <Link href={`/home/salidas/${id}`}className="edit_link">Editar &nbsp;
+                                                <Link href={`/home/salidas/${salida.id_salida}`}className="edit_link">Editar &nbsp;
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"  viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
             <path  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                                 </svg></Link>
-                                            </div>)}
+                                            </div>
                                             {/* botón editar registro */}
                                             
                                         </div>
@@ -539,9 +548,10 @@ const realizarBusqueda = () => {
                                     </div>
                                         );
                                     })}
-                        </Suspense>
+                        
                         {/* mapeo con filtro */}
                     </div>)}
+                    </Suspense>
                     {/* mapeo de todos los registros de salida */}
 
                 </div>
