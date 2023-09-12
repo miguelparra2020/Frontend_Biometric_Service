@@ -3,6 +3,7 @@ import MainLayout from '../../components/layouts/MainLayout';
 import { Suspense } from 'react';
 import '../../styles/pages/home.css';
 import '../../styles/pages/miperfil.css';
+import '../../styles/pages/usuarios.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -16,6 +17,8 @@ const MiPerfilPage = () => {
     const [email, setEmail] = useState('');
     const [tipo_usuario, setTipoUsuario] = useState('');
     const [imagen_perfil, setImagenPerfil] = useState('');
+    const [pregunta_seguridad, setPreguntaSeguridad] = useState('');
+    const [respuesta_seguridad, setRespuestaSeguridad] = useState('');
     const router = useRouter();
     // ----Constantes y variables de estado-----------
 
@@ -29,6 +32,8 @@ const MiPerfilPage = () => {
             setEmail(localStorage.getItem('email'));
             setTipoUsuario(localStorage.getItem('tipo_usuario'));
             setImagenPerfil(localStorage.getItem('imagen_perfil'));
+            setPreguntaSeguridad(localStorage.getItem('pregunta_seguridad'));
+            setRespuestaSeguridad(localStorage.getItem('respuesta_seguridad'));
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
         }
@@ -60,7 +65,9 @@ const MiPerfilPage = () => {
                                 <p className="perfil-title"><strong>Apellidos:</strong> {last_name}</p>
                                 <p className="perfil-title"><strong>Correo:</strong> {email}</p>
                                 <p className="perfil-title"><strong>Ficha:</strong> {ficha}</p>
-                                <p className="perfil-title"><strong>Tipo de usuario:</strong> {tipo_usuario}</p>                                
+                                <p className="perfil-title"><strong>Tipo de usuario:</strong> {tipo_usuario}</p>    
+                                <p className="perfil-title"><strong>Pregunta de seguridad:</strong> {pregunta_seguridad}</p>   
+                                <p className="perfil-title"><strong>Respuesta de seguridad:</strong> {respuesta_seguridad}</p>                             
                             </div>  
                         </Suspense>
                     </div>

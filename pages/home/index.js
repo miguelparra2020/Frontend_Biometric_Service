@@ -24,6 +24,7 @@ const HomePage = () => {
     const [usuario, setUsuario] = useState('');
     const [usuarios, setUsuarios] = useState('');
     const router = useRouter();
+    // ... (tu código actual)
 //---------------Variables------------------------------------------------- 
 
 
@@ -85,6 +86,9 @@ async function fetchUsuario() {
 
         // Guarda la imagen de perfil en el localStorage
         localStorage.setItem('imagen_perfil', imagenPerfil);
+        localStorage.setItem('pregunta_seguridad',data.pregunta_seguridad);
+        localStorage.setItem('respuesta_seguridad',data.respuesta_seguridad);
+
         console.log(data);
     } catch (error) {
         console.error(error);
