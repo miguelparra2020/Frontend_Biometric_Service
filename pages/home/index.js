@@ -52,53 +52,53 @@ const HomePage = () => {
     }
 //-------Función para obtener la fecha de hoy ---------------------
 
-const realizarBusqueda = () => {
-    toast.loading('Buscando', {
-      description: `${busquedaUsuario}`
-    });
-  
-    if (!busquedaUsuario) {
-      setBusquedaUsuario('');
-      router.push('/home');
-    } else {
-      // Convierte la búsqueda a minúsculas.
-      const busquedaMinuscula = busquedaUsuario.toLowerCase();
-  
-      // Realiza la búsqueda y muestra los resultados de ingresos.
-      const registrosIngresosFiltrados = ingresosTodos.filter((ingreso) => {
-        const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
-  
-        const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
-        const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
-  
-        return (
-          ingreso.username.includes(busquedaMinuscula) ||
-          (usuarioIngreso &&
-            (firstNameMinuscula.includes(busquedaMinuscula) ||
-              lastNameMinuscula.includes(busquedaMinuscula)))
-        );
-      });
-  
-      // Realiza la búsqueda y muestra los resultados de salidas.
-      const registrosSalidasFiltrados = salidasTodas.filter((salida) => {
-        const usuarioSalida = usuarios.find((user) => user.username === salida.username);
-  
-        const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
-        const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
-  
-        return (
-          salida.username.includes(busquedaMinuscula) ||
-          (usuarioSalida &&
-            (firstNameMinuscula.includes(busquedaMinuscula) ||
-              lastNameMinuscula.includes(busquedaMinuscula)))
-        );
-      });
-  
-      // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
-      setIngresosTodos(registrosIngresosFiltrados);
-      setSalidasTodas(registrosSalidasFiltrados);
-    }
-  };
+    const realizarBusqueda = () => {
+        toast.loading('Buscando', {
+        description: `${busquedaUsuario}`
+        });
+    
+        if (!busquedaUsuario) {
+        setBusquedaUsuario('');
+        router.push('/home');
+        } else {
+        // Convierte la búsqueda a minúsculas.
+        const busquedaMinuscula = busquedaUsuario.toLowerCase();
+    
+        // Realiza la búsqueda y muestra los resultados de ingresos.
+        const registrosIngresosFiltrados = ingresosTodos.filter((ingreso) => {
+            const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
+    
+            const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
+            const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
+    
+            return (
+            ingreso.username.includes(busquedaMinuscula) ||
+            (usuarioIngreso &&
+                (firstNameMinuscula.includes(busquedaMinuscula) ||
+                lastNameMinuscula.includes(busquedaMinuscula)))
+            );
+        });
+    
+        // Realiza la búsqueda y muestra los resultados de salidas.
+        const registrosSalidasFiltrados = salidasTodas.filter((salida) => {
+            const usuarioSalida = usuarios.find((user) => user.username === salida.username);
+    
+            const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
+            const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
+    
+            return (
+            salida.username.includes(busquedaMinuscula) ||
+            (usuarioSalida &&
+                (firstNameMinuscula.includes(busquedaMinuscula) ||
+                lastNameMinuscula.includes(busquedaMinuscula)))
+            );
+        });
+    
+        // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
+        setIngresosTodos(registrosIngresosFiltrados);
+        setSalidasTodas(registrosSalidasFiltrados);
+        }
+    };
   
 
     const recargarBusqueda = () => {
@@ -156,16 +156,16 @@ const realizarBusqueda = () => {
         }
 //--- Función para obtener los datos del usuario----
 //--- Función para obtener los datos del usuario----
-async function fetchUsuario() {
-    try {
-        const data = await getUsuarios();
-        setUsuarios(data);
-        
+        async function fetchUsuarios() {
+            try {
+                const data = await getUsuarios();
+                setUsuarios(data);
+                
 
-    } catch (error) {
-        console.error(error);
-    }
-}
+            } catch (error) {
+                console.error(error);
+            }
+        }
 //--- Función para obtener los datos del usuario----
 
 
@@ -227,6 +227,7 @@ async function fetchUsuario() {
 
 //---Inicializar funciones asyncronas -----------------
         fetchUsuario();
+        fetchUsuarios();
         // fetchSalidas();
         fetchIngresosTodos();  
         fetchSalidasTodas();
