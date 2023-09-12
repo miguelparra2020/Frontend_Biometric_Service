@@ -25,7 +25,9 @@ const HomePage = () => {
    
     const [ingresosTodos, setIngresosTodos] = useState([]);
     const [salidasTodas, setSalidasTodas] = useState([]);
-    const [salidas, setSalidas] = useState([]);
+
+    const [ingresosAprendiz, setIngresosAprendiz] = useState([]);
+    const [salidasAprendiz, setSalidasAprendiz] = useState([]);
     
     const [fechaInicioFiltro, setFechaInicioFiltro] = useState(getFormattedDate());
     const [fotografia, setFotografia] = useState('');
@@ -313,7 +315,6 @@ const HomePage = () => {
 
                 {/* registros de ingresos todos*/}
                 <div className="contenedor_registro_ingresos">
-
                     {/* Botón de crear un nuevo ingreso */}
                     {usuario.tipo_usuario !== "aprendiz" && (
                     <div className="div_button_editar_ficha">
@@ -334,7 +335,16 @@ const HomePage = () => {
                     </div>
                     {/* titulo registro de ingresos */}
 
-                    {/* mapeo de todos los registros de ingreso */}
+                    {/* mapeo de todos los registros de ingreso del aprendiz */}
+                    <Suspense fallback={<Loading />}>
+                    {usuario.tipo_usuario === "aprendiz" && (
+                        <div>Hola soy registros de ingreso del aprendiz</div>
+                    )}
+                    </Suspense>
+                    {/* mapeo de todos los registros de ingreso del aprendiz */}
+
+                    {/* mapeo de todos los registros de ingreso del aprendiz */}
+                    {/* mapeo de todos los registros de ingreso de todos */}
                     <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario !== "aprendiz" && (
                         
@@ -427,7 +437,7 @@ const HomePage = () => {
                         
                     </div>)}
                     </Suspense>
-                    {/* mapeo de todos los registros de ingreso */}
+                    {/* mapeo de todos los registros de ingreso todos*/}
 
                 </div>
                 {/* registros de ingresos*/}
@@ -450,6 +460,14 @@ const HomePage = () => {
                         <h1>Registros de Salidas</h1>  
                     </div>
                     {/* titulo registro de salidas */}
+
+                    {/* mapeo de todos los registros de salida del aprendiz */}
+                    <Suspense fallback={<Loading />}>
+                    {usuario.tipo_usuario === "aprendiz" && (
+                        <div>Hola soy registros de salida del aprendiz</div>
+                    )}
+                    </Suspense>
+                    {/* mapeo de todos los registros de salida del aprendiz */}
 
                     {/* mapeo de todos los registros de salida */}
                     <Suspense fallback={<Loading />}>
