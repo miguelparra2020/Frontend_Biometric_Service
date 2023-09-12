@@ -52,59 +52,54 @@ const HomePage = () => {
     }
 //-------Función para obtener la fecha de hoy ---------------------
 
-    const realizarBusqueda = () => {
-        toast.loading('Buscando', {
-            description: `${busquedaUsuario}`
-        });
-
-        if (!busquedaUsuario){
-            setBusquedaUsuario('')
-            router.push('/home');
-        }
-        else{
-            // Realiza la búsqueda y muestra los resultados de ingresos.
-            const busquedaMinuscula = busquedaUsuario.toLowerCase(); // Convierte la búsqueda a minúsculas.
-
-            // Realiza la búsqueda y muestra los resultados de ingresos.
-            const registrosIngresosFiltrados = ingresosTodos.filter((ingreso) => {
-                const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
-            
-                // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
-                const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
-                const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
-            
-                return (
-                ingreso.username.includes(busquedaMinuscula) ||
-                (usuarioIngreso &&
-                    (firstNameMinuscula.includes(busquedaMinuscula) ||
-                    lastNameMinuscula.includes(busquedaMinuscula)))
-                );
-            });
-                // Realiza la búsqueda y muestra los resultados de salidas.
-                const registrosSalidasFiltrados = salidasTodas.filter((salida) => {
-                    // return salida.username.includes(busquedaUsuario);
-
-                    const usuarioSalida = usuarios.find((user) => user.username === salida.username);
-            
-                    // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
-                    const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
-                    const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
-                
-                    return (
-                    salida.username.includes(busquedaMinuscula) ||
-                    (usuarioSalida &&
-                        (firstNameMinuscula.includes(busquedaMinuscula) ||
-                        lastNameMinuscula.includes(busquedaMinuscula)))
-                    );
-                });
-    
-        // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
-        setIngresosTodos(registrosIngresosFiltrados);
-        setSalidasTodas(registrosSalidasFiltrados);
-        }
-        
-        
-    };
+const realizarBusqueda = () => {
+    toast.loading('Buscando', {
+      description: `${busquedaUsuario}`
+    });
+  
+    if (!busquedaUsuario) {
+      setBusquedaUsuario('');
+      router.push('/home');
+    } else {
+      // Convierte la búsqueda a minúsculas.
+      const busquedaMinuscula = busquedaUsuario.toLowerCase();
+  
+      // Realiza la búsqueda y muestra los resultados de ingresos.
+      const registrosIngresosFiltrados = ingresosTodos.filter((ingreso) => {
+        const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
+  
+        const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
+        const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
+  
+        return (
+          ingreso.username.includes(busquedaMinuscula) ||
+          (usuarioIngreso &&
+            (firstNameMinuscula.includes(busquedaMinuscula) ||
+              lastNameMinuscula.includes(busquedaMinuscula)))
+        );
+      });
+  
+      // Realiza la búsqueda y muestra los resultados de salidas.
+      const registrosSalidasFiltrados = salidasTodas.filter((salida) => {
+        const usuarioSalida = usuarios.find((user) => user.username === salida.username);
+  
+        const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
+        const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
+  
+        return (
+          salida.username.includes(busquedaMinuscula) ||
+          (usuarioSalida &&
+            (firstNameMinuscula.includes(busquedaMinuscula) ||
+              lastNameMinuscula.includes(busquedaMinuscula)))
+        );
+      });
+  
+      // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
+      setIngresosTodos(registrosIngresosFiltrados);
+      setSalidasTodas(registrosSalidasFiltrados);
+    }
+  };
+  
 
     const recargarBusqueda = () => {
             setBusquedaUsuario('');
