@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 import { useRouter } from 'next/router';
 import '../../styles/pages/fichas.css';
 import '../../styles/pages/usuarios.css';
+import { Toaster, toast } from 'sonner';
 // --------Importaciones y librerías--------------
 
 // ----Función de exportar el componente---------
@@ -44,6 +45,9 @@ const HomePage = () => {
 
 const realizarBusqueda = () => {
     console.log(`Valor de busquedaUsuario: ${busquedaUsuario}`);
+    toast.loading('Buscando', {
+        description: `${busquedaUsuario}`
+      });
 
     if (!busquedaUsuario){
         setBusquedaUsuario('')
@@ -95,7 +99,10 @@ const realizarBusqueda = () => {
   };
 
   const recargarBusqueda = () => {
-        setBusquedaUsuario('')
+        setBusquedaUsuario('');
+        toast.loading('Actulizando', {
+            description: 'registros...'
+          });
         router.push('/home');
   }
 
@@ -288,10 +295,10 @@ const realizarBusqueda = () => {
             {/* Filtros */}
 
             
-            {/* registros */}
+            {/* todos los registros*/}
             <div className="contenedor_registros">
 
-                {/* registros de ingresos*/}
+                {/* registros de ingresos todos*/}
                 <div className="contenedor_registro_ingresos">
 
                     {/* Botón de crear un nuevo ingreso */}
@@ -315,6 +322,7 @@ const realizarBusqueda = () => {
                     {/* titulo registro de ingresos */}
 
                     {/* mapeo de todos los registros de ingreso */}
+                    {usuario.tipo_usuario !== "aprendiz" && (
                     <div className="div_contenedor_card_registros">
                         
                         {/* mapeo con filtro */}
@@ -408,7 +416,7 @@ const realizarBusqueda = () => {
                                 );
                             })}
                         </Suspense>
-                    </div>
+                    </div>)}
                     {/* mapeo de todos los registros de ingreso */}
 
                 </div>
@@ -434,6 +442,7 @@ const realizarBusqueda = () => {
                     {/* titulo registro de salidas */}
 
                     {/* mapeo de todos los registros de salida */}
+                    {usuario.tipo_usuario !== "aprendiz" && (
                     <div className="div_contenedor_card_registros">
                         {/* mapeo con filtro */}
                         <Suspense fallback={<Loading />}>
@@ -527,14 +536,15 @@ const realizarBusqueda = () => {
                                     })}
                         </Suspense>
                         {/* mapeo con filtro */}
-                    </div>
+                    </div>)}
                     {/* mapeo de todos los registros de salida */}
 
                 </div>
                 {/* registros de salidas*/}
 
             </div>
-            {/* registros */}
+            {/* todos los registros*/}
+            <Toaster/>
         </MainLayout>
     )
 };
