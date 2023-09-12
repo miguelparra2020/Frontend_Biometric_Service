@@ -210,7 +210,28 @@ font-style: oblique;
 .edit_link:hover {
     background-color: #0056b3;
 }
-
+.boton_busqueda {
+    background-color: #3498db; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 7px 10px; /* Espaciado interno (vertical, horizontal) */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de puntero al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s ease; /* Transición de color de fondo */
+    
+  }
+  
+  /* Estilo para el botón al pasar el cursor sobre él */
+  .boton_busqueda:hover {
+    background-color: #2980b9; /* Cambiar el color de fondo al pasar el cursor */
+  }
+  
+  
+  
+  
+  
+  
 @media (max-width: 750px) {
     
     .div_fechas{

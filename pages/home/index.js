@@ -26,6 +26,8 @@ const HomePage = () => {
     const [usuario, setUsuario] = useState('');
     const [usuarios, setUsuarios] = useState('');
     const router = useRouter();
+
+    const [busquedaUsuario, setBusquedaUsuario] = useState('');
     // ... (tu código actual)
 //---------------Variables------------------------------------------------- 
 
@@ -40,10 +42,37 @@ const HomePage = () => {
     }
 //-------Función para obtener la fecha de hoy ---------------------
 
+const realizarBusqueda = () => {
+    if (!busquedaUsuario) {
+        router.push('/home');
+    } else {
+      // Realiza la búsqueda y muestra los resultados de ingresos.
+    const registrosIngresosFiltrados = ingresos.filter((ingreso) => {
+        return ingreso.username.includes(busquedaUsuario);
+      });
+  
+      // Realiza la búsqueda y muestra los resultados de salidas.
+      const registrosSalidasFiltrados = salidas.filter((salida) => {
+        return salida.username.includes(busquedaUsuario);
+      });
+  
+      // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
+      setIngresos(registrosIngresosFiltrados);
+      setSalidas(registrosSalidasFiltrados);
+    }
+  };
 
+
+
+  const recargarBusqueda = () => {
+    setBusquedaUsuario('');
+    router.push('/home');
+  }
+  
 
     useEffect(() => {
-
+        // Esta lógica se ejecutará solo una vez cuando el componente se monte.
+   
 //----Función para detectar al usuario si puede acceder---------
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
@@ -52,6 +81,7 @@ const HomePage = () => {
         if (access_token == 'sin-acceso'){
             router.push('/');
         }
+        
 //----Función para detectar al usuario si puede acceder---------
         
 //--- obtención de la data de local storage------
@@ -105,6 +135,14 @@ async function fetchUsuario() {
                 const data = await getIngresos();
                 setIngresos(data);
                 console.log(data);
+                // Continúa con las demás llamadas a las funciones fetch (fetchSalidas, fetchUsuario, etc.).
+                // También puedes realizar el filtrado aquí si el usuario es un aprendiz.
+                if (usuario && usuario.tipo_usuario === 'aprendiz') {
+                    const registrosIngresosFiltrados = data.filter((ingreso) => {
+                        return ingreso.username === username;
+                    });
+                    setIngresos(registrosIngresosFiltrados);
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -117,6 +155,13 @@ async function fetchUsuario() {
                 const data = await getSalidas();
                 setSalidas(data);
                 console.log(data);
+                if (usuario && usuario.tipo_usuario === 'aprendiz') {
+                    const registrosSalidasFiltrados = data.filter((salida) => {
+                        return salida.username === username;
+                    });
+                    setSalidas(registrosSalidasFiltrados);
+
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -130,7 +175,7 @@ async function fetchUsuario() {
         fetchSalidas();  
         
 //---Inicializar funciones asyncronas -----------------
-    }, [access_token,username, router]);
+    }, [access_token,username, router, usuario]);
     
     console.log(usuario)
     return (
@@ -176,9 +221,29 @@ async function fetchUsuario() {
                     </div>
                     
                 </div>
+
             </div>
+            {usuario.tipo_usuario !== "aprendiz" &&(
+            <div className="contenedor_filtros_asistencias">
+                <div>
+                        <input
+                        type="text"
+                        placeholder="Buscar por usuario"
+                        className="date_input"
+                        value={busquedaUsuario}
+                        onChange={(e) => {
+                            setBusquedaUsuario(e.target.value);
+                            realizarBusqueda(); // Llama a la función de búsqueda cuando el valor cambie.
+                        }}
+                        />&nbsp; <button onClick={recargarBusqueda} className="boton_busqueda">recargar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                      </svg></button>      
+                </div>
+            </div>)}
             {/* Filtros */}
 
+            
             {/* registros */}
             <div className="contenedor_registros">
 
