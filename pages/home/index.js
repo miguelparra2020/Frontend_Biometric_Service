@@ -225,7 +225,7 @@ const realizarBusqueda = () => {
         <MainLayout>
             {/* Imagen de perfil */}
             <div className="contenedor_titulo_asistencias">
-                <Image src={fotografia} alt="Imagen de perfil" width={80} height={80} className="rounded-image" loading="lazy" onError={handleImageError}/>
+                <Image src={fotografia} alt="Imagen de perfil" width={80} height={80} className="rounded-image" loading="lazy" />
             </div>
             {/* Imagen de perfil */}
             {/* titulo */}
