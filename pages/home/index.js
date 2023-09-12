@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { useRouter } from 'next/router';
 import '../../styles/pages/fichas.css';
+import '../../styles/pages/usuarios.css';
 // --------Importaciones y librerías--------------
 
 // ----Función de exportar el componente---------
@@ -18,6 +19,7 @@ const HomePage = () => {
     const [ingresos, setIngresos] = useState([]);
     const [salidas, setSalidas] = useState([]);
     const [fechaInicioFiltro, setFechaInicioFiltro] = useState(getFormattedDate());
+    const [fotografia, setFotografia] = useState('');
     const [fechaFinFiltro, setFechaFinFiltro] = useState(getFormattedDate());
     const [access_token, setAccess] = useState('');
     const [username, setUsername] = useState('');
@@ -86,6 +88,7 @@ async function fetchUsuario() {
 
         // Guarda la imagen de perfil en el localStorage
         localStorage.setItem('imagen_perfil', imagenPerfil);
+        setFotografia(imagenPerfil);
         localStorage.setItem('pregunta_seguridad',data.pregunta_seguridad);
         localStorage.setItem('respuesta_seguridad',data.respuesta_seguridad);
 
@@ -132,6 +135,11 @@ async function fetchUsuario() {
     console.log(usuario)
     return (
         <MainLayout>
+            {/* Imagen de perfil */}
+            <div className="contenedor_titulo_asistencias">
+                <Image src={fotografia} alt="Imagen de perfil" width={80} height={80} className="rounded-image" />
+            </div>
+            {/* Imagen de perfil */}
             {/* titulo */}
             <div className="contenedor_titulo_asistencias">
                 
@@ -222,12 +230,17 @@ async function fetchUsuario() {
 
                                         {/* div header img - id */}
                                         <div className="div_card_header">
+                                        <Image 
+                                            src={usuario.imagen_perfil} alt="Icono de ingresos" 
+                                            width={30}
+                                            height={30}  className="rounded-image"/>&nbsp;&nbsp; 
+                                            <p><strong>Id ingreso:</strong> {id}</p>&nbsp;&nbsp; 
                                             <Image 
                                             src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/acceso_wmsdly.png" alt="Icono de ingresos" 
                                             width={30}
                                             height={30}  />
                                             &nbsp;&nbsp;                               
-                                            <p><strong>Id ingreso:</strong> {id}</p>
+                                            
                                         </div>
                                         {/* div header img - id */}
 
@@ -337,11 +350,17 @@ async function fetchUsuario() {
                                             {/* div header img - id */}
                                             <div className="div_card_header">
                                                 <Image 
+                                                src={usuario.imagen_perfil} alt="Icono de salidas" 
+                                                width={30}
+                                                height={30}  className="rounded-image"/>&nbsp;&nbsp; 
+                                                                               
+                                                <p><strong>Id salida:</strong> {id}</p>&nbsp;&nbsp; 
+
+                                                <Image 
                                                 src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/cerrar-sesion_wlgj16.png" alt="Icono de ingresos" 
                                                 width={30}
                                                 height={30}  />
-                                                &nbsp;&nbsp;                               
-                                                <p><strong>Id salida:</strong> {id}</p>
+                                                &nbsp;&nbsp;
                                             </div>
                                             {/* div header img - id */}
 
