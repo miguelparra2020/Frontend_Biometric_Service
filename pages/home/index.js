@@ -199,6 +199,38 @@ const HomePage = () => {
             }
         };
 
+        async  function fetchIngresosAprendiz(){            
+            try {
+                const dataIngresos = await getIngresos();
+                const username = localStorage.getItem("username");
+                
+                const todosIngresosAprendiz = [];
+
+                dataIngresos.forEach(ingreso => { 
+                    if (username == ingreso.username) {
+                        const urlParts = ingreso.url.split('/');
+                        const id = urlParts[urlParts.length - 2];
+                        const nuevoIngreso = {
+                                ...ingreso, 
+                                id_ingreso: id,
+                                first_name: localStorage.getItem('first_name'),
+                                last_name: localStorage.getItem('last_name'),
+                                ficha: localStorage.getItem('ficha'),
+                                imagen_perfil: localStorage.getItem('imagen_perfil'),
+                        }
+                        
+                        todosIngresosAprendiz.push(nuevoIngreso);
+                    }
+                });
+
+                setIngresosAprendiz(todosIngresosAprendiz);
+                
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         async  function fetchSalidasTodas(){
             
             try {
@@ -227,18 +259,54 @@ const HomePage = () => {
             }
         };
 
+        async  function fetchSalidasAprendiz(){            
+            try {
+                const dataSalidas = await getSalidas();
+                const username = localStorage.getItem("username");
+                
+                const todasSalidasAprendiz = [];
+
+                dataSalidas.forEach(salida => { 
+                    if (username == salida.username) {
+                        const urlParts = salida.url.split('/');
+                        const id = urlParts[urlParts.length - 2];
+                        const nuevaSalida = {
+                                ...salida, 
+                                id_salida: id,
+                                first_name: localStorage.getItem('first_name'),
+                                last_name: localStorage.getItem('last_name'),
+                                ficha: localStorage.getItem('ficha'),
+                                imagen_perfil: localStorage.getItem('imagen_perfil'),
+                        }
+                        
+                        todasSalidasAprendiz.push(nuevaSalida);
+                    }
+                });
+
+                setSalidasAprendiz(todasSalidasAprendiz);
+                
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
 //---Inicializar funciones asyncronas -----------------
         fetchUsuario();
         fetchUsuarios();
         // fetchSalidas();
         fetchIngresosTodos();  
         fetchSalidasTodas();
+        fetchIngresosAprendiz();
+        fetchSalidasAprendiz();
         
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
     
     console.log("Hola soy todosIngresosArray:", ingresosTodos); 
     console.log("Hola soy todasSalidasArray:", salidasTodas);
+    console.log("Hola soy todosIngresosAprendiz:", ingresosAprendiz);
+    console.log("Hola soy todasSalidasAprendiz:", salidasAprendiz);
     return (
         <MainLayout>
             {/* Imagen de perfil */}
@@ -338,12 +406,88 @@ const HomePage = () => {
                     {/* mapeo de todos los registros de ingreso del aprendiz */}
                     <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario === "aprendiz" && (
-                        <div>Hola soy registros de ingreso del aprendiz</div>
-                    )}
+                        <div className="div_contenedor_card_registros">
+                        {/* mapeo con filtro */}
+                        
+                            {ingresosAprendiz.filter((ingreso) => {
+                                    if (!fechaInicioFiltro || !fechaFinFiltro) return true; // Mostrar todo si no se ingresaron fechas
+                                    return (
+                                        ingreso.fecha_ingreso >= fechaInicioFiltro &&
+                                        ingreso.fecha_ingreso <= fechaFinFiltro
+                                    );
+                                })
+                                .map((ingreso) => {                            return (
+                                <div key={ingreso.url}>
+                                    {/* card completa */}
+                                    <div className="div_card">
+
+                                        {/* div header img - id */}
+                                        <div className="div_card_header">
+                                        <Image 
+                                            src={ingreso.imagen_perfil} alt="Icono de ingresos" 
+                                            width={30}
+                                            height={30}  
+                                            loading="lazy"
+                                            className="rounded-image"/>&nbsp;&nbsp; 
+                                            <p><strong>Id ingreso: {ingreso.id_ingreso} </strong></p>&nbsp;&nbsp; 
+                                            <Image 
+                                            src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/acceso_wmsdly.png" alt="Icono de ingresos" 
+                                            width={30}
+                                            height={30}  />
+                                            &nbsp;&nbsp;                               
+                                            
+                                        </div>
+                                        {/* div header img - id */}
+
+                                        {/* div con usuario y nombre */}
+                                        <div className="div_card_usuario">
+                                            <p className="div_card_usuario_ind">
+                                                <strong>▫ Usuario:</strong> {ingreso.username}
+                                            </p>
+                                            <p className="div_card_usuario_ind">
+                                            <strong>Nombre:</strong>{" "}
+                                            <span className="div_card_usuario_nombre">
+                                            {ingreso.first_name} {ingreso.last_name} 
+                                            </span>
+                                            </p>
+                                        </div>
+                                        {/* div con usuario y nombre */}
+
+                                        {/* Div con fecha y hora de ingreso */}
+                                        <div className="div_card_usuario">
+                                            <p className="div_card_usuario_ind">
+                                                <strong>▫ Fecha de ingreso:</strong> {ingreso.fecha_ingreso}</p>
+                                            <p className="div_card_usuario_ind">
+                                                <strong>Hora de ingreso:</strong> {ingreso.hora_ingreso}</p>
+                                        </div>
+                                        {/* Div con fecha y hora de ingreso */}
+
+                                        {/* Div con ficha y zona */}
+                                        <div className="div_card_usuario">
+                                            <p className="div_card_usuario_ind">
+                                                <strong>▫ Ficha:</strong>{" "}
+                                                <span className="div_card_usuario_nombre">
+                                                    {ingreso.ficha}
+                                                </span>
+                                            </p>
+                                            <p className="div_card_usuario_ind">
+                                                <strong>Zona:</strong> {ingreso.zona}
+                                            </p>
+                                        </div>
+                                        {/* Div con ficha y zona */}
+
+                                        
+                                    </div>
+                                    {/* card completa */}
+                                    
+                                </div>
+                                );
+                            })}
+                        
+                    </div>)}
                     </Suspense>
                     {/* mapeo de todos los registros de ingreso del aprendiz */}
 
-                    {/* mapeo de todos los registros de ingreso del aprendiz */}
                     {/* mapeo de todos los registros de ingreso de todos */}
                     <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario !== "aprendiz" && (
@@ -464,7 +608,90 @@ const HomePage = () => {
                     {/* mapeo de todos los registros de salida del aprendiz */}
                     <Suspense fallback={<Loading />}>
                     {usuario.tipo_usuario === "aprendiz" && (
-                        <div>Hola soy registros de salida del aprendiz</div>
+                        <div className="div_contenedor_card_registros">
+                        {/* mapeo con filtro */}
+                        
+                            {salidasAprendiz
+                                .filter((salida) => {
+                                    if (!fechaInicioFiltro || !fechaFinFiltro) return true; // Mostrar todo si no se ingresaron fechas
+                                    return (
+                                        salida.fecha_salida >= fechaInicioFiltro &&
+                                        salida.fecha_salida <= fechaFinFiltro
+                                    );
+                                })
+                                .map((salida) => {
+
+                                return (
+                                    <div key={salida.url}>
+                                        {/* card completa */}
+                                        <div className="div_card">
+
+                                            {/* div header img - id */}
+                                            <div className="div_card_header">
+                                            <Image 
+                                            src={salida.imagen_perfil} alt="Icono de ingresos" 
+                                            width={30}
+                                            height={30}  
+                                            loading="lazy"
+                                            onError={handleImageError}
+                                            className="rounded-image"/>&nbsp;&nbsp; 
+                                                                               
+                                                <p><strong>Id salida:</strong> {salida.id_salida}</p>&nbsp;&nbsp; 
+
+                                                <Image 
+                                                src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/cerrar-sesion_wlgj16.png" alt="Icono de ingresos" 
+                                                width={30}
+                                                height={30}  />
+                                                &nbsp;&nbsp;
+                                            </div>
+                                            {/* div header img - id */}
+
+                                            {/* div con usuario y nombre */}
+                                            <div className="div_card_usuario">
+                                                <p className="div_card_usuario_ind">
+                                                    <strong>▫ Usuario:</strong> {salida.username}</p>
+                                                <p className="div_card_usuario_ind">
+                                                <strong>Nombre:</strong>{" "}
+                                                <span className="div_card_usuario_nombre">
+                                                    {salida.first_name} {salida.last_name}
+                                                </span>
+                                                </p>
+                                            </div>
+                                            {/* div con usuario y nombre */}
+
+                                            {/* Div fecha y hora de ingreso */}
+                                            <div className="div_card_usuario">
+                                                <p className="div_card_usuario_ind">
+                                                    <strong>▫ Fecha de salida:</strong> {salida.fecha_salida}</p>
+                                                <p className="div_card_usuario_ind">
+                                                    <strong>Hora de salida:</strong> {salida.hora_salida}</p>
+                                            </div>
+                                            {/* Div fecha y hora de ingreso */}
+
+                                            {/* Div con ficha y zona */}
+                                            <div className="div_card_usuario">
+                                                <p className="div_card_usuario_ind">
+                                                    <strong>▫ Ficha:</strong>{" "}
+                                                    <span className="div_card_usuario_nombre">
+                                                        {salida.ficha}
+                                                    </span>
+                                                </p>
+                                                <p className="div_card_usuario_ind">
+                                                    <strong>Zona:</strong> {salida.zona}
+                                                </p>
+                                            </div>
+                                            {/* Div con ficha y zona */}
+
+                                           
+                                            
+                                        </div>
+                                        {/* card completa */}
+                                    </div>
+                                        );
+                                    })}
+                        
+                        {/* mapeo con filtro */}
+                    </div>
                     )}
                     </Suspense>
                     {/* mapeo de todos los registros de salida del aprendiz */}
