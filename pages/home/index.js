@@ -138,7 +138,7 @@ async function fetchUsuario() {
                 <h1>Bienvenid@ {usuario.first_name} {usuario.last_name} al área de asistencias</h1>   
             </div>
             <div className="contenedor_titulo_asistencias">
-                <h1>Usuario {usuario.username} {usuario.tipo_usuario} - Ficha {usuario.ficha}</h1>   
+                <h2>Usuario {usuario.username} {usuario.tipo_usuario} - Ficha {usuario.ficha}</h2>   
             </div>
             {/* titulo */}
 
