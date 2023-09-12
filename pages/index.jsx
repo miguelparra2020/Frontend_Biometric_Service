@@ -18,6 +18,7 @@ const LandPage = () => {
     const last_name = '';
     const ficha = '';
     const tipo_usuario = ''; 
+    const imagen_perfil = ''; 
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('id', id);
     localStorage.setItem('username', username);
@@ -26,6 +27,7 @@ const LandPage = () => {
     localStorage.setItem('last_name', last_name);
     localStorage.setItem('ficha', ficha);
     localStorage.setItem('tipo_usuario', tipo_usuario);
+    localStorage.setItem('imagen_perfil', imagen_perfil);
 
 
   }, []);

@@ -133,10 +133,18 @@ function base64ToFile(base64, filename) {
               });
             return;
         }
-        // if (imagen_perfil) {
-        //     formData.append("imagen_perfil", imagen_perfil);
-        //   }
-    
+
+         // Validar que al menos una de las dos opciones tenga contenido
+        if (!imagen_perfil && !imagenMostrar) {
+            toast.error('Error en la imagen de perfil', {
+            description: 'Debes seleccionar una imagen o tomar una foto antes de enviar el formulario.'
+            });
+            return;
+        }
+
+        // Si no se seleccionó una imagen de perfil, utiliza la imagen predeterminada
+        const imagenPerfilAEnviar = imagen_perfil || 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png';
+
         const usuarioData = {
             username,
             email,
@@ -145,9 +153,9 @@ function base64ToFile(base64, filename) {
             ficha,
             tipo_usuario,
             password,
-            imagen_perfil,
+            imagen_perfil: imagenPerfilAEnviar, // Utiliza la imagen predeterminada si no se selecciona una
             pregunta_seguridad,
-            respuesta_seguridad,            
+            respuesta_seguridad,
         };
         console.log(usuarioData);
 
@@ -173,7 +181,7 @@ function base64ToFile(base64, filename) {
                 <h1>Bienvenid@ al área de crear usuarios</h1>  
             </div> 
         <div>
-            <form onSubmit={handleSubmit} className="container">
+            <form onSubmit={handleSubmit} className="container" encType="multipart/form-data">
             <div>
             Número de documento identidad = usuario:&nbsp;
             <input type="number" value={username} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required/>

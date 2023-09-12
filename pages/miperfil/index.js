@@ -15,6 +15,7 @@ const MiPerfilPage = () => {
     const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [tipo_usuario, setTipoUsuario] = useState('');
+    const [imagen_perfil, setImagenPerfil] = useState('');
     const router = useRouter();
     // ----Constantes y variables de estado-----------
 
@@ -27,6 +28,7 @@ const MiPerfilPage = () => {
             setLastName(localStorage.getItem('last_name'));
             setEmail(localStorage.getItem('email'));
             setTipoUsuario(localStorage.getItem('tipo_usuario'));
+            setImagenPerfil(localStorage.getItem('imagen_perfil'));
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
         }
@@ -48,11 +50,8 @@ const MiPerfilPage = () => {
                 <div className="div-contenedor">
                     <div className="qr-container">
                         <Suspense fallback={<Loading />}>
-                            <div className='icon-header'> 
-                                 <Image 
-                                        src="https://res.cloudinary.com/unidigital/image/upload/v1693070445/biometric%20services/ficha-de-datos-de-seguridad_gjl0dh.png" alt="Icono de fichas" 
-                                        width={30}
-                                        height={30}  />
+                        <div className='icon-header'> 
+                                <Image src={imagen_perfil} alt="Imagen de perfil" width={80} height={80} className="rounded-image" />
                             </div>
                             <br/>
                             <div className="perfil-header">

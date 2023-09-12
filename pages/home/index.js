@@ -80,6 +80,11 @@ async function fetchUsuario() {
         localStorage.setItem('email',data.email);
         localStorage.setItem('ficha',data.ficha);
         localStorage.setItem('tipo_usuario',data.tipo_usuario);
+        // Obtén la imagen de perfil del usuario
+        const imagenPerfil = data.imagen_perfil || 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png';
+
+        // Guarda la imagen de perfil en el localStorage
+        localStorage.setItem('imagen_perfil', imagenPerfil);
         console.log(data);
     } catch (error) {
         console.error(error);
