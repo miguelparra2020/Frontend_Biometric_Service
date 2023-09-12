@@ -16,6 +16,11 @@ import { Toaster, toast } from 'sonner';
 // ----Función de exportar el componente---------
 const HomePage = () => {
 
+    const handleImageError = () => {
+        // Recarga la página en caso de error
+        window.location.reload();
+      };
+
 //---------------Variables------------------------------------------------- 
     const [ingresos, setIngresos] = useState([]);
     const [salidas, setSalidas] = useState([]);
@@ -106,14 +111,7 @@ const realizarBusqueda = () => {
         router.push('/home');
   }
 
-
-
-
-//   const recargarBusqueda = () => {
-//     setBusquedaUsuario('');
-//     router.push('/home');
-//   }
-  
+ 
 
     useEffect(() => {
         // Esta lógica se ejecutará solo una vez cuando el componente se monte.
@@ -227,7 +225,7 @@ const realizarBusqueda = () => {
         <MainLayout>
             {/* Imagen de perfil */}
             <div className="contenedor_titulo_asistencias">
-                <Image src={fotografia} alt="Imagen de perfil" width={80} height={80} className="rounded-image" />
+                <Image src={fotografia} alt="Imagen de perfil" width={80} height={80} className="rounded-image" loading="lazy" onError={handleImageError}/>
             </div>
             {/* Imagen de perfil */}
             {/* titulo */}
@@ -268,30 +266,30 @@ const realizarBusqueda = () => {
                 </div>
 
             </div>
-                {/* busqueda por usuario */}
-                {usuario.tipo_usuario !== "aprendiz" &&(
-                <div className="contenedor_filtros_asistencias">
-                    <div>
-                            <input
-                            type="text"
-                            placeholder="Buscar por usuario o nombre"
-                            className="date_input"
-                            value={busquedaUsuario}
-                            onChange={(e) => {
-                                setBusquedaUsuario(e.target.value);
-                                
-                            }}
-                            />&nbsp; 
-                            <button onClick={realizarBusqueda} className="boton_busqueda">Buscar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            {/* busqueda por usuario y nombre */}
+            {usuario.tipo_usuario !== "aprendiz" &&(
+            <div className="contenedor_filtros_asistencias">
+                <div>
+                        <input
+                        type="text"
+                        placeholder="Buscar por usuario o nombre"
+                        className="date_input"
+                        value={busquedaUsuario}
+                        onChange={(e) => {
+                            setBusquedaUsuario(e.target.value);
+                            
+                        }}
+                        />&nbsp; 
+                        <button onClick={realizarBusqueda} className="boton_busqueda">Buscar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 </svg></button>&nbsp;    
-                            <button onClick={recargarBusqueda} className="boton_busqueda">Recargar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        <button onClick={recargarBusqueda} className="boton_busqueda">Recargar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
 </svg></button>   
-                    </div>
-                </div>)}
-                {/* busqueda por usuario */}
+                </div>
+            </div>)}
+            {/* busqueda por usuario */}
             {/* Filtros */}
 
             
@@ -350,7 +348,10 @@ const realizarBusqueda = () => {
                                         <Image 
                                             src={usuario.imagen_perfil} alt="Icono de ingresos" 
                                             width={30}
-                                            height={30}  className="rounded-image"/>&nbsp;&nbsp; 
+                                            height={30}  
+                                            loading="lazy"
+                                            onError={handleImageError}
+                                            className="rounded-image"/>&nbsp;&nbsp; 
                                             <p><strong>Id ingreso:</strong> {id}</p>&nbsp;&nbsp; 
                                             <Image 
                                             src="https://res.cloudinary.com/unidigital/image/upload/v1692931577/biometric%20services/acceso_wmsdly.png" alt="Icono de ingresos" 
@@ -458,7 +459,8 @@ const realizarBusqueda = () => {
                                 // Extraer el ID de la URL
                                 const urlParts = salida.url.split('/');
                                 const id = urlParts[urlParts.length - 2]; // Suponemos que el ID está antes del último slash
-                                const usuario = usuarios.find((user) => user.username === salida.username);
+                                const usuario2 = usuarios.find((user) => user.username === salida.username);
+                                const usuario = usuario2 ? usuario2 : null;
 
                                 return (
                                     <div key={salida.url}>
@@ -467,10 +469,13 @@ const realizarBusqueda = () => {
 
                                             {/* div header img - id */}
                                             <div className="div_card_header">
-                                                <Image 
-                                                src={usuario.imagen_perfil} alt="Icono de salidas" 
-                                                width={30}
-                                                height={30}  className="rounded-image"/>&nbsp;&nbsp; 
+                                            <Image 
+                                            src={usuario.imagen_perfil} alt="Icono de ingresos" 
+                                            width={30}
+                                            height={30}  
+                                            loading="lazy"
+                                            onError={handleImageError}
+                                            className="rounded-image"/>&nbsp;&nbsp; 
                                                                                
                                                 <p><strong>Id salida:</strong> {id}</p>&nbsp;&nbsp; 
 
