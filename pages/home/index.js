@@ -43,31 +43,64 @@ const HomePage = () => {
 //-------Función para obtener la fecha de hoy ---------------------
 
 const realizarBusqueda = () => {
-    if (!busquedaUsuario) {
+    console.log(`Valor de busquedaUsuario: ${busquedaUsuario}`);
+
+    if (!busquedaUsuario){
+        setBusquedaUsuario('')
         router.push('/home');
-    } else {
-      // Realiza la búsqueda y muestra los resultados de ingresos.
-    const registrosIngresosFiltrados = ingresos.filter((ingreso) => {
-        return ingreso.username.includes(busquedaUsuario);
-      });
-  
-      // Realiza la búsqueda y muestra los resultados de salidas.
-      const registrosSalidasFiltrados = salidas.filter((salida) => {
-        return salida.username.includes(busquedaUsuario);
-      });
+    }
+    else{
+          // Realiza la búsqueda y muestra los resultados de ingresos.
+          const busquedaMinuscula = busquedaUsuario.toLowerCase(); // Convierte la búsqueda a minúsculas.
+
+          // Realiza la búsqueda y muestra los resultados de ingresos.
+          const registrosIngresosFiltrados = ingresos.filter((ingreso) => {
+            const usuarioIngreso = usuarios.find((user) => user.username === ingreso.username);
+        
+            // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
+            const firstNameMinuscula = usuarioIngreso ? usuarioIngreso.first_name.toLowerCase() : '';
+            const lastNameMinuscula = usuarioIngreso ? usuarioIngreso.last_name.toLowerCase() : '';
+        
+            return (
+              ingreso.username.includes(busquedaMinuscula) ||
+              (usuarioIngreso &&
+                (firstNameMinuscula.includes(busquedaMinuscula) ||
+                  lastNameMinuscula.includes(busquedaMinuscula)))
+            );
+          });
+            // Realiza la búsqueda y muestra los resultados de salidas.
+            const registrosSalidasFiltrados = salidas.filter((salida) => {
+                // return salida.username.includes(busquedaUsuario);
+
+                const usuarioSalida = usuarios.find((user) => user.username === salida.username);
+        
+                // Convierte first_name y last_name a minúsculas para hacer la comparación insensible a mayúsculas y minúsculas.
+                const firstNameMinuscula = usuarioSalida ? usuarioSalida.first_name.toLowerCase() : '';
+                const lastNameMinuscula = usuarioSalida ? usuarioSalida.last_name.toLowerCase() : '';
+            
+                return (
+                salida.username.includes(busquedaMinuscula) ||
+                (usuarioSalida &&
+                    (firstNameMinuscula.includes(busquedaMinuscula) ||
+                    lastNameMinuscula.includes(busquedaMinuscula)))
+                );
+            });
   
       // Actualiza el estado de los registros de ingresos y salidas para mostrar los resultados de la búsqueda.
       setIngresos(registrosIngresosFiltrados);
       setSalidas(registrosSalidasFiltrados);
     }
+    
+    
   };
 
 
 
-  const recargarBusqueda = () => {
-    setBusquedaUsuario('');
-    router.push('/home');
-  }
+
+//   const recargarBusqueda = () => {
+//     setBusquedaUsuario('');
+//     router.push('/home');
+//   }
   
 
     useEffect(() => {
@@ -91,42 +124,42 @@ const realizarBusqueda = () => {
 
 
 //---Función para obtener todos los datos de todos los usuarios--------
-async function fetchUsuarios() {
-    try {
-        const data = await getUsuarios();
-        setUsuarios(data);
-        console.log(data);
-    } catch (error) {
-        console.error(error);
-    }
-}
+        async function fetchUsuarios() {
+        try {
+            const data = await getUsuarios();
+            setUsuarios(data);
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+            }
 //---Función para obtener todos los datos de todos los usuarios--------
 
 //--- Función para obtener los datos del usuario----
-async function fetchUsuario() {
-    try {
-        const data = await getUsuario(username);
-        setUsuario(data);
-        localStorage.setItem('id',data.id);
-        localStorage.setItem('first_name',data.first_name);
-        localStorage.setItem('last_name',data.last_name);
-        localStorage.setItem('email',data.email);
-        localStorage.setItem('ficha',data.ficha);
-        localStorage.setItem('tipo_usuario',data.tipo_usuario);
-        // Obtén la imagen de perfil del usuario
-        const imagenPerfil = data.imagen_perfil || 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png';
+        async function fetchUsuario() {
+            try {
+                const data = await getUsuario(username);
+                setUsuario(data);
+                localStorage.setItem('id',data.id);
+                localStorage.setItem('first_name',data.first_name);
+                localStorage.setItem('last_name',data.last_name);
+                localStorage.setItem('email',data.email);
+                localStorage.setItem('ficha',data.ficha);
+                localStorage.setItem('tipo_usuario',data.tipo_usuario);
+                // Obtén la imagen de perfil del usuario
+                const imagenPerfil = data.imagen_perfil || 'https://res.cloudinary.com/unidigital/image/upload/v1694319071/biometric%20services/usuario_llozkf.png';
 
-        // Guarda la imagen de perfil en el localStorage
-        localStorage.setItem('imagen_perfil', imagenPerfil);
-        setFotografia(imagenPerfil);
-        localStorage.setItem('pregunta_seguridad',data.pregunta_seguridad);
-        localStorage.setItem('respuesta_seguridad',data.respuesta_seguridad);
+                // Guarda la imagen de perfil en el localStorage
+                localStorage.setItem('imagen_perfil', imagenPerfil);
+                setFotografia(imagenPerfil);
+                localStorage.setItem('pregunta_seguridad',data.pregunta_seguridad);
+                localStorage.setItem('respuesta_seguridad',data.respuesta_seguridad);
 
-        console.log(data);
-    } catch (error) {
-        console.error(error);
-    }
-}
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
 //--- Función para obtener los datos del usuario----
 
 //---Función asyncrona para obtener los datos de ingresos -----------------
@@ -137,12 +170,12 @@ async function fetchUsuario() {
                 console.log(data);
                 // Continúa con las demás llamadas a las funciones fetch (fetchSalidas, fetchUsuario, etc.).
                 // También puedes realizar el filtrado aquí si el usuario es un aprendiz.
-                if (usuario && usuario.tipo_usuario === 'aprendiz') {
-                    const registrosIngresosFiltrados = data.filter((ingreso) => {
-                        return ingreso.username === username;
-                    });
-                    setIngresos(registrosIngresosFiltrados);
-                }
+                // if (usuario && usuario.tipo_usuario === 'aprendiz') {
+                //     const registrosIngresosFiltrados = data.filter((ingreso) => {
+                //         return ingreso.username === username;
+                //     });
+                //     setIngresos(registrosIngresosFiltrados);
+                // }
             } catch (error) {
                 console.error(error);
             }
@@ -155,13 +188,13 @@ async function fetchUsuario() {
                 const data = await getSalidas();
                 setSalidas(data);
                 console.log(data);
-                if (usuario && usuario.tipo_usuario === 'aprendiz') {
-                    const registrosSalidasFiltrados = data.filter((salida) => {
-                        return salida.username === username;
-                    });
-                    setSalidas(registrosSalidasFiltrados);
+                // if (usuario && usuario.tipo_usuario === 'aprendiz') {
+                //     const registrosSalidasFiltrados = data.filter((salida) => {
+                //         return salida.username === username;
+                //     });
+                //     setSalidas(registrosSalidasFiltrados);
 
-                }
+                // }
             } catch (error) {
                 console.error(error);
             }
@@ -175,7 +208,7 @@ async function fetchUsuario() {
         fetchSalidas();  
         
 //---Inicializar funciones asyncronas -----------------
-    }, [access_token,username, router, usuario]);
+    }, [access_token,username, router]);
     
     console.log(usuario)
     return (
@@ -223,24 +256,23 @@ async function fetchUsuario() {
                 </div>
 
             </div>
-            {usuario.tipo_usuario !== "aprendiz" &&(
-            <div className="contenedor_filtros_asistencias">
-                <div>
-                        <input
-                        type="text"
-                        placeholder="Buscar por usuario"
-                        className="date_input"
-                        value={busquedaUsuario}
-                        onChange={(e) => {
-                            setBusquedaUsuario(e.target.value);
-                            realizarBusqueda(); // Llama a la función de búsqueda cuando el valor cambie.
-                        }}
-                        />&nbsp; <button onClick={recargarBusqueda} className="boton_busqueda">recargar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                      </svg></button>      
-                </div>
-            </div>)}
+                {/* busqueda por usuario */}
+                {usuario.tipo_usuario !== "aprendiz" &&(
+                <div className="contenedor_filtros_asistencias">
+                    <div>
+                            <input
+                            type="text"
+                            placeholder="Buscar por usuario o nombre"
+                            className="date_input"
+                            value={busquedaUsuario}
+                            onChange={(e) => {
+                                setBusquedaUsuario(e.target.value);
+                            }}
+                            />&nbsp; 
+                            <button onClick={realizarBusqueda} className="boton_busqueda">Buscar</button>   
+                    </div>
+                </div>)}
+                {/* busqueda por usuario */}
             {/* Filtros */}
 
             
