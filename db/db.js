@@ -210,17 +210,30 @@ export async function getUsuario(username) {
 //Función para crear un usuario
 
 export async function CreateUsuario(usuarioData) {
-  const response = await fetch('https://miguelpaez9612.pythonanywhere.com/register/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(usuarioData),
-  });
+  // Crea un nuevo objeto FormData
+  const formData = new FormData();
 
-  const data = await response.json();
-  return data;
+  // Agrega todos los campos y la imagen al FormData
+  for (const key in usuarioData) {
+    formData.append(key, usuarioData[key]);
+  }
+
+  try {
+    const response = await fetch('https://miguelpaez9612.pythonanywhere.com/register/', {
+      method: 'POST',
+      body: formData,  // Envía el FormData en lugar de usuarioData
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // Maneja cualquier error de la solicitud aquí
+    console.error('Error al crear usuario:', error);
+    throw error;
+  }
 }
+
+
 
 
 
