@@ -1,7 +1,7 @@
 // --------Importaciones y librerías--------------
 import React from "react";
 import MainLayout from '../../components/layouts/MainLayout';
-import { getIngresos, getSalidas, getUsuario, getUsuarios } from '../../db/db';
+import { getIngresos, getSalidas, getUsuario, getUsuarios, getFichas } from '../../db/db';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import '../../styles/pages/home.css';
@@ -22,12 +22,16 @@ const HomePage = () => {
       };
 
 //---------------Variables------------------------------------------------- 
-   
+    const [ingresosTodosIniciales, setIngresosTodosIniciales] = useState([]);
+    const [salidasTodasIniciales, setSalidasTodasIniciales] = useState([]);
     const [ingresosTodos, setIngresosTodos] = useState([]);
     const [salidasTodas, setSalidasTodas] = useState([]);
 
     const [ingresosAprendiz, setIngresosAprendiz] = useState([]);
     const [salidasAprendiz, setSalidasAprendiz] = useState([]);
+
+    const [fichas, setFichas] = useState([]);
+    const [fichaSeleccionada, setFichaSeleccionada] = useState([]);
     
     const [fechaInicioFiltro, setFechaInicioFiltro] = useState(getFormattedDate());
     const [fotografia, setFotografia] = useState('');
@@ -111,6 +115,26 @@ const HomePage = () => {
             router.push('/home');
     }
 
+    const filtrarFicha = () => {
+        toast.loading('Filtrando por ficha N.', {
+            description: fichaSeleccionada
+        });
+        // Filtra los registros de ingreso basados en la ficha seleccionada
+        const registrosIngresosFichas = ingresosTodosIniciales.filter((ingreso) => {
+          return fichaSeleccionada === ingreso.ficha;
+        });
+
+        // Filtra los registros de salida basados en la ficha seleccionada
+        const registrosSalidasFichas = salidasTodasIniciales.filter((salida) => {
+            return fichaSeleccionada === salida.ficha;
+          });
+        
+      
+      
+        // Actualiza el estado 'ingresosTodos' con los registros filtrados
+        setIngresosTodos(registrosIngresosFichas);
+        setSalidasTodas(registrosSalidasFichas);
+      };
  
 
     useEffect(() => {
@@ -191,6 +215,7 @@ const HomePage = () => {
                       };
                     todosIngresosArray.push(nuevoIngreso);
                   });
+                  setIngresosTodosIniciales(todosIngresosArray);
                   setIngresosTodos(todosIngresosArray);
                 
 
@@ -251,6 +276,7 @@ const HomePage = () => {
                       };
                       todasSalidasArray.push(nuevaSalida);
                   });
+                  setSalidasTodasIniciales(todasSalidasArray);
                   setSalidasTodas(todasSalidasArray);
                 
 
@@ -291,6 +317,15 @@ const HomePage = () => {
             }
         };
 
+        async  function fetchSalidasAprendiz(){            
+            try {
+                const dataFichas = await getFichas();
+                setFichas(dataFichas);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
 //---Inicializar funciones asyncronas -----------------
         fetchUsuario();
         fetchUsuarios();
@@ -302,11 +337,6 @@ const HomePage = () => {
         
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
-    
-    console.log("Hola soy todosIngresosArray:", ingresosTodos); 
-    console.log("Hola soy todasSalidasArray:", salidasTodas);
-    console.log("Hola soy todosIngresosAprendiz:", ingresosAprendiz);
-    console.log("Hola soy todasSalidasAprendiz:", salidasAprendiz);
     return (
         <MainLayout>
             {/* Imagen de perfil */}
@@ -357,14 +387,15 @@ const HomePage = () => {
             <div className="contenedor_filtros_asistencias">
                 <div>
                         <input
+                        
                         type="text"
                         placeholder="Buscar por usuario o nombre"
-                        className="date_input"
+                        className="searh_input"
                         value={busquedaUsuario}
                         onChange={(e) => {
                             setBusquedaUsuario(e.target.value);
                         }}
-                        />&nbsp; 
+                        /><br/> <br/> 
                         <button onClick={realizarBusqueda} className="boton_busqueda">Buscar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 </svg></button>&nbsp;    
@@ -374,7 +405,35 @@ const HomePage = () => {
 </svg></button>   
                 </div>
             </div>)}
-            {/* busqueda por usuario */}
+            <br/>
+            {/* busqueda por usuario y nombre*/}
+
+            {/* busqueda por ficha */}
+            {usuario.tipo_usuario !== "aprendiz" &&(
+            <div className="contenedor_filtros_asistencias">
+            <select
+            className="searh_input"
+              value={fichaSeleccionada}
+              onChange={(e) => {
+                setFichaSeleccionada(e.target.value);
+                 // Llama a la función filtrarFicha cuando se seleccione una opción.
+              }}
+            >
+              <option value="">Selecciona una ficha</option>
+              {fichas.map((ficha) => (
+                <option key={ficha.url} value={ficha.numero_ficha}>
+                  {ficha.numero_ficha}
+                </option>
+              ))}
+            </select>
+            <button onClick={filtrarFicha}
+            className="boton_busqueda"
+          >Filtrar por ficha</button>
+          </div>       
+          
+                
+          )}
+            {/* busqueda por ficha*/}
             {/* Filtros */}
 
             
