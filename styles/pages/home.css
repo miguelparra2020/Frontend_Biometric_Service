@@ -246,7 +246,22 @@ font-style: oblique;
     background-color: #2980b9; /* Cambiar el color de fondo al pasar el cursor */
   }
   
-  
+.boton_descargar_excel{
+    padding: 10px 20px;
+    background: #0ec96f;
+    color: white;
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.boton_descargar_excel:hover{
+    background: #0b874b;
+}
   
   
   
