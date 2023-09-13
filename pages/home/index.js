@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import '../../styles/pages/fichas.css';
 import '../../styles/pages/usuarios.css';
 import { Toaster, toast } from 'sonner';
+import * as XLSX from 'xlsx';
 // --------Importaciones y librerías--------------
 
 // ----Función de exportar el componente---------
@@ -135,7 +136,26 @@ const HomePage = () => {
         setIngresosTodos(registrosIngresosFichas);
         setSalidasTodas(registrosSalidasFichas);
       };
- 
+
+      const exportToExcel = (data) => {
+        // Crear un libro de trabajo (workbook)
+        const wb = XLSX.utils.book_new();
+      
+        // Crear una hoja de trabajo (worksheet) con tus datos
+        const ws = XLSX.utils.json_to_sheet(data);
+      
+        // Agregar la hoja de trabajo al libro de trabajo
+        XLSX.utils.book_append_sheet(wb, ws, 'Hoja1');
+      
+        // Descargar el archivo Excel con un nombre específico (por ejemplo, "Report.xlsb")
+        XLSX.writeFile(wb, "Report.xlsb");
+      }
+      
+      const data = [
+        { Nombre: 'Usuario 1', Edad: 25, Correo: 'usuario1@example.com' },
+        { Nombre: 'Usuario 2', Edad: 30, Correo: 'usuario2@example.com' },
+        // Agrega tus datos aquí
+      ];
 
     useEffect(() => {
         // Esta lógica se ejecutará solo una vez cuando el componente se monte.
@@ -338,7 +358,10 @@ const HomePage = () => {
         
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
-    console.log(salidasAprendiz)
+    
+   
+
+
     return (
         <MainLayout>
             {/* Imagen de perfil */}
@@ -456,12 +479,15 @@ const HomePage = () => {
                                     </svg>
                                 </Link>
                     </div>)}
+
+                    
                     {/* Botón de crear un nuevo ingreso */}
 
                     {/* titulo registro de ingresos */}
                     <div className="div_titulo_registros">
                         <h1>Registros de ingresos</h1> 
                     </div>
+                    <button onClick={() => exportToExcel(data)}>Descargar Excel</button>
                     {/* titulo registro de ingresos */}
 
                     {/* mapeo de todos los registros de ingreso del aprendiz */}
