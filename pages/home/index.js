@@ -317,7 +317,7 @@ const HomePage = () => {
             }
         };
 
-        async  function fetchSalidasAprendiz(){            
+        async  function fetchFichas(){            
             try {
                 const dataFichas = await getFichas();
                 setFichas(dataFichas);
@@ -334,9 +334,11 @@ const HomePage = () => {
         fetchSalidasTodas();
         fetchIngresosAprendiz();
         fetchSalidasAprendiz();
+        fetchFichas();
         
 //---Inicializar funciones asyncronas -----------------
     }, [access_token,username, router]);
+    console.log(salidasAprendiz)
     return (
         <MainLayout>
             {/* Imagen de perfil */}
