@@ -15,10 +15,11 @@ const CrearUsuarioPage = () => {
     const [first_name, setFirstName] = useState(''); 
     const [last_name, setLastName] = useState(''); 
     const [email, setEmail] = useState('');
-    const [ficha, setFicha] = useState([]);  
+    const [ficha, setFicha] = useState([]);   
     const [fichas, setFichas] = useState([]); 
     const [fichaSeleccionada, setFichaSeleccionada] = useState(""); 
     const [tipo_usuario, setTipoUsuario] = useState(""); 
+    const [tipo_usuario_seleccionado, setTipoUsuarioSeleccionado] = useState(""); 
     const [password, setPassword] = useState(''); 
     const [confirmPassword, setConfirmPassword] = useState(''); 
     const [imagen_perfil, setImagenPerfil] = useState(null);
@@ -83,16 +84,9 @@ function base64ToFile(base64, filename) {
         if (typeof window !== 'undefined') {
             const storedUsuario = localStorage.getItem('access_token');
             setAccess(storedUsuario);
-            setTipoUsuario(localStorage.getItem('tipo_usuario'));
         }
         if (access_token == 'sin-acceso'){
             router.push('/');
-        }
-        if (tipo_usuario == 'aprendiz'){
-            router.push('/home');
-        }
-        if (tipo_usuario == 'undefined'){
-            router.push('/home');
         }
         async function fetchUsuarios() {
             const Usuarios = await getUsuarios();
@@ -105,17 +99,17 @@ function base64ToFile(base64, filename) {
         }
         fetchFichas();
         fetchUsuarios();
-    }, [access_token, router,tipo_usuario]);
+    }, [access_token, router,tipo_usuario_seleccionado]);
 
     //---Función para el cambio de selección de ficha----
-    const handleFichaChange = (e) => {
+    const handleFichaChangeNueva = (e) => {
         setFichaSeleccionada(e.target.value);
         setFicha(e.target.value);
     };
     //---Función para el cambio de selección de ficha----
 
-    const handleTipoUsuarioChange = (e) => {
-        setTipoUsuario(e.target.value);
+    const handleTipoUsuarioChangeNuevo = (e) => {
+        setTipoUsuarioSeleccionado(e.target.value);
     };
 
     const handlePreguntaChange = (e) => {
@@ -158,7 +152,7 @@ function base64ToFile(base64, filename) {
             first_name,
             last_name,
             ficha,
-            tipo_usuario,
+            tipo_usuario: tipo_usuario_seleccionado,
             password,
             imagen_perfil: imagenPerfilAEnviar, // Utiliza la imagen predeterminada si no se selecciona una
             pregunta_seguridad,
@@ -207,7 +201,7 @@ function base64ToFile(base64, filename) {
             </div>
             <div>
             Asignar ficha:&nbsp;
-            <select value={fichaSeleccionada} className="inputs-ingresos" required onChange={handleFichaChange}>
+            <select value={fichaSeleccionada} className="inputs-ingresos" required onChange={handleFichaChangeNueva}>
                 <option value="">Selecciona una ficha</option>
                 {fichas.map((ficha) => (
                     <option key={ficha.url} value={ficha.numero_ficha}>
@@ -218,7 +212,7 @@ function base64ToFile(base64, filename) {
             </div>
             <div>
             Tipo de usuario:&nbsp;
-            <select value={tipo_usuario} className="inputs-ingresos" required onChange={handleTipoUsuarioChange}>
+            <select value={tipo_usuario_seleccionado} className="inputs-ingresos" required onChange={handleTipoUsuarioChangeNuevo}>
                 <option value="">Seleccionar Tipo de Usuario</option>
                 <option value="aprendiz">Aprendiz</option>
                 <option value="instructor">Instructor</option>
