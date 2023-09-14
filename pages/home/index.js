@@ -4,12 +4,15 @@ import MainLayout from '../../components/layouts/MainLayout';
 import { getIngresos, getSalidas, getUsuario, getUsuarios, getFichas } from '../../db/db';
 import { useState, useEffect } from "react";
 import Link from "next/link";
+// --------- Styles CSS -------------
 import '../../styles/pages/home.css';
+import '../../styles/pages/fichas.css';
+import '../../styles/pages/usuarios.css';
+
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { useRouter } from 'next/router';
-import '../../styles/pages/fichas.css';
-import '../../styles/pages/usuarios.css';
+// ==== Biblioteca de mensajes ===
 import { Toaster, toast } from 'sonner';
 import * as XLSX from 'xlsx';
 // --------Importaciones y librerías--------------
