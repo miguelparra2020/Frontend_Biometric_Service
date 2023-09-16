@@ -1,6 +1,5 @@
 import React from 'react';
 import  LoginLayout from '../../components/layouts/LoginLayout';
-
 // CSS styles 
 import styles from '@/styles/pages/terminos.module.css';
 
@@ -8,7 +7,7 @@ import styles from '@/styles/pages/terminos.module.css';
 const Terminos = () => {
     return (
       <LoginLayout>
-      <div>
+      <div className={styles.container__content}>
         {/* className={styles.} */}
         <main className={styles.main}>
           <article className={styles.article}>
