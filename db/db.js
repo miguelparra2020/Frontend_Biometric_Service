@@ -243,3 +243,71 @@ export async function getUsuarios() {
   const data = await response.json();
   return data;
 }
+
+
+//----------------------------Modelo---Excusas-------------------------------
+
+
+//Función para obtener todas las excusas de la base de datos es un READ - lectura
+export async function getExcusas() {
+  const response = await fetch('https://miguelpaez9612.pythonanywhere.com/excusas/');
+  const data = await response.json();
+  return data;
+}
+
+//del CRUD - excusas
+//Created 🆕
+//Función para crear una excusa
+
+export async function CreateExcusa(excusaData) {
+  const response = await fetch('https://miguelpaez9612.pythonanywhere.com/excusas/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(excusaData),
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+//del CRUD - Excusa
+//Read 👀
+//Función para obtener una excusa especifica
+export async function getExcusa(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/excusas/${id}/`);
+  const data = await response.json();
+  return data;
+}
+
+//del CRUD - excusa
+//Updated 😮‍💨
+//Función para  actualizar todos los datos de una excusa de la base de datos es un Updated 
+export async function updateExcusa(id, updatedExcusa) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/excusas/${id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedExcusa),
+  });
+
+  const data = await response.json();
+  return data;
+} 
+
+//del CRUD - excusas
+//Delete ❌
+//Función para eliminar una excusa según el ID
+export async function deleteExcusa(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/excusas/${id}/`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    return { success: true };
+  } else {
+    throw new Error('Error al eliminar una excusa');
+  }
+}
