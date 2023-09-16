@@ -3,14 +3,22 @@
 }
 
 .article {
-    background-color: #B2C1C9;
-    margin: 3rem 7rem;
-    padding: 3rem 3rem;
+    background-color: #001629;
+    color: #fff;
+    margin: 7rem 70px;
+    padding: 3rem 5rem;
     border-radius: 25px;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     -ms-border-radius: 25px;
     -o-border-radius: 25px;
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+}
+
+.p {
+    margin-top: 1rem;
+    font-size: 1.2em;
 }
 
 @media (max-width: 750px){

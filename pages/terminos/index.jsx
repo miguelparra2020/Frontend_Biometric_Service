@@ -1,5 +1,7 @@
 import React from 'react';
 import  LoginLayout from '../../components/layouts/LoginLayout';
+
+// CSS styles 
 import styles from '@/styles/pages/terminos.module.css';
 
 
