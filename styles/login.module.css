@@ -3,14 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4rem 3rem;
-    padding-bottom: 8rem;
 }
 
 .tarjeta {
+    margin: 3rem 3rem 15rem 3rem;
     background-color: #001629;
     color: white;
-    padding: 1rem 3.3rem;
+    padding: 1.6rem 3.3rem ;
     border-radius: 1rem;
     border: solid 4px;
     border-color: #668494;
@@ -79,7 +78,6 @@
 }
 
 .a{
-    
     text-decoration: underline;
     color: #fff;
     font-weight: 300;
