@@ -18,3 +18,18 @@
     -20px -20px 60px #ffffff;
     border: solid 3px #39A900;
 }
+.header_card_excusa{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.imagen_perfil_card_excusa{
+    border-radius: 50px;
+}
+.fila_card_excusa{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
