@@ -4,6 +4,7 @@ import { getExcusas } from '../../db/db';
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import '../../styles/pages/fichas.css';
+import '../../styles/pages/excusas.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -32,7 +33,8 @@ function ExcusasPage(){
             try {
                 const data = await getExcusas();
                 console.log(data);     
-                setExcusas(data);           
+                setExcusas(data);  
+                setTipoUsuario(localStorage.getItem('tipo_usuario')) ;         
             } catch (error) {
                 console.log(error);                
             }
@@ -58,9 +60,24 @@ function ExcusasPage(){
             { 
                 tipo_usuario == 'aprendiz' ? (<div>Soy aprendiz</div>) : (<></>)
             }
+            <div className="contenedor_excusas">
             { 
-                tipo_usuario !== 'aprendiz' ? (<div>Soy otros usuarios</div>) : (<></>)
+                tipo_usuario !== 'aprendiz' ? (<div>
+                    {excusas.map((item) => (
+                            <div key={item.id} className="card_excusa">
+                                <div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                Id excusa: {item.id}
+
+                                {item.username}                                
+                            </div>
+                        ))}
+                </div>) : (<></>)
             }
+            </div>
 
         </MainLayout>
     )
