@@ -1,7 +1,12 @@
+.main {
+    background-color: #FBFBE2;
+    padding: 4rem 4rem;
+}
+
 .article {
     background-color: #001629;
     color: #fff;
-    margin: 7rem 70px;
+    /* margin: 7rem 70px; */
     padding: 3rem 5rem;
     border-radius: 25px;
     -webkit-border-radius: 25px;
@@ -18,8 +23,18 @@
 }
 
 @media (max-width: 750px){
-    .article {
-    margin: 3rem 1rem;
+    .main {
+        background-color: #FBFBE2;
+        padding: 3rem 2rem;
+    }
 
+    .article {
+        padding: 2rem 2.5rem;
+
+    }
+
+    .p {
+        margin-top: 1rem;
+        font-size: 0.9em;
     }
 }

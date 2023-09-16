@@ -1,3 +1,41 @@
 .main {
-    background-color: darkorange;
+    background-color: #FBFBE2;
+    padding: 4rem 4rem;
+}
+
+.article {
+    background-color: #001629;
+    color: #fff;
+     /* margin: 7rem 70px; */
+    padding: 3rem 5rem;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+}
+
+.article__p {
+    margin-top: 1rem;
+    font-size: 1.2em;
+}
+
+@media (max-width: 750px){
+    .main {
+        background-color: #FBFBE2;
+        padding: 3rem 2rem;
+    }
+
+    .article {
+        padding: 2rem 2.5rem;
+
+    }
+
+    .article__p {
+        margin-top: 1rem;
+        font-size: 0.9em;
+    }
+
 }
