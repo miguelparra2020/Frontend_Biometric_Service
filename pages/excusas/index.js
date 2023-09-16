@@ -79,7 +79,7 @@ function ExcusasPage(){
                                 </div>
                                 <div className="fila_card_excusa">
                                     <div>◽<strong>Ficha:</strong> {item.numero_ficha}</div>&nbsp;&nbsp;
-                                    <div><strong>Tipo:</strong>  {item.first_name}  {item.tipo_usuario}</div>
+                                    <div><strong>Tipo:</strong>   {item.tipo_usuario}</div>
                                 </div>
                                 <div className="fila_card_excusa">
                                     <div>◽<strong>Comentario del aprendiz:</strong> {item.comentario_aprendiz}</div>
@@ -93,9 +93,18 @@ function ExcusasPage(){
                                 <br/>
                                 <br/>
                                 <div className="fila_card_excusa">
-                                    <div>◽<strong>Estado:</strong> {item.estado_excusa}</div>
+                                    <div>◽<strong>Estado:</strong> {item.estado_excusa}</div>&nbsp;
+                                    <div>
+                                        {item.estado_excusa == "pendiente" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903486/biometric%20services/caducado_zvji6p.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        {item.estado_excusa == "aprobada" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903699/biometric%20services/cheque_c4qgg7.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        {item.estado_excusa == "anulada" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903759/biometric%20services/rechazado_i5mzyx.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        
+                                        </div>
                                 </div>
-
+                                <br/>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Comentarios del instructor:</strong> {item.comentario_instructor}</div>
+                                </div>
                                                        
                             </div>
                         ))}
