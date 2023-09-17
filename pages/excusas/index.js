@@ -13,6 +13,7 @@ function ExcusasPage(){
     const [access_token, setAccess] = useState('');
     const [tipo_usuario, setTipoUsuario] = useState('');
     const [excusas, setExcusas] = useState([]);
+    const [excusasAprendiz, setExcusasAprendiz] = useState([]);
     const router = useRouter();
 //----------------Variables---------------------------------
 
@@ -32,9 +33,23 @@ function ExcusasPage(){
         async function fecthExcusas () {
             try {
                 const data = await getExcusas();
+                const usuario = localStorage.getItem('username');
+                const dataAprendiz = [];
                 console.log(data);     
                 setExcusas(data);  
-                setTipoUsuario(localStorage.getItem('tipo_usuario')) ;         
+                setTipoUsuario(localStorage.getItem('tipo_usuario')) ;  
+                console.log("Soy usuario:", usuario);
+
+                // Filtrar data según el usuario
+                data.forEach(item => {
+                    if (item.username === usuario) {
+                        dataAprendiz.push(item);
+                    }
+                });
+
+                console.log("Data del aprendiz:", dataAprendiz);
+                setExcusasAprendiz(dataAprendiz);
+
             } catch (error) {
                 console.log(error);                
             }
@@ -56,10 +71,71 @@ function ExcusasPage(){
             <div className="contenedor_titulo_fichas">
                 <h1>Bienvenid@ al área de excusas</h1>   
             </div>
+            <div className="button_card_excusa">
+                                    <div><Link href="/excusas/nueva" className="boton_editar_excusa"><button> Crear excusa</button></Link></div>
+                                </div>
             {/* titulo */}
+            {/* Excusas del aprendiz */}
+            <div className="contenedor_excusas">
             { 
-                tipo_usuario == 'aprendiz' ? (<div>Soy aprendiz</div>) : (<></>)
+                tipo_usuario == 'aprendiz' ? (<div>
+                    {excusasAprendiz.map((item) => (
+                            <div key={item.id} className="card_excusa">
+                                <div className="header_card_excusa"> 
+                                    <div><Image src={item.imagen_perfil} width={50} height={50} alt="Imagen de perfil" className="imagen_perfil_card_excusa"/></div>
+                                    &nbsp;&nbsp;
+                                    <div><strong>Id excusa:</strong>  {item.id} </div>
+                                    &nbsp;&nbsp;
+                                    <div><Image src="https://res.cloudinary.com/unidigital/image/upload/v1694901295/biometric%20services/historial-medico_ekakxl.png" width={40} height={40} alt="Imagen de excusa"/></div>
+                                </div>
+                                <br/>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Usuario:</strong> {item.username}</div>&nbsp;&nbsp;
+                                    <div><strong>Nombre:</strong>  {item.first_name}  {item.last_name}</div>
+                                </div>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Ficha:</strong> {item.numero_ficha}</div>&nbsp;&nbsp;
+                                    <div><strong>Tipo:</strong>   {item.tipo_usuario}</div>
+                                </div>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Comentario del aprendiz:</strong> {item.comentario_aprendiz}</div>
+                                </div>
+                                <br/>
+                                <div className="fila_card_excusa">
+                                    <div><strong>Archivo Excusa:</strong> 
+                                        <Link href={item.archivo_excusa} target="_blank"> <Image src="https://res.cloudinary.com/unidigital/image/upload/v1694902849/biometric%20services/pdf_juwlld.png" width={30} height={30} alt="Imagen de pdf"/></Link>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Estado:</strong> {item.estado_excusa}</div>&nbsp;
+                                    <div>
+                                        {item.estado_excusa == "pendiente" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903486/biometric%20services/caducado_zvji6p.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        {item.estado_excusa == "aprobada" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903699/biometric%20services/cheque_c4qgg7.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        {item.estado_excusa == "anulada" ? (<Image src="https://res.cloudinary.com/unidigital/image/upload/v1694903759/biometric%20services/rechazado_i5mzyx.png" width={25} height={25} alt="Imagen de pdf"/>) : (<></>)}
+                                        
+                                        </div>
+                                </div>
+                                <br/>
+                                <div className="fila_card_excusa">
+                                    <div>◽<strong>Comentarios del instructor:</strong> {item.comentario_instructor}</div>
+                                </div>
+                                <br/>
+                                <div className="button_card_excusa">
+                                    <div><Link href="/" className="boton_editar_excusa"><button> Editar Excusa <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg></button></Link></div>
+                                </div>
+                                                       
+                            </div>
+                        ))}
+                </div>) : (<></>)
             }
+            </div>
+            {/* Excusas del aprendiz */}
+            {/* Todas las excusas se muestran al instructor */}
             <div className="contenedor_excusas">
             { 
                 tipo_usuario !== 'aprendiz' ? (<div>
@@ -107,7 +183,10 @@ function ExcusasPage(){
                                 </div>
                                 <br/>
                                 <div className="button_card_excusa">
-                                    <div><Link href="/" className="boton_editar_excusa"><button> Editar Excusa</button></Link></div>
+                                    <div><Link href="/home" className="boton_editar_excusa"><button> Editar Excusa <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg></button></Link></div>
                                 </div>
                                                        
                             </div>
@@ -115,6 +194,7 @@ function ExcusasPage(){
                 </div>) : (<></>)
             }
             </div>
+            {/* Todas las excusas se muestran al instructor */}
 
         </MainLayout>
     )

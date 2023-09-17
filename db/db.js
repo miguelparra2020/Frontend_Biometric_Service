@@ -260,16 +260,27 @@ export async function getExcusas() {
 //Función para crear una excusa
 
 export async function CreateExcusa(excusaData) {
-  const response = await fetch('https://miguelpaez9612.pythonanywhere.com/excusas/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(excusaData),
-  });
+  // Crea un nuevo objeto FormData
+  const formData = new FormData();
 
-  const data = await response.json();
-  return data;
+  // Agrega todos los campos y la imagen al FormData
+  for (const key in excusaData) {
+    formData.append(key, excusaData[key]);
+  }
+
+  try {
+    const response = await fetch('https://miguelpaez9612.pythonanywhere.com/excusas/', {
+      method: 'POST',
+      body: formData,  // Envía el FormData en lugar de usuarioData
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // Maneja cualquier error de la solicitud aquí
+    console.error('Error al crear usuario:', error);
+    throw error;
+  }
 }
 
 //del CRUD - Excusa

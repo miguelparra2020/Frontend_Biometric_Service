@@ -54,3 +54,73 @@
   .boton_editar_excusa button:hover {
     background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón */
   }
+
+  .boton_enviar_excusa {
+    background-color: #3498db; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno (ajústalo según tus preferencias) */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    font-size: 16px; /* Tamaño del texto */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  .boton_enviar_excusa:hover {
+    background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón */
+  }
+
+  .card_formulario{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    border: solid 3px white;
+  }
+  .card_formulario:hover{
+    box-shadow:  20px 20px 60px #d5d5c0,
+    -20px -20px 60px #ffffff;
+    border: solid 3px #39A900;
+  }
+
+  .fila_formulario {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .fila_formulario label {
+    flex-basis: 30%;
+    text-align: right;
+    margin-right: 15px;
+  }
+  
+  .fila_formulario input[type="text"],
+  .fila_formulario input[type="search"],
+  .fila_formulario input[type="date"],
+  .fila_formulario input[type="time"],
+  .fila_formulario input[type="file"],
+  .fila_formulario textarea,
+  .fila_formulario select {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  /* Estilo para el mensaje de error */
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  
+  @media (max-width: 750px) {
+    .fila_formulario {
+        flex-direction: column;
+    }
+  }
