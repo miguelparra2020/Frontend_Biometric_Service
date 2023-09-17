@@ -232,17 +232,30 @@ export async function CreateUsuario(usuarioData) {
     throw error;
   }
 }
-
-
-
-
-
-//----------------------------Modelo---Usuarios-------------------------------
 export async function getUsuarios() {
   const response = await fetch('https://miguelpaez9612.pythonanywhere.com/users/');
   const data = await response.json();
   return data;
 }
+
+export async function updateUsuario(id, updatedUsuario) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/usuarios/${id}/`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedUsuario),
+  });
+
+  const data = await response.json();
+  return data;
+} 
+
+
+
+
+//----------------------------Modelo---Usuarios-------------------------------
+
 
 
 //----------------------------Modelo---Excusas-------------------------------

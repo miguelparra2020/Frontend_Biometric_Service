@@ -6,6 +6,7 @@ import '../../styles/pages/miperfil.css';
 import '../../styles/pages/usuarios.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from "next/link";
 
 const MiPerfilPage = () => {
     // ----Constantes y variables de estado-----------
@@ -67,8 +68,12 @@ const MiPerfilPage = () => {
                                 <p className="perfil-title"><strong>Ficha:</strong> {ficha}</p>
                                 <p className="perfil-title"><strong>Tipo de usuario:</strong> {tipo_usuario}</p>    
                                 <p className="perfil-title"><strong>Pregunta de seguridad:</strong> {pregunta_seguridad}</p>   
-                                <p className="perfil-title"><strong>Respuesta de seguridad:</strong> {respuesta_seguridad}</p>                             
+                                <p className="perfil-title"><strong>Respuesta de seguridad:</strong> {respuesta_seguridad}</p>
+
                             </div>  
+                            <div>
+                                <Link href={`/miperfil/${username}`}><button>Editar Perfil</button></Link>
+                            </div>
                         </Suspense>
                     </div>
                 </div>
