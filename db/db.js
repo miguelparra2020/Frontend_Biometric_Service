@@ -278,7 +278,7 @@ export async function CreateExcusa(excusaData) {
     return data;
   } catch (error) {
     // Maneja cualquier error de la solicitud aquí
-    console.error('Error al crear usuario:', error);
+    console.error('Error al crear excusa:', error);
     throw error;
   }
 }
@@ -296,16 +296,26 @@ export async function getExcusa(id) {
 //Updated 😮‍💨
 //Función para  actualizar todos los datos de una excusa de la base de datos es un Updated 
 export async function updateExcusa(id, updatedExcusa) {
-  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/excusas/${id}/`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedExcusa),
-  });
+  // Crea un nuevo objeto FormData
+  const formData = new FormData();
 
-  const data = await response.json();
-  return data;
+  // Agrega todos los campos y la imagen al FormData
+  for (const key in updatedExcusa) {
+    formData.append(key, updatedExcusa[key]);
+  }
+  try {
+    const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/excusas/${id}/`, {
+      method: 'PUT',
+      body: formData,  // Envía el FormData en lugar de usuarioData
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // Maneja cualquier error de la solicitud aquí
+    console.error('Error al actualizar excusa:', error);
+    throw error;
+  }
 } 
 
 //del CRUD - excusas

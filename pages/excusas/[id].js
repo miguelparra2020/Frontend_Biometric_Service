@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from '../../components/layouts/MainLayout';
-import { getExcusa } from '../../db/db';
+import { getExcusa, updateExcusa } from '../../db/db';
 import { useState, useEffect } from "react";
 import '../../styles/pages/fichas.css';
 import '../../styles/pages/excusas.css';
@@ -17,6 +17,7 @@ function IdExcusasPage(){
     const [last_name, setLastName] = useState('');
     const [imagen_perfil, setImagenPerfil] = useState('');
     const [tipo_usuario, setTipoUsuario] = useState('');
+    const [tipo_usuario_editar, setTipoUsuarioEditar] = useState('');
     const [numero_ficha, setNumeroFicha] = useState('');
     const [fecha_excusa, setFechaExcusa] = useState('');
     const [hora_excusa, setHoraExcusa] = useState('');
@@ -25,9 +26,6 @@ function IdExcusasPage(){
     const [comentario_instructor, setComentarioInstructor] = useState('Sin comentario');
     const [file_excusa, setFileExcusa] = useState(null);
 
-
-    const [excusas, setExcusas] = useState([]);
-    const [excusasAprendiz, setExcusasAprendiz] = useState([]);
 //----------------Variables---------------------------------
 
 //----Función useEffect asyncrona para obtener la data de fichas-------
@@ -47,7 +45,21 @@ function IdExcusasPage(){
         async function fecthExcusa () {
             try {
                 const dataExcusa = await getExcusa(id);
-                console.log("datos excusa:",dataExcusa)
+                console.log("datos excusa:",dataExcusa);
+                setUsuario(dataExcusa.username);
+                setFirsName(dataExcusa.first_name);
+                setLastName(dataExcusa.last_name);
+                setImagenPerfil(dataExcusa.imagen_perfil);
+                setTipoUsuario(localStorage.getItem("tipo_usuario"));
+                setTipoUsuarioEditar(dataExcusa.tipo_usuario);
+                setNumeroFicha(dataExcusa.numero_ficha);
+                setFechaExcusa(dataExcusa.fecha_excusa);
+                setHoraExcusa(dataExcusa.hora_excusa);
+                setComentarioAprendiz(dataExcusa.comentario_aprendiz);
+                setEstadoExcusa(dataExcusa.estado_excusa);
+                setComentarioInstructor(dataExcusa.comentario_instructor);
+                setFileExcusa(dataExcusa.archivo_excusa);
+
 
             } catch (error) {
                 console.log(error);                
@@ -92,48 +104,71 @@ const handleFileChange = (e) => {
         "comentario_aprendiz": comentario_aprendiz,
         "estado_excusa": estado_excusa,
         "comentario_instructor": comentario_instructor,
-        "archivo_excusa": file_excusa
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (file_excusa && file_excusa.name.endsWith('.pdf')) {
-        CreateExcusa(objetoExcusa);
-        toast.loading('Creando ', {
-            description: 'Excusa'
+    await updateExcusa(id, objetoExcusa);
+    toast.loading('Actualizando ', {
+        description: 'Excusa'
+      });
+      setTimeout(() => {
+        toast.success('Excusa ', {
+            description: 'Actualizada'
           });
-          setTimeout(() => {
-            toast.success('Excusa ', {
-                description: 'Creada'
-              });
-          }, 3000);
-          setTimeout(() => {
-            router.push(`/excusas`);
-          }, 5000);
-          
-    }
-    else{
-        toast.error('Error en la creación', {
-            description: 'Seleccione un archivo PDF válido.'
-          });
-    }
-    
+      }, 3000);
+      setTimeout(() => {
+        router.push(`/excusas`);
+      }, 5000);    
   };
 
+  const objetoExcusaAprendiz = {
+    "username": usuario,
+    "first_name": first_name,
+    "last_name": last_name,
+    "imagen_perfil": imagen_perfil,
+    "tipo_usuario": tipo_usuario,
+    "numero_ficha": numero_ficha,
+    "fecha_excusa": fecha_excusa,
+    "hora_excusa": hora_excusa,
+    "comentario_aprendiz": comentario_aprendiz,
+    "estado_excusa": estado_excusa,
+    "comentario_instructor": comentario_instructor,
+    "archivo_excusa": file_excusa
+}
+  const handleSubmitAprendiz = async (e) => {
+    e.preventDefault();
+    await updateExcusa(id, objetoExcusaAprendiz);
+    toast.loading('Actualizando ', {
+        description: 'Excusa'
+      });
+      setTimeout(() => {
+        toast.success('Excusa ', {
+            description: 'Actualizada'
+          });
+      }, 3000);
+      setTimeout(() => {
+        router.push(`/excusas`);
+      }, 5000);    
+  };
 //---área visual de la página---------
     return (
         <MainLayout>
             {/* titulo */}
             <div className="contenedor_titulo_fichas">
                 <h1>Bienvenid@ al área de editar una excusa</h1>   
-                {id}
+                
             </div>
             {/* titulo */}
             {/* Excusas del aprendiz */}
             <div className="contenedor_excusas">
             { 
                 tipo_usuario == 'aprendiz' ? (<div className="card_formulario">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitAprendiz}>
+                <div className="fila_formulario">
+             <label htmlFor="username">Id excusa:</label>
+             <label htmlFor="username">{id}</label>
+             </div>
              <div className="fila_formulario">
              <label htmlFor="username">Usuario:</label>
              <input
@@ -170,66 +205,7 @@ const handleFileChange = (e) => {
                  required
              />
              </div>
-             <div className="fila_formulario">
-             <label htmlFor="imagen_perfil">Imagen de perfil:</label>
-             <input
-                 type="text"
-                 id="imagen_perfil"
-                 name="imagen_perfil"
-                 value={imagen_perfil}
-                 onChange={(e) => setImagenPerfil(e.target.value)} 
-                 disabled
-                 required
-             />
-             </div>
-             <div className="fila_formulario">
-             <label htmlFor="tipo_usuario">Tipo de Usuario:</label>
-             <input
-                 type="text"
-                 id="tipo_usuario"
-                 name="tipo_usuario"
-                 value={tipo_usuario}
-                 onChange={(e) => setTipoUsuario(e.target.value)}
-                 disabled 
-                 required
-             />
-             </div>
-             <div className="fila_formulario">
-             <label htmlFor="numero_ficha">Número Ficha:</label>
-             <input
-                 type="text"
-                 id="numero_ficha"
-                 name="numero_ficha"
-                 value={numero_ficha}
-                 onChange={(e) => setNumeroFicha(e.target.value)} 
-                 disabled
-                 required
-             />
-             </div>
-             <div className="fila_formulario">
-             <label htmlFor="fecha_excusa">Fecha de la excusa:</label>
-             <input
-                 type="date"
-                 id="fecha_excusa"
-                 name="fecha_excusa"
-                 value={fecha_excusa}
-                 onChange={(e) => setNumeroFicha(e.target.value)}
-                 disabled 
-                 required
-             />
-             </div>
-             <div className="fila_formulario">
-             <label htmlFor="hora_excusa">Hora de la excusa:</label>
-             <input
-                 type="hour"
-                 id="hora_excusa"
-                 name="hora_excusa"
-                 value={hora_excusa}
-                 onChange={(e) => setHoraExcusa(e.target.value)} 
-                 disabled
-                 required
-             />
-             </div>
+             
              <div className="fila_formulario">
              <label htmlFor="comentario_aprendiz">Comentario del aprendiz:</label>
              <input
@@ -241,30 +217,7 @@ const handleFileChange = (e) => {
                  onChange={(e) => setComentarioAprendiz(e.target.value)} 
              />
              </div>
-             <div className="fila_formulario">
-             <label htmlFor="estado_excusa">Estado de la excusa:</label>
-             <input
-                 type="text"
-                 id="estado_excusa"
-                 name="estado_excusa"
-                 value={estado_excusa}
-                 onChange={(e) => setEstadoExcusa(e.target.value)} 
-                 disabled
-                 required
-             />
-             </div>
-             <div className="fila_formulario">
-             <label htmlFor="comentario_instructor">Comentario del instructor:</label>
-             <input
-                 type="search"
-                 id="comentario_instructor"
-                 name="comentario_instructor"
-                 value={comentario_instructor}                 
-                 onChange={(e) => setComentarioInstructor(e.target.value)}
-                 disabled
-                 required
-             />
-             </div>
+             
              <div className="fila_formulario">
                  <label htmlFor="file_excusa">Archivo de la excusa:</label>
                  <input
@@ -284,7 +237,7 @@ const handleFileChange = (e) => {
                  </div>
                  <div className="button_card_excusa">
                                  <div>
-                 <input type="submit" value="Enviar Excusa" className="boton_enviar_excusa"/></div>
+                 <input type="submit" value="Actualizar Excusa" className="boton_enviar_excusa"/></div>
                              </div>
              
              </form>
@@ -298,6 +251,10 @@ const handleFileChange = (e) => {
             { 
                 tipo_usuario !== 'aprendiz' ? (<div className="card_formulario">
                    <form onSubmit={handleSubmit}>
+                   <div className="fila_formulario">
+                <label htmlFor="username">Id excusa:</label>
+                <label htmlFor="username">{id}</label>
+                </div>
                 <div className="fila_formulario">
                 <label htmlFor="username">Usuario:</label>
                 <input
@@ -335,79 +292,6 @@ const handleFileChange = (e) => {
                 />
                 </div>
                 <div className="fila_formulario">
-                <label htmlFor="imagen_perfil">Imagen de perfil:</label>
-                <input
-                    type="text"
-                    id="imagen_perfil"
-                    name="imagen_perfil"
-                    value={imagen_perfil}
-                    onChange={(e) => setImagenPerfil(e.target.value)} 
-                    disabled
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
-                <label htmlFor="tipo_usuario">Tipo de Usuario:</label>
-                <input
-                    type="text"
-                    id="tipo_usuario"
-                    name="tipo_usuario"
-                    value={tipo_usuario}
-                    onChange={(e) => setTipoUsuario(e.target.value)}
-                    disabled 
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
-                <label htmlFor="numero_ficha">Número Ficha:</label>
-                <input
-                    type="text"
-                    id="numero_ficha"
-                    name="numero_ficha"
-                    value={numero_ficha}
-                    onChange={(e) => setNumeroFicha(e.target.value)} 
-                    disabled
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
-                <label htmlFor="fecha_excusa">Fecha de la excusa:</label>
-                <input
-                    type="date"
-                    id="fecha_excusa"
-                    name="fecha_excusa"
-                    value={fecha_excusa}
-                    onChange={(e) => setNumeroFicha(e.target.value)}
-                    disabled 
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
-                <label htmlFor="hora_excusa">Hora de la excusa:</label>
-                <input
-                    type="hour"
-                    id="hora_excusa"
-                    name="hora_excusa"
-                    value={hora_excusa}
-                    onChange={(e) => setHoraExcusa(e.target.value)} 
-                    disabled
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
-                <label htmlFor="comentario_aprendiz">Comentario del aprendiz:</label>
-                <input
-                    type="text"
-                    id="comentario_aprendiz"
-                    name="comentario_aprendiz"
-                    value={comentario_aprendiz}
-                    
-                    onChange={(e) => setComentarioAprendiz(e.target.value)} 
-                    disabled
-                    required
-                />
-                </div>
-                <div className="fila_formulario">
                 <label htmlFor="estado_excusa">Estado de la excusa:</label>
                 <select
                     id="estado_excusa"
@@ -432,26 +316,12 @@ const handleFileChange = (e) => {
                     onChange={(e) => setComentarioInstructor(e.target.value)}
                 />
                 </div>
-                <div className="fila_formulario">
-                    <label htmlFor="file_excusa">Archivo de la excusa:</label>
-                    <input
-                        type="file"
-                        id="file_excusa"
-                        name="file_excusa"
-                        accept=".pdf"
-                        onChange={handleFileChange}
-                        required
-                    />
                     {/* Puedes mostrar el nombre del archivo seleccionado si es necesario */}
                     
                     
-                    </div>
-                    <div className="fila_formulario">
-                    {file_excusa && <p>Archivo seleccionado: {file_excusa.name}</p>}
-                    </div>
                     <div className="button_card_excusa">
                                     <div>
-                    <input type="submit" value="Enviar Excusa" className="boton_enviar_excusa"/></div>
+                    <input type="submit" value="Actulizar Excusa" className="boton_enviar_excusa"/></div>
                                 </div>
                 
                 </form>
