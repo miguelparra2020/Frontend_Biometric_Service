@@ -33,3 +33,24 @@
     align-items: center;
     justify-content: flex-start;
 }
+.button_card_excusa{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton_editar_excusa button {
+    background-color: #3498db; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno (ajústalo según tus preferencias) */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    font-size: 16px; /* Tamaño del texto */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  .boton_editar_excusa button:hover {
+    background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón */
+  }

@@ -105,6 +105,10 @@ function ExcusasPage(){
                                 <div className="fila_card_excusa">
                                     <div>◽<strong>Comentarios del instructor:</strong> {item.comentario_instructor}</div>
                                 </div>
+                                <br/>
+                                <div className="button_card_excusa">
+                                    <div><Link href="/" className="boton_editar_excusa"><button> Editar Excusa</button></Link></div>
+                                </div>
                                                        
                             </div>
                         ))}
