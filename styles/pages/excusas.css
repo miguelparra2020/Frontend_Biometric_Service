@@ -118,6 +118,51 @@
     margin-top: 5px;
   }
 
+  .boton_pendiente{
+    background-color: #ffcc00; /* Amarillo bonito */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .boton_pendiente:hover{
+    background-color: #ddb308;
+  }
+  
+  /* Estilo para el botón "Aprobadas" */
+  .boton_aprobada{
+    background-color: #4caf50; /* Verde bonito */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .boton_aprobada:hover{
+    background-color: #37823a;
+  }
+  /* Estilo para el botón "Anuladas" */
+  .boton_anulada{
+    background-color: #ff5733; /* Rojo bonito */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .boton_anulada:hover{
+    background-color: #c44428;
+  }
+  .fila_botones{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
   
   @media (max-width: 750px) {
     .fila_formulario {
