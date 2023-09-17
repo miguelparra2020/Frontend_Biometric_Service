@@ -13,6 +13,7 @@ function IdExcusasPage(){
     const router = useRouter();
     const { id } = router.query;
     const [usuario, setUsuario] = useState('');
+    const [usuario_aprendiz, setUsuarioAprendiz] = useState('');
     const [first_name, setFirsName] = useState('');
     const [last_name, setLastName] = useState('');
     const [imagen_perfil, setImagenPerfil] = useState('');
@@ -47,6 +48,7 @@ function IdExcusasPage(){
                 const dataExcusa = await getExcusa(id);
                 console.log("datos excusa:",dataExcusa);
                 setUsuario(dataExcusa.username);
+                setUsuarioAprendiz(localStorage.getItem("username"));
                 setFirsName(dataExcusa.first_name);
                 setLastName(dataExcusa.last_name);
                 setImagenPerfil(dataExcusa.imagen_perfil);
@@ -200,7 +202,7 @@ const handleFileChange = (e) => {
             {/* Excusas del aprendiz */}
             <div className="contenedor_excusas">
             { 
-                tipo_usuario == 'aprendiz' ? (<div className="card_formulario">
+                tipo_usuario == 'aprendiz' && usuario == usuario_aprendiz ? (<div className="card_formulario">
                 <form onSubmit={handleSubmitAprendiz}>
                 <div className="fila_formulario">
              <label htmlFor="username">Id excusa:</label>
