@@ -70,6 +70,21 @@
     background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón */
   }
 
+  .boton_eliminar_excusa {
+    background-color: #db3434; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno (ajústalo según tus preferencias) */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    font-size: 16px; /* Tamaño del texto */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  .boton_eliminar_excusa:hover {
+    background-color: #b92929; /* Cambia el color de fondo al pasar el ratón */
+  }
+
   .card_formulario{
     background-color: white;
     padding: 20px;

@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from '../../components/layouts/MainLayout';
-import { getExcusa, updateExcusa } from '../../db/db';
+import { getExcusa, updateExcusa, deleteExcusa } from '../../db/db';
 import { useState, useEffect } from "react";
 import '../../styles/pages/fichas.css';
 import '../../styles/pages/excusas.css';
@@ -108,18 +108,25 @@ const handleFileChange = (e) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateExcusa(id, objetoExcusa);
-    toast.loading('Actualizando ', {
-        description: 'Excusa'
-      });
-      setTimeout(() => {
-        toast.success('Excusa ', {
-            description: 'Actualizada'
-          });
-      }, 3000);
-      setTimeout(() => {
-        router.push(`/excusas`);
-      }, 5000);    
+    try {
+        await updateExcusa(id, objetoExcusa);
+        toast.loading('Actualizando ', {
+            description: 'Excusa'
+        });
+        setTimeout(() => {
+            toast.success('Excusa ', {
+                description: 'Actualizada'
+            });
+        }, 3000);
+        setTimeout(() => {
+            router.push(`/excusas`);
+        }, 5000);  
+    } catch (error) {
+        toast.error('Excusa ', {
+            description: error
+        });
+    }
+      
   };
 
   const objetoExcusaAprendiz = {
@@ -138,19 +145,49 @@ const handleFileChange = (e) => {
 }
   const handleSubmitAprendiz = async (e) => {
     e.preventDefault();
-    await updateExcusa(id, objetoExcusaAprendiz);
-    toast.loading('Actualizando ', {
-        description: 'Excusa'
-      });
-      setTimeout(() => {
-        toast.success('Excusa ', {
-            description: 'Actualizada'
-          });
-      }, 3000);
-      setTimeout(() => {
-        router.push(`/excusas`);
-      }, 5000);    
+    try {
+        await updateExcusa(id, objetoExcusaAprendiz);
+        toast.loading('Actualizando ', {
+            description: 'Excusa'
+        });
+        setTimeout(() => {
+            toast.success('Excusa ', {
+                description: 'Actualizada'
+            });
+        }, 3000);
+        setTimeout(() => {
+            router.push(`/excusas`);
+        }, 5000); 
+    } catch (error) {
+        toast.error('Excusa ', {
+            description: error
+        });
+    }
+       
   };
+
+  const handleEliminarAprendiz = async (e) => {
+    e.preventDefault();
+    try {
+        await deleteExcusa(id);
+        toast.loading('Eliminando ', {
+            description: 'Excusa'
+        });
+        setTimeout(() => {
+            toast.success('Excusa ', {
+                description: 'Eliminada'
+            });
+        }, 3000);
+        setTimeout(() => {
+            router.push(`/excusas`);
+        }, 5000); 
+    } catch (error) {
+        toast.error('Excusa ', {
+            description: error
+        });
+    }
+     
+  }
 //---área visual de la página---------
     return (
         <MainLayout>
@@ -239,6 +276,12 @@ const handleFileChange = (e) => {
                                  <div>
                  <input type="submit" value="Actualizar Excusa" className="boton_enviar_excusa"/></div>
                              </div>
+                <br/>
+                <div className="button_card_excusa">
+                                 <div>
+                 <button onClick={handleEliminarAprendiz} value="Eliminar Excusa" className="boton_eliminar_excusa">Eliminar Excusa</button>
+                             </div></div>
+                
              
              </form>
 
