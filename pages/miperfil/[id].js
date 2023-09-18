@@ -192,9 +192,6 @@ function base64ToFile(base64, filename) {
                 <h1>Bienvenid@ al área de editar perfil</h1>  
             </div> 
         <div>
-            tipo User : {tipo_user}
-            <br/>
-           usuario: {username} id: {id}
             <br/>           
             {tipo_user == 'aprendiz' && username == id ? (<>
                 <form onSubmit={handleSubmit} className="container" encType="multipart/form-data">
@@ -268,7 +265,75 @@ function base64ToFile(base64, filename) {
         </form>
            </>):(<></>)}
            {tipo_user !== 'aprendiz' ? (<>
-            el instructor puede editar
+            <form onSubmit={handleSubmit} className="container" encType="multipart/form-data">
+            <div>
+            Número de documento identidad = usuario:&nbsp;
+            <input type="number" value={username} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required disabled/>
+            </div>
+            <div>
+            Nombres:&nbsp;
+            <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <div>
+            Apellidos:&nbsp;
+            <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <div>
+            Email:&nbsp;
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <div>
+            Asignar ficha:&nbsp;
+            <select value={fichaSeleccionada} className="inputs-ingresos" required onChange={handleFichaChangeNueva} >
+                <option value="">Selecciona una ficha</option>
+                {fichas.map((ficha) => (
+                    <option key={ficha.url} value={ficha.numero_ficha}>
+                        {ficha.numero_ficha}
+                    </option>
+                ))}
+            </select>
+            </div>
+            <div>
+            Tipo de usuario:&nbsp;
+            <select value={tipo_usuario_seleccionado} className="inputs-ingresos" required onChange={handleTipoUsuarioChangeNuevo} >
+                <option value="">Seleccionar Tipo de Usuario</option>
+                <option value="aprendiz">Aprendiz</option>
+                <option value="instructor">Instructor</option>
+                <option value="administrador">Administrador</option>
+            </select>
+            </div>
+            
+            <div>
+            Contraseña:&nbsp;
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <div>
+            Confirmar contraseña:&nbsp;
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <br/>
+            <br/>
+            <div>
+            <h3>Para la recuperación de cuenta:&nbsp;</h3> 
+            </div>
+            <br/><br/>
+            <div>
+            Escoge una pregunta de seguridad:&nbsp;
+            <select value={pregunta_seguridad} className="inputs-ingresos" required onChange={handlePreguntaChange}>
+                <option value="">Seleccionar pregunta</option>
+                <option value="¿Cuál fue el nombre de tu primera mascota?">¿Cuál fue el nombre de tu primera mascota?</option>
+                <option value="¿Cuál fue el nombre de tu mejor amigo en la infancia?">¿Cuál fue el nombre de tu mejor amigo en la infancia?</option>
+                <option value="¿En qué ciudad conociste a tu primer pareja?">¿En qué ciudad conociste a tu primer pareja?</option>
+                <option value="¿Cuál es tu comida favorita de la abuela?">¿En Cuál es tu comida favorita de la abuela?</option>
+            </select>
+            </div>
+            <div>
+            Respuesta a la pregunta de seguridad - <strong>en minúsculas</strong> :&nbsp;
+            <input type="text" value={respuesta_seguridad} onChange={(e) => setRespuestaSeguridad(e.target.value)} className="inputs-ingresos" required/>
+            </div>
+            <br/>
+            <button type="submit">Crear usuario</button> 
+        </form>
            </>):(<></>)}
 
         </div>
