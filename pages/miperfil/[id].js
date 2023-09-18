@@ -211,27 +211,7 @@ function base64ToFile(base64, filename) {
             Email:&nbsp;
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="inputs-ingresos" required/>
             </div>
-            <div>
-            Asignar ficha:&nbsp;
-            <select value={fichaSeleccionada} className="inputs-ingresos" required onChange={handleFichaChangeNueva} disabled>
-                <option value="">Selecciona una ficha</option>
-                {fichas.map((ficha) => (
-                    <option key={ficha.url} value={ficha.numero_ficha}>
-                        {ficha.numero_ficha}
-                    </option>
-                ))}
-            </select>
-            </div>
-            <div>
-            Tipo de usuario:&nbsp;
-            <select value={tipo_usuario_seleccionado} className="inputs-ingresos" required onChange={handleTipoUsuarioChangeNuevo} disabled>
-                <option value="">Seleccionar Tipo de Usuario</option>
-                <option value="aprendiz">Aprendiz</option>
-                <option value="instructor">Instructor</option>
-                <option value="administrador">Administrador</option>
-            </select>
-            </div>
-            
+                        
             <div>
             Contraseña:&nbsp;
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="inputs-ingresos" required/>
