@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getFicha, updateFicha, deleteFicha } from '../../db/db';
+import { Toaster, toast } from 'sonner';
 
 
 
@@ -21,21 +22,7 @@ function FichaPage() {
 
   //----Función useEffect asyncrona para obtener la data de fichas-------
     useEffect(() => {
-  //----Función para detectar al usuario si puede acceder---------
-       if (typeof window !== 'undefined') {
-        const storedUsuario = localStorage.getItem('access_token');
-        setAccess(storedUsuario);
-        setTipoUsuario(localStorage.getItem('tipo_usuario'));
-        }
-      if (access_token == 'sin-acceso'){
-          router.push('/');
-      }
-      if (tipo_usuario == 'aprendiz'){
-        router.push('/home');
-    }
-    if (tipo_usuario == 'undefined'){
-      router.push('/home');
-  }
+  
   //----Función para detectar al usuario si puede acceder---------
         async function fetchFicha() {
           const data = await getFicha(id);
@@ -48,26 +35,55 @@ function FichaPage() {
       },[access_token, id,router,tipo_usuario]);
     //----Función useEffect asyncrona para obtener la data de fichas-------
     
-      const handleUpdate = async () => {
+      const handleUpdate = async (e) => {
+        e.preventDefault();
         const updatedFicha = {
             numero_ficha,
             nombre_ficha,
         };
-    
-        await updateFicha(id, updatedFicha);
-        alert("Ha actualizado la ficha de manera exitosa!"); // Successful update alert
-        router.push('/fichas');
+        try {
+          await updateFicha(id, updatedFicha);
+          toast.loading('Actualizando ', {
+            description: 'Ficha'
+        });
+        setTimeout(() => {
+            toast.success('Ficha ', {
+                description: 'Actualizada'
+            });
+        }, 3000);
+        setTimeout(() => {
+            router.push(`/fichas`);
+        }, 5000);
+        } catch (error) {
+          toast.error('error ', {
+            description: error
+        });
+        }
       };
     
-      const handleDelete = async () => {
-        await deleteFicha(id);
-        alert("Ha eliminado la ficha de manera exitosa!"); // Successful deletion alert
-        router.push('/fichas');
+        const deleteFunction = async (e) => {
+          e.preventDefault();
+        
+        try {
+          await deleteFicha(id);
+          toast.loading('Eliminando ', {
+            description: 'Ficha'
+        });
+        setTimeout(() => {
+            toast.success('Ficha ', {
+                description: 'Eliminada'
+            });
+        }, 3000);
+        setTimeout(() => {
+            router.push(`/fichas`);
+        }, 5000);
+        } catch (error) {
+          toast.error('error ', {
+            description: error
+        });
+        }
       };
     
-      if (!ficha) {
-        return <p>Cargando...</p>; // Loading message
-      }
 
     return(
         <MainLayout>
@@ -92,8 +108,9 @@ function FichaPage() {
             
             <button onClick={handleUpdate}>Guardar cambios</button> 
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleDelete}>Eliminar</button> 
+            <button onClick={deleteFunction}>Eliminar</button> 
             </form> 
+            <Toaster/>
         </MainLayout>
     )
 
