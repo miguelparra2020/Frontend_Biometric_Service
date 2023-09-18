@@ -44,6 +44,10 @@ const UsuariosPage = () => {
         fetchUsuarios();
     }, [access_token, router,tipo_usuario]);
 
+    const handleEliminar = () => {
+        alert("soy boton eliminar")
+    }
+
     return (
         <MainLayout>
             <div className="contenedor_titulo_fichas">
