@@ -3,6 +3,7 @@ import MainLayout from '../../components/layouts/MainLayout';
 import { getUsuarios } from '../../db/db';
 import Link from "next/link";
 import '../../styles/pages/usuarios.css';
+import '../../styles/pages/miperfil.css';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
@@ -75,7 +76,7 @@ const UsuariosPage = () => {
                         {item.ficha} &nbsp;
                         {item.tipo_usuario} &nbsp;
 
-                        <Link href={`/miperfil/${item.username}`}><button>editar</button></Link>
+                        <Link href={`/miperfil/${item.username}`}><button className="boton_editar_perfil">editar</button></Link>
 
                     </div>
                 ))}
