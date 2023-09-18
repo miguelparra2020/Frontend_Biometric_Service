@@ -251,6 +251,17 @@ export async function updateUsuario(id, updatedUsuario) {
   return data;
 } 
 
+export async function deleteUsuario(id) {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/usuario/${id}/`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    return { success: true };
+  } else {
+    throw new Error('Error al eliminar usuario');
+  }
+}
 
 
 

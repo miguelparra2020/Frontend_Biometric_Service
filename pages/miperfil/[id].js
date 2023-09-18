@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import MainLayout from '../../components/layouts/MainLayout';
-import { getUsuarios, getFichas, updateUsuario, getUsuario } from '../../db/db';
+import { getUsuarios, getFichas, updateUsuario, getUsuario, deleteUsuario } from '../../db/db';
 import { useRouter } from 'next/router';
 import '../../styles/pages/ingresos.css';
 import { Toaster, toast } from 'sonner';
@@ -24,9 +24,6 @@ const EditarPerfilPage = () => {
     const [tipo_usuario_seleccionado, setTipoUsuarioSeleccionado] = useState(""); 
     const [password, setPassword] = useState(''); 
     const [confirmPassword, setConfirmPassword] = useState(''); 
-    const [imagen_perfil, setImagenPerfil] = useState(null);
-    const [imagenMostrar, setImagenMostrar] = useState(null);
-    const [mostrarVideo, setMostrarVideo] = useState(false);
     const [pregunta_seguridad, setPreguntaSeguridad] = useState(null);
     const [respuesta_seguridad, setRespuestaSeguridad] = useState(null);
     const videoRef = useRef(null);
@@ -241,7 +238,7 @@ function base64ToFile(base64, filename) {
             <input type="text" value={respuesta_seguridad} onChange={(e) => setRespuestaSeguridad(e.target.value)} className="inputs-ingresos" required/>
             </div>
             <br/>
-            <button type="submit">Crear usuario</button> 
+            <button type="submit">Actualizar Perfil</button> 
         </form>
            </>):(<></>)}
            {tipo_user !== 'aprendiz' ? (<>
@@ -312,7 +309,7 @@ function base64ToFile(base64, filename) {
             <input type="text" value={respuesta_seguridad} onChange={(e) => setRespuestaSeguridad(e.target.value)} className="inputs-ingresos" required/>
             </div>
             <br/>
-            <button type="submit">Crear usuario</button> 
+            <button type="submit">Actualizar usuario</button> 
         </form>
            </>):(<></>)}
 
