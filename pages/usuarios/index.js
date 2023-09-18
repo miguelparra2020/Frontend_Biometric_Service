@@ -71,6 +71,8 @@ const UsuariosPage = () => {
                         {item.ficha} &nbsp;
                         {item.tipo_usuario} &nbsp;
 
+                        <Link href={`/miperfil/${item.username}`}><button>editar</button></Link>
+
                     </div>
                 ))}
             </div>

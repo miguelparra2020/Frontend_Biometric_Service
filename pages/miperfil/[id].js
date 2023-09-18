@@ -26,7 +26,6 @@ const EditarPerfilPage = () => {
     const [confirmPassword, setConfirmPassword] = useState(''); 
     const [pregunta_seguridad, setPreguntaSeguridad] = useState(null);
     const [respuesta_seguridad, setRespuestaSeguridad] = useState(null);
-    const videoRef = useRef(null);
     const router = useRouter();
     const { id } = router.query;
 
@@ -34,48 +33,10 @@ const EditarPerfilPage = () => {
 
     
       
-    const handleCameraClick = async () => {
-        setMostrarVideo(true);
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-          videoRef.current.srcObject = stream;
-        } catch (error) {
-          console.error('Error al acceder a la cámara: ', error);
-        }
-      };
-    
-      // Función para convertir base64 en objeto File
-function base64ToFile(base64, filename) {
-    const byteCharacters = atob(base64.split(',')[1]);
-    const byteArrays = [];
-  
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteArrays.push(byteCharacters.charCodeAt(i));
-    }
-  
-    const byteArray = new Uint8Array(byteArrays);
-  
-    return new File([byteArray], filename, { type: 'image/png' }); // Puedes ajustar el tipo de archivo según corresponda
-  }
-  
-  // En tu función handleCaptureClick
-  const handleCaptureClick = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const capturedImageDataUrl = canvas.toDataURL('image/png');
-    setImagenMostrar(capturedImageDataUrl);
-    // Llama a la función base64ToFile para convertirlo en un objeto File
-    const capturedImageFile = base64ToFile(capturedImageDataUrl, 'captured_image.png');
-  
-    // Asigna el objeto File a files[0]
-    setImagenPerfil(capturedImageFile);
-    videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-    setMostrarVideo(false);
-  };
 
+    
+
+  
       
       
       
@@ -102,6 +63,7 @@ function base64ToFile(base64, filename) {
             setLastName(Usuario.last_name);
             setEmail(Usuario.email);
             setFichaSeleccionada(Usuario.ficha);
+            setTipoUsuario(Usuario.tipo_usuario);
             setTipoUsuarioSeleccionado(Usuario.tipo_usuario);
             setPreguntaSeguridad(Usuario.pregunta_seguridad);
             setRespuestaSeguridad(Usuario.respuesta_seguridad);
@@ -147,12 +109,12 @@ function base64ToFile(base64, filename) {
         
 
         const usuarioData = {
-            username,
+            username: id,
             email,
             first_name,
             last_name,
             ficha: fichaSeleccionada,
-            tipo_usuario: tipo_usuario_seleccionado,
+            tipo_usuario: tipo_usuario,
             password,
             pregunta_seguridad,
             respuesta_seguridad,
@@ -194,7 +156,7 @@ function base64ToFile(base64, filename) {
                 <form onSubmit={handleSubmit} className="container" encType="multipart/form-data">
             <div>
             Número de documento identidad = usuario:&nbsp;
-            <input type="number" value={username} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required disabled/>
+            <input type="number" value={id} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required disabled/>
             </div>
             <div>
             Nombres:&nbsp;
@@ -245,7 +207,7 @@ function base64ToFile(base64, filename) {
             <form onSubmit={handleSubmit} className="container" encType="multipart/form-data">
             <div>
             Número de documento identidad = usuario:&nbsp;
-            <input type="number" value={username} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required disabled/>
+            <input type="number" value={id} onChange={(e) => setUsername(e.target.value)} className="inputs-ingresos" required disabled/>
             </div>
             <div>
             Nombres:&nbsp;
@@ -272,7 +234,7 @@ function base64ToFile(base64, filename) {
             </div>
             <div>
             Tipo de usuario:&nbsp;
-            <select value={tipo_usuario_seleccionado} className="inputs-ingresos" required onChange={handleTipoUsuarioChangeNuevo} >
+            <select value={tipo_usuario} className="inputs-ingresos" required onChange={(e) => setTipoUsuario(e.target.value)} >
                 <option value="">Seleccionar Tipo de Usuario</option>
                 <option value="aprendiz">Aprendiz</option>
                 <option value="instructor">Instructor</option>
