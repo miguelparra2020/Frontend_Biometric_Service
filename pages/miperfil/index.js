@@ -72,7 +72,7 @@ const MiPerfilPage = () => {
 
                             </div>  
                             <div>
-                                <Link href={`/miperfil/${username}`}><button>Editar Perfil</button></Link>
+                                <Link href={`/miperfil/${username}`}><button className="boton_editar_perfil">Editar Perfil</button></Link>
                             </div>
                         </Suspense>
                     </div>

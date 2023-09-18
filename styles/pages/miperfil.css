@@ -85,3 +85,17 @@
   }
   
   
+  .boton_editar_perfil {
+    background-color: #007BFF; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+  }
+  
+  .boton_editar_perfil:hover {
+    background-color: #0056b3; /* Cambia de color al pasar el mouse */
+  }
