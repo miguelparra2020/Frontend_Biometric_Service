@@ -36,10 +36,8 @@ function ExcusasPage(){
                 const data = await getExcusas();
                 const usuario = localStorage.getItem('username');
                 const dataAprendiz = [];
-                console.log(data);     
                 setExcusas(data);  
                 setTipoUsuario(localStorage.getItem('tipo_usuario')) ;  
-                console.log("Soy usuario:", usuario);
 
                 // Filtrar data según el usuario
                 data.forEach(item => {

@@ -60,9 +60,7 @@ function NuevaFichaPage() {
             numero_ficha,
             nombre_ficha,
         };
-        console.log(fichaData);
         const createFicha = await CreateFicha(fichaData);
-        console.log(fichaData);
         toast.success('Exito en la creación', {
           description: 'Ficha creada'
         });

@@ -30,25 +30,6 @@ const [username, setUsername] = useState('');
       });
 
       const accessToken = response.data.access;
-      console.log('Token de acceso:', accessToken);
-
-      // const response2 = await axios.get(`https://miguelpaez9612.pythonanywhere.com/users/${username}/`);
-
-      // console.log(response2.data.id);
-      // setId(response2.data.id);
-      // console.log(response2.data.username);
-      // setUsername(response2.data.username);
-      // console.log(response2.data.email);
-      // setEmail(response2.data.email);
-      // console.log(response2.data.first_name);
-      // setFirstName(response2.data.first_name);
-      // console.log(response2.data.last_name);
-      // setLastName(response2.data.last_name);
-      // console.log(response2.data.ficha);
-      // setFicha(response2.data.ficha);
-      // console.log(response2.data.tipo_usuario);
-      // setTipoUsuario(response2.data.tipo_usuario);
-
 
 
       

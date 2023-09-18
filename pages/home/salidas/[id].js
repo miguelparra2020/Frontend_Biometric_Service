@@ -38,7 +38,6 @@ function SalidasIdPage() {
           setFechaSalida(data.fecha_salida);
           setHoraSalida(data.hora_salida);
           setZona(data.zona);
-          console.log(data);
         }
     
         fetchSalida();

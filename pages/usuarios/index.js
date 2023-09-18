@@ -36,7 +36,6 @@ const UsuariosPage = () => {
             try {
                 const data = await getUsuarios();
                 setUsuarios(data);
-                console.log(data);
             } catch (error) {
                 console.error(error);
             }

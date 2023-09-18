@@ -46,7 +46,6 @@ function IdExcusasPage(){
         async function fecthExcusa () {
             try {
                 const dataExcusa = await getExcusa(id);
-                console.log("datos excusa:",dataExcusa);
                 setUsuario(dataExcusa.username);
                 setUsuarioAprendiz(localStorage.getItem("username"));
                 setFirsName(dataExcusa.first_name);
@@ -63,8 +62,10 @@ function IdExcusasPage(){
                 setFileExcusa(dataExcusa.archivo_excusa);
 
 
-            } catch (error) {
-                console.log(error);                
+            } catch (error) {     
+                toast.error('Error', {
+                    description: error
+                  });    
             }
         }
        

@@ -70,25 +70,11 @@ function NuevaExcusasPage(){
 
             // Formatear la hora como HH:MM:SS
             const horaFormateada = `${horaActual < 10 ? '0' : ''}${horaActual}:${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
-
-            console.log("Fecha actual:", fechaFormateada);
-            console.log("Hora actual:", horaFormateada);
             setFechaExcusa(fechaFormateada);
             setHoraExcusa(horaFormateada);
 
         }
 
-//-----Función asincrona para obtener las excusas----------------
-        async function fecthExcusas () {
-            try {
-                
-
-            } catch (error) {
-                console.log(error);                
-            }
-        }
-       
-//-----Función asincrona para obtener las excusas----------------
 
 //-----Inicializar funciones-------------------------
         fechahora();

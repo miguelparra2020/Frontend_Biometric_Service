@@ -66,7 +66,6 @@ useEffect(() => {
                   
                   const orderedData = [...data].sort((a, b) => a.numero_ficha - b.numero_ficha);
                   setOrderedFichas(orderedData);
-                  console.log(orderedData);
               } catch (error) {
                   console.error(error);
               }

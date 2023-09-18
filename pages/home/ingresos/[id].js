@@ -38,7 +38,6 @@ function IngreosPage() {
           setFechaIngreso(data.fecha_ingreso);
           setHoraIngreso(data.hora_ingreso);
           setZona(data.zona);
-          console.log(data);
         }
     
         fetchIngreso();

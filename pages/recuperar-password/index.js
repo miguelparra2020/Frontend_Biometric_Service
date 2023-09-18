@@ -64,8 +64,6 @@ async function handleActualizar () {
     if(password === confirm_password){
         try {
             await updateUsuario(id_usuario, objetoUsuario);
-            console.log("id:",id_usuario);
-            console.log("objeto:",objetoUsuario);
             toast.loading("Actualizando ", {
             description: "contraseña"
             });

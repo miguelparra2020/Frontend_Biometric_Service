@@ -68,12 +68,10 @@ const EditarPerfilPage = () => {
             setPreguntaSeguridad(Usuario.pregunta_seguridad);
             setRespuestaSeguridad(Usuario.respuesta_seguridad);
             setIdUser(Usuario.id);
-            console.log("Soy los datos del usuario a editar:",Usuario)
         }
         async function fetchFichas() {
             const data = await getFichas();
             setFichas(data);
-            console.log(data);
         }
         fetchUsuario();
         fetchFichas();
@@ -119,12 +117,10 @@ const EditarPerfilPage = () => {
             pregunta_seguridad,
             respuesta_seguridad,
         };
-        console.log("Datos a actualizar:", usuarioData);
 
 
         try {
             const actualizarUsuario = await updateUsuario(id_user, usuarioData);
-            console.log(actualizarUsuario);
             toast.success('Actualización de usuario', {
                 description: 'Exitoso!'
             });
@@ -137,7 +133,6 @@ const EditarPerfilPage = () => {
             });
         }
         // const createUsuario = await CreateUsuario(usuarioData);
-        // console.log(createUsuario);
         
     };
 

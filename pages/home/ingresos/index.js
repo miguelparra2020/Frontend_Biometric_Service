@@ -54,7 +54,6 @@ const IngresosPage = () => {
             zona
         }
         // ----creación de objeto para el envío de datos----
-        console.log(ingresoData)
 
         // ---Validación que el usuario exista----------
         const usuarioExiste = existeUsuario.some((usuario) => usuario.username === username);

@@ -96,7 +96,6 @@ function base64ToFile(base64, filename) {
         async function fetchFichas() {
             const data = await getFichas();
             setFichas(data);
-            console.log(data);
         }
         fetchFichas();
         fetchUsuarios();
@@ -159,12 +158,10 @@ function base64ToFile(base64, filename) {
             pregunta_seguridad,
             respuesta_seguridad,
         };
-        console.log(usuarioData);
 
 
 
         const createUsuario = await CreateUsuario(usuarioData);
-        console.log(createUsuario);
         toast.success('Registro de usuario', {
             description: 'Exitoso!'
         });
