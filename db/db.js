@@ -252,7 +252,7 @@ export async function updateUsuario(id, updatedUsuario) {
 } 
 
 export async function deleteUsuario(id) {
-  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/usuario/${id}/`, {
+  const response = await fetch(`https://miguelpaez9612.pythonanywhere.com/usuarios/${id}/`, {
     method: 'DELETE',
   });
 
