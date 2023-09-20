@@ -53,7 +53,7 @@ const FooterLandPage = () => {
           </div>
           <div className={styles.divsecond}>
             <p className={styles.divsecond__p}>
-              Copyright © 2023 - SENA CDIT / ADSO - 2465417
+              Copyright © 2023 - SENA CDITI / ADSO - 2465417
             </p>
           </div>
         </footer>
